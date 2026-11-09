@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PERCY_PITT_ORCHESTRAL_WORKS, PercyPittWork } from '../data/percyPittData';
-import { Music, X, Calendar, BookOpen, ExternalLink, Mail, ArrowUp, Volume2, ZoomIn } from 'lucide-react';
+import { Music, X, Calendar, BookOpen, ExternalLink, Mail, ArrowUp, Volume2, ZoomIn, PenLine } from 'lucide-react';
 
 export const PercyPittPost: React.FC = () => {
   const [selectedWork, setSelectedWork] = useState<PercyPittWork | null>(null);
@@ -18,18 +18,18 @@ export const PercyPittPost: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         {/* Header Bar: Featured Post label on left, Jump to Audio right-justified on same level */}
         <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-sm sm:text-base font-semibold tracking-widest text-stone-600 uppercase">
+          <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
             FEATURED POST
           </span>
 
           <button
             type="button"
             onClick={() => scrollToSection('pitt-coronation-march')}
-            className="inline-flex items-center gap-2 font-mono text-sm sm:text-base font-semibold tracking-widest text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer group"
+            className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer group"
             title="Jump to audio"
           >
             <span>JUMP TO AUDIO</span>
-            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-amber-900 group-hover:scale-110 transition-transform" />
+            <Volume2 className="w-4 h-4 text-amber-900 group-hover:scale-110 transition-transform" />
           </button>
         </div>
 
@@ -40,7 +40,7 @@ export const PercyPittPost: React.FC = () => {
           </h1>
 
           {/* Subtitle / Quote */}
-          <p className="font-serif italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
+          <p className="font-times italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
             &ldquo;A life on the podium, a composer in the shadows&rdquo;
           </p>
         </header>
@@ -99,9 +99,6 @@ export const PercyPittPost: React.FC = () => {
             <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
               &ldquo;His conducting methods were a trifle peculiar. He had a habit of burying his head in the score and waving his arms over his head like a gesticulating stag-beetle... This habit rather detracted from the personal magnetism which great conductors exercise, owing to the orphaned orchestra seeing nothing less abstract than a baton.&rdquo;
             </p>
-            <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
-              — Contemporary Press Notice on Pitt&apos;s Conducting
-            </footer>
           </blockquote>
 
           <p>
@@ -121,14 +118,6 @@ export const PercyPittPost: React.FC = () => {
             {/* Letter 1: Percy Pitt to Edward Elgar */}
             <div className="bg-gradient-to-b from-[#FAF6EB] via-[#F5EEDC] to-[#EFE7D2] border border-[#DCD3BD] rounded-xs shadow-[0_8px_20px_rgba(45,36,22,0.14),0_2px_6px_rgba(45,36,22,0.08)] p-4 sm:p-5 flex flex-col justify-between relative font-serif text-sm sm:text-base">
               <div>
-                <div className="flex justify-between items-center border-b border-[#E1D7BF] pb-2 mb-3 text-sm sm:text-base">
-                  <span className="font-mono uppercase tracking-widest font-semibold text-stone-500">
-                    1902 Epistolary Archive
-                  </span>
-                  <span className="italic text-amber-950/70">
-                    London
-                  </span>
-                </div>
                 <div className="text-stone-900 leading-relaxed space-y-2.5 pt-0.5 text-sm sm:text-base">
                   <p className="font-bold text-amber-950">My dear Elgarmusdock</p>
                   <p className="italic text-stone-700">Greetings</p>
@@ -163,14 +152,6 @@ export const PercyPittPost: React.FC = () => {
             {/* Letter 2: Edward Elgar to Percy Pitt */}
             <div className="bg-gradient-to-b from-[#FAF6EB] via-[#F5EEDC] to-[#EFE7D2] border border-[#DCD3BD] rounded-xs shadow-[0_8px_20px_rgba(45,36,22,0.14),0_2px_6px_rgba(45,36,22,0.08)] p-4 sm:p-5 flex flex-col justify-between relative overflow-visible font-serif text-sm sm:text-base">
               <div>
-                <div className="flex justify-between items-center border-b border-[#E1D7BF] pb-2 mb-3 text-sm sm:text-base">
-                  <span className="font-mono uppercase tracking-widest font-semibold text-stone-500">
-                    Edward Elgar Autograph Letter
-                  </span>
-                  <span className="italic text-amber-950/70">
-                    New Year
-                  </span>
-                </div>
                 <div className="text-stone-900 leading-relaxed space-y-2.5 pt-0.5 text-sm sm:text-base">
                   <p className="font-bold text-amber-950">Dear old Pitt.</p>
                   <p className="text-stone-900 leading-relaxed mt-2">
@@ -204,12 +185,17 @@ export const PercyPittPost: React.FC = () => {
         </div>
 
         {/* Orchestral Work List Section */}
-        <section className="mt-14 pt-8 border-t-2 border-stone-300/70">
-          <div className="mb-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
-              Orchestral work list
-            </h2>
-            <div className="text-right">
+        <section className="mt-10 pt-6 border-t-2 border-stone-300/70">
+          <div className="mb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+            <div>
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
+                Orchestral work list
+              </h2>
+              <p className="font-serif italic text-stone-700 text-lg sm:text-xl mt-0.5">
+                Showing only surviving scores MS or published
+              </p>
+            </div>
+            <div className="text-left sm:text-right pb-0.5">
               <span className="font-serif text-xs sm:text-sm uppercase tracking-wider font-semibold text-stone-700">
                 WORKS IN <span className="text-[#B8860B] font-bold">GOLD</span> ARE LINKS TO THEIR WORK PAGES
               </span>
@@ -222,9 +208,8 @@ export const PercyPittPost: React.FC = () => {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-[#2A2621] text-stone-200 font-serif text-sm tracking-wider uppercase border-b border-stone-300">
-                    <th className="py-3 px-4 sm:px-6 font-semibold">Work</th>
-                    <th className="py-3 px-4 sm:px-6 font-semibold">Date</th>
-                    <th className="py-3 px-4 sm:px-6 font-semibold text-right">E / L</th>
+                    <th className="py-2 px-4 sm:px-6 font-semibold">Work</th>
+                    <th className="py-2 px-4 sm:px-6 font-semibold text-right">Date</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-200 text-sm font-sans">
@@ -235,9 +220,10 @@ export const PercyPittPost: React.FC = () => {
                         className="hover:bg-amber-50/60 transition-colors"
                       >
                         {/* Work Title */}
-                        <td className="py-3.5 px-4 sm:px-6">
+                        <td className="py-2 px-4 sm:px-6">
                           {work.hasDedicatedPage ? (
                             <button
+                              type="button"
                               onClick={() => scrollToSection('pitt-coronation-march')}
                               className="text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer"
                               title="Click to view Coronation March work page"
@@ -252,27 +238,8 @@ export const PercyPittPost: React.FC = () => {
                         </td>
 
                         {/* Date */}
-                        <td className="py-3.5 px-4 sm:px-6 font-mono text-xs sm:text-sm text-stone-700 whitespace-nowrap">
+                        <td className="py-2 px-4 sm:px-6 font-serif text-base sm:text-lg text-stone-700 text-right tabular-nums">
                           {work.date}
-                        </td>
-
-                        {/* Status (E / L) */}
-                        <td className="py-3.5 px-4 sm:px-6 text-right whitespace-nowrap">
-                          {work.isLost ? (
-                            <span
-                              className="inline-flex items-center justify-center font-mono font-bold text-xs text-stone-900 bg-white w-6 h-6 rounded border border-stone-900"
-                              title="Lost"
-                            >
-                              L
-                            </span>
-                          ) : (
-                            <span
-                              className="inline-flex items-center justify-center font-mono font-bold text-xs text-stone-900 bg-stone-300 w-6 h-6 rounded border border-stone-400 shadow-2xs"
-                              title="Extant"
-                            >
-                              E
-                            </span>
-                          )}
                         </td>
                       </tr>
                     );
@@ -280,21 +247,15 @@ export const PercyPittPost: React.FC = () => {
                 </tbody>
               </table>
             </div>
-
-            {/* Table Footnote with Key at bottom right */}
-            <div className="bg-stone-50 px-4 sm:px-6 py-3 border-t border-stone-200 text-xs text-stone-600 flex items-center justify-end">
-              <div className="flex items-center gap-4 font-mono text-xs font-semibold tracking-wider uppercase text-stone-700">
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-flex items-center justify-center font-mono font-bold text-xs text-stone-900 bg-stone-300 w-5 h-5 rounded border border-stone-400">E</span>
-                  = EXTANT
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-flex items-center justify-center font-mono font-bold text-xs text-stone-900 bg-white w-5 h-5 rounded border border-stone-900">L</span>
-                  = LOST
-                </span>
-              </div>
-            </div>
           </div>
+
+          {/* Missing Scores Note */}
+          <p className="mt-5 sm:mt-6 text-base sm:text-lg font-serif text-stone-800 leading-relaxed">
+            <span className="font-mono font-bold uppercase tracking-wider text-xs sm:text-sm text-stone-900 mr-2">
+              MISSING SCORES:
+            </span>
+            Symphony (Sinfonietta) in G minor ; The Taming of the Shrew Overture ; Cinderella (only piano duet exists) ; Hercules March ; Incidental music to &lsquo;Flodden Field&rsquo; ; Incidental music to &lsquo;Richard II&rsquo; ; English Rhapsody ; Sakura suite ; Ballet Egyptien
+          </p>
         </section>
 
         {/* Section 3: Work Page — Coronation March */}
@@ -304,7 +265,7 @@ export const PercyPittPost: React.FC = () => {
               WORK PAGE
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
-              Percy Pitt &mdash; Coronation March
+              Coronation March
             </h2>
 
             {/* Audio player directly below title */}
@@ -326,11 +287,41 @@ export const PercyPittPost: React.FC = () => {
               Despite being given the title &ldquo;Coronation March&rdquo; this work was written specifically for Queen Victoria’s Diamond Jubilee in 1897. Bizarrely it was first performed in the previous year, 1896, in a Prom concert at the Queens Hall under Henry Wood. It was Pitt&apos;s first work for a full orchestra.
             </p>
 
-            <div className="border-l-4 border-amber-800 pl-4 sm:pl-5 py-1 space-y-3 font-bold text-stone-900 leading-relaxed">
-              <p className="text-left">
+            {/* Section Heading above Brown Accent Line */}
+            <div className="flex items-center gap-2.5 pt-2">
+              <h3 className="font-serif italic text-xl sm:text-2xl font-bold text-amber-950 tracking-tight">
+                Some notes in passing ...
+              </h3>
+              <span className="inline-flex items-center text-amber-900" aria-label="Book with pen">
+                <BookOpen className="w-5 h-5 text-amber-900" />
+                <PenLine className="w-4 h-4 text-amber-800 -ml-1" />
+              </span>
+            </div>
+
+            {/* Notes on White Paper with Hole-Punched Left Margin */}
+            <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-4 text-left overflow-hidden">
+              {/* Hole Punches in Left Margin */}
+              <span
+                className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
+                aria-hidden="true"
+                title="Binder hole punch"
+              />
+              <span
+                className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
+                aria-hidden="true"
+                title="Binder hole punch"
+              />
+
+              {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
+              <div
+                className="absolute left-8 sm:left-10 -top-1 -bottom-1 w-[1.5px] bg-amber-800/40 pointer-events-none"
+                aria-hidden="true"
+              />
+
+              <p className="text-left m-0">
                 Pitt&apos;s Coronation March is not in the classic, clearly defined ABA shape of marches such as Elgar&apos;s Pomp and Circumstance where a brisk, lively opening is followed by a contrasting slower part with a sustained legato melody and then a da capo of the opening. Pitt chooses to begin softly and gradually build the music through a series of gradual crescendos. It&apos;s as if Pitt has chosen to focus less on the ceremonial pomp and more on the regal serenity.
               </p>
-              <p className="text-left">
+              <p className="text-left m-0">
                 At the end he takes the slow legato theme and scores it passionately for unison strings. This departure from the norm left the reviewers, and no doubt the audience, somewhat perplexed.
               </p>
             </div>

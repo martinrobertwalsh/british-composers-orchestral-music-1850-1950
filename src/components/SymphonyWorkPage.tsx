@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, ZoomIn, Calendar, X } from 'lucide-react';
+import { ArrowLeft, ZoomIn, Calendar, X, BookOpen, PenLine, Play } from 'lucide-react';
 
 interface SymphonyWorkPageProps {
   onBack: () => void;
@@ -21,10 +21,10 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
   }, []);
 
   const movementJumps = [
-    { label: '1st mov', time: 0 },
-    { label: '2nd mov', time: 571.0 },
-    { label: '3rd mov', time: 1015.5 },
-    { label: '4th mov', time: 1227.0 },
+    { label: '1st mov', title: 'I. Allegro assai', timeStr: '00:00', time: 0 },
+    { label: '2nd mov', title: 'II. Andante poco Allegretto', timeStr: '09:31', time: 571.0 },
+    { label: '3rd mov', title: 'III. Scherzo', timeStr: '16:55', time: 1015.5 },
+    { label: '4th mov', title: 'IV. Allegro con Maesta', timeStr: '20:27', time: 1227.0 },
   ];
 
   const handleJumpToMovement = (time: number, label: string) => {
@@ -71,7 +71,7 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
         {/* Post Title & Audio Player */}
         <header className="text-center mb-8 pb-6 border-b border-stone-200">
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-stone-900 mb-4">
-            Walter Macfarren - Symphony in Bb (1879)
+            Symphony in B flat (1879)
           </h1>
 
           <div className="max-w-xl mx-auto mt-3">
@@ -85,19 +85,25 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
               Your browser does not support the audio element.
             </audio>
 
-            {/* Movement Buttons directly under player */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-3.5">
+            {/* Quick Movement Jump Buttons Bar under Audio */}
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              <span className="font-mono text-xs uppercase tracking-wider text-stone-600 font-semibold mr-1">
+                Movements:
+              </span>
               {movementJumps.map((jump, idx) => (
                 <button
                   key={idx}
+                  type="button"
                   onClick={() => handleJumpToMovement(jump.time, jump.label)}
-                  className={`px-4 py-1.5 border border-[#765B37] rounded shadow-2xs font-serif text-xs sm:text-sm font-semibold tracking-wider transition-all cursor-pointer active:scale-95 ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 border border-stone-300 rounded font-serif text-xs sm:text-sm font-semibold transition-colors cursor-pointer shadow-2xs ${
                     activeJumpLabel === jump.label
-                      ? 'bg-[#FDE8B5] text-amber-950 ring-2 ring-[#765B37] animate-pulse'
-                      : 'bg-[#FFF8E1] hover:bg-[#FDE8B5] text-stone-900 hover:text-stone-950'
+                      ? 'bg-amber-100 ring-2 ring-amber-800 text-stone-900'
+                      : 'bg-white hover:bg-amber-50 text-stone-800'
                   }`}
+                  title={`Jump to ${jump.title} (${jump.timeStr})`}
                 >
-                  {jump.label}
+                  <Play className="w-3 h-3 text-amber-900" />
+                  <span>{jump.label}</span>
                 </button>
               ))}
             </div>
@@ -129,18 +135,56 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
             Completed in August 1879 the work is conservative in style for its time. Despite this it received a number of performances in some surprising places. These are noted, with dates, on the inside cover of the score.
           </p>
 
-          {/* Movement by Movement Breakdown */}
-          <div className="border-l-4 border-amber-800 pl-4 sm:pl-5 py-1 my-6 space-y-5 font-bold text-stone-900 leading-relaxed">
+          {/* Section Heading above Brown Accent Line */}
+          <div className="flex items-center gap-2.5 pt-2">
+            <h3 className="font-serif italic text-xl sm:text-2xl font-bold text-amber-950 tracking-tight">
+              Some notes in passing ...
+            </h3>
+            <span className="inline-flex items-center text-amber-900" aria-label="Book with pen">
+              <BookOpen className="w-5 h-5 text-amber-900" />
+              <PenLine className="w-4 h-4 text-amber-800 -ml-1" />
+            </span>
+          </div>
+
+          {/* Notes on White Paper with Hole-Punched Left Margin */}
+          <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-6 text-left overflow-hidden">
+            {/* Hole Punches in Left Margin */}
+            <span
+              className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
+              aria-hidden="true"
+              title="Binder hole punch"
+            />
+            <span
+              className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
+              aria-hidden="true"
+              title="Binder hole punch"
+            />
+
+            {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
+            <div
+              className="absolute left-8 sm:left-10 -top-1 -bottom-1 w-[1.5px] bg-amber-800/40 pointer-events-none"
+              aria-hidden="true"
+            />
+
             <div>
               <button
                 type="button"
                 onClick={() => handleJumpToMovement(0, '1st mov')}
-                className="font-bold underline underline-offset-4 text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl block"
+                className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-center flex-wrap gap-y-1"
                 title="Jump to 1st movement in audio player"
               >
-                1st movement &ndash; Andante Lento : Allegro assai
+                <span
+                  className="inline-flex items-center justify-center min-w-[2.2rem] h-7 px-2 rounded-full bg-gradient-to-b from-amber-50 to-amber-100/90 border border-amber-900/35 text-amber-950 font-serif font-bold text-xs sm:text-sm tracking-wider shadow-2xs mr-2 shrink-0 select-none"
+                  aria-label="Movement I"
+                >
+                  I
+                </span>
+                <span>Andante Lento : Allegro assai</span>{' '}
+                <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
+                  (00:00)
+                </span>
               </button>
-              <p className="mt-1 text-stone-900 font-bold">
+              <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
                 String pizzicato in the slow introduction followed by a standard allegro with some erratic key changes in the development.
               </p>
             </div>
@@ -148,13 +192,22 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
             <div>
               <button
                 type="button"
-                onClick={() => handleJumpToMovement(480, '2nd mov')}
-                className="font-bold underline underline-offset-4 text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl block"
+                onClick={() => handleJumpToMovement(571.0, '2nd mov')}
+                className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-center flex-wrap gap-y-1"
                 title="Jump to 2nd movement in audio player"
               >
-                2nd movement &ndash; Andante poco Allegretto
+                <span
+                  className="inline-flex items-center justify-center min-w-[2.2rem] h-7 px-2 rounded-full bg-gradient-to-b from-amber-50 to-amber-100/90 border border-amber-900/35 text-amber-950 font-serif font-bold text-xs sm:text-sm tracking-wider shadow-2xs mr-2 shrink-0 select-none"
+                  aria-label="Movement II"
+                >
+                  II
+                </span>
+                <span>Andante poco Allegretto</span>{' '}
+                <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
+                  (09:31)
+                </span>
               </button>
-              <p className="mt-1 text-stone-900 font-bold">
+              <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
                 In the manner of an intermezzo featuring the woodwind predominately.
               </p>
             </div>
@@ -162,13 +215,22 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
             <div>
               <button
                 type="button"
-                onClick={() => handleJumpToMovement(760, '3rd mov')}
-                className="font-bold underline underline-offset-4 text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl block"
+                onClick={() => handleJumpToMovement(1015.5, '3rd mov')}
+                className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-center flex-wrap gap-y-1"
                 title="Jump to 3rd movement in audio player"
               >
-                3rd mov: Scherzo &ndash; Allegretto Leggiero
+                <span
+                  className="inline-flex items-center justify-center min-w-[2.2rem] h-7 px-2 rounded-full bg-gradient-to-b from-amber-50 to-amber-100/90 border border-amber-900/35 text-amber-950 font-serif font-bold text-xs sm:text-sm tracking-wider shadow-2xs mr-2 shrink-0 select-none"
+                  aria-label="Movement III"
+                >
+                  III
+                </span>
+                <span>Scherzo &ndash; Allegretto Leggiero</span>{' '}
+                <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
+                  (16:55)
+                </span>
               </button>
-              <p className="mt-1 text-stone-900 font-bold">
+              <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
                 A scherzo without a trio. Clarinets skip busily along with the main theme.
               </p>
             </div>
@@ -176,13 +238,22 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
             <div>
               <button
                 type="button"
-                onClick={() => handleJumpToMovement(1045, '4th mov')}
-                className="font-bold underline underline-offset-4 text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl block"
+                onClick={() => handleJumpToMovement(1227.0, '4th mov')}
+                className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-center flex-wrap gap-y-1"
                 title="Jump to 4th movement in audio player"
               >
-                4th movement &ndash; Andante Lento: Allegro con Maesta
+                <span
+                  className="inline-flex items-center justify-center min-w-[2.2rem] h-7 px-2 rounded-full bg-gradient-to-b from-amber-50 to-amber-100/90 border border-amber-900/35 text-amber-950 font-serif font-bold text-xs sm:text-sm tracking-wider shadow-2xs mr-2 shrink-0 select-none"
+                  aria-label="Movement IV"
+                >
+                  IV
+                </span>
+                <span>Andante Lento: Allegro con Maesta</span>{' '}
+                <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
+                  (20:27)
+                </span>
               </button>
-              <p className="mt-1 text-stone-900 font-bold">
+              <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
                 The opening is a repeat of the 1st movement opening but now tutti. Material from the 2nd and 3rd movements is also reworked. There&apos;s a definite feel of a Finale in this Allegro.
               </p>
             </div>

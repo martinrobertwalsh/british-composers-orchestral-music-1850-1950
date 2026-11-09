@@ -2,7 +2,7 @@ import { Composer, MusicalTheme } from '../types/composer';
 
 // Musical themes crafted note-by-note for Web Audio synthesizer realisation
 export const HARVEY_LOHR_SYMPHONY_3_THEME: MusicalTheme = {
-  title: 'Harvey Löhr: Symphony No. 3 in D minor, Op. 18 (Opening Allegro con brio)',
+  title: 'Harvey Löhr: Symphony No. 3 in D minor (Opening Allegro con brio)',
   tempoBpm: 108,
   timeSignature: '4/4',
   keySignature: 'D minor',
@@ -188,7 +188,7 @@ export const ALICE_MARY_SMITH_SYMPHONY_THEME: MusicalTheme = {
 };
 
 export const PERCY_SHERWOOD_CONCERTO_THEME: MusicalTheme = {
-  title: 'Percy Sherwood: Piano Concerto in C minor, Op. 7 (Andante sostenuto)',
+  title: 'Percy Sherwood: Piano Concerto in C minor (Andante sostenuto)',
   tempoBpm: 76,
   timeSignature: '3/4',
   keySignature: 'Ab major',
@@ -400,7 +400,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'lohr-sym-3',
         title: 'Symphony No. 3 in D minor',
-        opus: 'Op. 18',
         yearComposed: 1888,
         premiereInfo: 'Westminster Orchestral Society, Town Hall, London, 1888',
         genre: 'Symphony',
@@ -450,7 +449,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'lohr-piano-concerto',
         title: 'Piano Concerto in E minor',
-        opus: 'Op. 11',
         yearComposed: 1882,
         genre: 'Concerto',
         instrumentation: 'Solo Piano + Orchestral Winds & Strings',
@@ -467,7 +465,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'lohr-queen-sheba',
         title: 'The Queen of Sheba (Oratorio)',
-        opus: 'Op. 24',
         yearComposed: 1894,
         genre: 'Choral & Vocal',
         instrumentation: 'Soli, Chorus & Full Orchestra',
@@ -597,7 +594,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'sherwood-piano-concerto-1',
         title: 'Piano Concerto No. 1 in C minor',
-        opus: 'Op. 7',
         yearComposed: 1887,
         premiereInfo: 'Royal Conservatory Orchestra, Dresden, 1888',
         genre: 'Concerto',
@@ -769,7 +765,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'davies-sym-g-major',
         title: 'Symphony in G major',
-        opus: 'Op. 8',
         yearComposed: 1895,
         genre: 'Symphony',
         instrumentation: 'Full Orchestra',
@@ -802,7 +797,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'ellerton-waldsymphonie',
         title: 'Symphony in D major "Waldsymphonie" (Forest Symphony)',
-        opus: 'Op. 120',
         yearComposed: 1857,
         genre: 'Symphony',
         instrumentation: '2 Flutes, 2 Oboes, 2 Clarinets, 2 Bassoons, 4 Horns, 2 Trumpets, 3 Trombones, Timpani, Strings',
@@ -841,7 +835,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'dale-viola-phantasy',
         title: 'Phantasy in D major for Viola and Orchestra',
-        opus: 'Op. 4',
         yearComposed: 1907,
         premiereInfo: 'Lionel Tertis, Queen’s Hall Promenade Concerts, 1908',
         genre: 'Concerto',
@@ -1083,7 +1076,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'fenney-romance-rose',
         title: 'The Romance of the Rose (Tone Poem)',
-        opus: 'Op. 13',
         yearComposed: 1914,
         premiereInfo: 'Queen’s Hall Promenade Concert, cond. Henry Wood, 1915',
         genre: 'Symphonic Poem',
@@ -1150,7 +1142,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'prout-sym-3',
         title: 'Symphony No. 3 in F major',
-        opus: 'Op. 22',
         yearComposed: 1885,
         premiereInfo: 'Birmingham Triennial Musical Festival, 1885',
         genre: 'Symphony',
@@ -1217,7 +1208,6 @@ export const COMPOSERS_DATA: Composer[] = [
       {
         id: 'wilson-skye-symphony',
         title: 'Symphony No. 1 "A Skye Symphony"',
-        opus: 'Op. 38',
         yearComposed: 1927,
         premiereInfo: 'Bournemouth Symphony Orchestra, cond. Dan Godfrey, 1928',
         genre: 'Symphony',

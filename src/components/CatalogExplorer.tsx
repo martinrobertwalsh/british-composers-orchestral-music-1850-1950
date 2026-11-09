@@ -252,10 +252,7 @@ export const CatalogExplorer: React.FC<CatalogExplorerProps> = ({
                       <span>{composer.works.length} Documented Works</span>
                     </div>
 
-                    <h3
-                      onClick={() => onSelectComposer(composer)}
-                      className="font-serif text-xl font-bold text-stone-900 group-hover:text-amber-900 transition-colors cursor-pointer"
-                    >
+                    <h3 className="font-serif text-xl font-bold text-stone-900">
                       {composer.name}
                     </h3>
 
@@ -270,7 +267,7 @@ export const CatalogExplorer: React.FC<CatalogExplorerProps> = ({
                           Notable Work
                         </span>
                         <div className="font-serif font-semibold text-stone-800 truncate">
-                          {featuredWork.title} {featuredWork.opus && `(${featuredWork.opus})`}
+                          {featuredWork.title}
                         </div>
                         <div className="text-stone-500 font-mono text-[11px] mt-0.5">
                           {featuredWork.yearComposed} · {featuredWork.genre} · {featuredWork.archiveLocation}
@@ -348,7 +345,6 @@ export const CatalogExplorer: React.FC<CatalogExplorerProps> = ({
                       <td className="p-3.5 text-stone-600">{composer.nationality}</td>
                       <td className="p-3.5 font-serif">
                         <span className="font-medium text-stone-800">{leadWork?.title}</span>
-                        {leadWork?.opus && <span className="text-stone-500 ml-1">({leadWork.opus})</span>}
                       </td>
                       <td className="p-3.5 text-stone-500 font-mono text-[11px]">
                         {composer.keyArchives[0]}

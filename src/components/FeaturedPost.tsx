@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MACFARREN_ORCHESTRAL_WORKS } from '../data/macfarrenData';
-import { ZoomIn, Calendar, X, ArrowUp, Volume2 } from 'lucide-react';
+import { ZoomIn, Calendar, X, ArrowUp, Volume2, BookOpen, PenLine, Play } from 'lucide-react';
 
 export const FeaturedPost: React.FC = () => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
@@ -25,10 +25,10 @@ export const FeaturedPost: React.FC = () => {
   };
 
   const movementJumps = [
-    { label: '1st mov', time: 0 },
-    { label: '2nd mov', time: 571.0 },
-    { label: '3rd mov', time: 1015.5 },
-    { label: '4th mov', time: 1227.0 },
+    { label: '1st mov', title: 'I. Allegro assai', timeStr: '00:00', time: 0 },
+    { label: '2nd mov', title: 'II. Andante poco Allegretto', timeStr: '09:31', time: 571.0 },
+    { label: '3rd mov', title: 'III. Scherzo', timeStr: '16:55', time: 1015.5 },
+    { label: '4th mov', title: 'IV. Allegro con Maesta', timeStr: '20:27', time: 1227.0 },
   ];
 
   const handleJumpToMovement = (time: number, label: string) => {
@@ -60,18 +60,18 @@ export const FeaturedPost: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         {/* Header Bar: Featured Post label on left, Jump to Audio right-justified on same level */}
         <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-sm sm:text-base font-semibold tracking-widest text-stone-600 uppercase">
+          <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
             FEATURED POST
           </span>
 
           <button
             type="button"
             onClick={() => scrollToSection('macfarren-score-samples')}
-            className="inline-flex items-center gap-2 font-mono text-sm sm:text-base font-semibold tracking-widest text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer group"
+            className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer group"
             title="Jump to audio"
           >
             <span>JUMP TO AUDIO</span>
-            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-amber-900 group-hover:scale-110 transition-transform" />
+            <Volume2 className="w-4 h-4 text-amber-900 group-hover:scale-110 transition-transform" />
           </button>
         </div>
 
@@ -82,7 +82,7 @@ export const FeaturedPost: React.FC = () => {
           </h1>
 
           {/* Subtitle / Quote */}
-          <p className="font-serif italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
+          <p className="font-times italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
             &ldquo;A symphony missing for over a hundred years, finally turns up&rdquo;
           </p>
         </header>
@@ -146,12 +146,17 @@ export const FeaturedPost: React.FC = () => {
         </section>
 
         {/* SECTION 2: Peruse the work list */}
-        <section id="macfarren-works-list" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
-          <div className="mb-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
-              Orchestral work list
-            </h2>
-            <div className="text-right">
+        <section id="macfarren-works-list" className="mt-10 pt-6 border-t-2 border-stone-300/70 scroll-mt-20">
+          <div className="mb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+            <div>
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
+                Orchestral work list
+              </h2>
+              <p className="font-serif italic text-stone-700 text-lg sm:text-xl mt-0.5">
+                Showing only surviving scores MS or published
+              </p>
+            </div>
+            <div className="text-left sm:text-right pb-0.5">
               <span className="font-serif text-xs sm:text-sm uppercase tracking-wider font-semibold text-stone-700">
                 WORKS IN <span className="text-[#B8860B] font-bold">GOLD</span> ARE LINKS TO THEIR WORK PAGES
               </span>
@@ -164,9 +169,8 @@ export const FeaturedPost: React.FC = () => {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-[#2A2621] text-stone-200 font-serif text-sm tracking-wider uppercase border-b border-stone-300">
-                    <th className="py-3 px-4 sm:px-6 font-semibold">Work</th>
-                    <th className="py-3 px-4 sm:px-6 font-semibold">Date</th>
-                    <th className="py-3 px-4 sm:px-6 font-semibold text-right">E / L</th>
+                    <th className="py-2 px-4 sm:px-6 font-semibold">Work</th>
+                    <th className="py-2 px-4 sm:px-6 font-semibold text-right">Date</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-200 text-sm font-sans">
@@ -177,9 +181,10 @@ export const FeaturedPost: React.FC = () => {
                         className="hover:bg-amber-50/60 transition-colors"
                       >
                         {/* Work Title - Gold for works with a link */}
-                        <td className="py-3.5 px-4 sm:px-6">
+                        <td className="py-2 px-4 sm:px-6">
                           {work.id === 'symphony-in-bb' ? (
                             <button
+                              type="button"
                               onClick={() => scrollToSection('macfarren-score-samples')}
                               className="text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer"
                               title="Click to view Symphony in B flat work page"
@@ -194,27 +199,8 @@ export const FeaturedPost: React.FC = () => {
                         </td>
 
                         {/* Date */}
-                        <td className="py-3.5 px-4 sm:px-6 font-mono text-xs sm:text-sm text-stone-700 whitespace-nowrap">
+                        <td className="py-2 px-4 sm:px-6 font-serif text-base sm:text-lg text-stone-700 text-right tabular-nums">
                           {work.date}
-                        </td>
-
-                        {/* Status (E / L) */}
-                        <td className="py-3.5 px-4 sm:px-6 text-right whitespace-nowrap">
-                          {work.isLost ? (
-                            <span
-                              className="inline-flex items-center justify-center font-mono font-bold text-xs text-stone-900 bg-white w-6 h-6 rounded border border-stone-900"
-                              title="Lost"
-                            >
-                              L
-                            </span>
-                          ) : (
-                            <span
-                              className="inline-flex items-center justify-center font-mono font-bold text-xs text-stone-900 bg-stone-300 w-6 h-6 rounded border border-stone-400 shadow-2xs"
-                              title="Extant"
-                            >
-                              E
-                            </span>
-                          )}
                         </td>
                       </tr>
                     );
@@ -222,21 +208,15 @@ export const FeaturedPost: React.FC = () => {
                 </tbody>
               </table>
             </div>
-
-            {/* Table Footnote with Key at bottom right */}
-            <div className="bg-stone-50 px-4 sm:px-6 py-3 border-t border-stone-200 text-xs text-stone-600 flex items-center justify-end">
-              <div className="flex items-center gap-4 font-mono text-xs font-semibold tracking-wider uppercase text-stone-700">
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-flex items-center justify-center font-mono font-bold text-xs text-stone-900 bg-stone-300 w-5 h-5 rounded border border-stone-400">E</span>
-                  = EXTANT
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-flex items-center justify-center font-mono font-bold text-xs text-stone-900 bg-white w-5 h-5 rounded border border-stone-900">L</span>
-                  = LOST
-                </span>
-              </div>
-            </div>
           </div>
+
+          {/* Missing Scores Note */}
+          <p className="mt-5 sm:mt-6 text-base sm:text-lg font-serif text-stone-800 leading-relaxed">
+            <span className="font-mono font-bold uppercase tracking-wider text-xs sm:text-sm text-stone-900 mr-2">
+              MISSING SCORES:
+            </span>
+            Pastoral Overture ; Hero and Leander ; Henry V ; A Winter&apos;s Tale ; Bluebeard
+          </p>
         </section>
 
         {/* Section 3: Work Page */}
@@ -246,7 +226,7 @@ export const FeaturedPost: React.FC = () => {
               WORK PAGE
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
-              Walter Macfarren &mdash; Symphony in Bb (1879)
+              Symphony in B flat (1879)
             </h2>
 
             <div className="max-w-xl mx-auto mt-3">
@@ -260,19 +240,25 @@ export const FeaturedPost: React.FC = () => {
                 Your browser does not support the audio element.
               </audio>
 
-              {/* Movement Buttons directly under player */}
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-3.5">
+              {/* Quick Movement Jump Buttons Bar under Audio */}
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+                <span className="font-mono text-xs uppercase tracking-wider text-stone-600 font-semibold mr-1">
+                  Movements:
+                </span>
                 {movementJumps.map((jump, idx) => (
                   <button
                     key={idx}
+                    type="button"
                     onClick={() => handleJumpToMovement(jump.time, jump.label)}
-                    className={`px-4 py-1.5 border border-[#765B37] rounded shadow-2xs font-serif text-xs sm:text-sm font-semibold tracking-wider transition-all cursor-pointer active:scale-95 ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 border border-stone-300 rounded font-serif text-xs sm:text-sm font-semibold transition-colors cursor-pointer shadow-2xs ${
                       activeJumpLabel === jump.label
-                        ? 'bg-[#FDE8B5] text-amber-950 ring-2 ring-[#765B37] animate-pulse'
-                        : 'bg-[#FFF8E1] hover:bg-[#FDE8B5] text-stone-900 hover:text-stone-950'
+                        ? 'bg-amber-100 ring-2 ring-amber-800 text-stone-900'
+                        : 'bg-white hover:bg-amber-50 text-stone-800'
                     }`}
+                    title={`Jump to ${jump.title} (${jump.timeStr})`}
                   >
-                    {jump.label}
+                    <Play className="w-3 h-3 text-amber-900" />
+                    <span>{jump.label}</span>
                   </button>
                 ))}
               </div>
@@ -304,18 +290,56 @@ export const FeaturedPost: React.FC = () => {
               Completed in August 1879 the work is conservative in style for its time. Compared to Stanford&apos;s and Parry&apos;s 1st Symphonies from the same time it&apos;s a lightweight offering but it has some innovative touches such as the string pizzicato which dominate the slow introduction to the Allegro in the first movement.
             </p>
 
-            {/* Movement by Movement Breakdown */}
-            <div className="border-l-4 border-amber-800 pl-4 sm:pl-5 py-1 my-6 space-y-5 font-bold text-stone-900 leading-relaxed">
+            {/* Section Heading above Brown Accent Line */}
+            <div className="flex items-center gap-2.5 pt-2">
+              <h3 className="font-serif italic text-xl sm:text-2xl font-bold text-amber-950 tracking-tight">
+                Some notes in passing ...
+              </h3>
+              <span className="inline-flex items-center text-amber-900" aria-label="Book with pen">
+                <BookOpen className="w-5 h-5 text-amber-900" />
+                <PenLine className="w-4 h-4 text-amber-800 -ml-1" />
+              </span>
+            </div>
+
+            {/* Notes on White Paper with Hole-Punched Left Margin */}
+            <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-6 text-left overflow-hidden">
+              {/* Hole Punches in Left Margin */}
+              <span
+                className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
+                aria-hidden="true"
+                title="Binder hole punch"
+              />
+              <span
+                className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
+                aria-hidden="true"
+                title="Binder hole punch"
+              />
+
+              {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
+              <div
+                className="absolute left-8 sm:left-10 -top-1 -bottom-1 w-[1.5px] bg-amber-800/40 pointer-events-none"
+                aria-hidden="true"
+              />
+
               <div>
                 <button
                   type="button"
                   onClick={() => handleJumpToMovement(0, '1st mov')}
-                  className="font-bold underline underline-offset-4 text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl block"
+                  className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-center flex-wrap gap-y-1"
                   title="Jump to 1st movement in audio player"
                 >
-                  1st movement &ndash; Andante Lento : Allegro assai
+                  <span
+                    className="inline-flex items-center justify-center min-w-[2.2rem] h-7 px-2 rounded-full bg-gradient-to-b from-amber-50 to-amber-100/90 border border-amber-900/35 text-amber-950 font-serif font-bold text-xs sm:text-sm tracking-wider shadow-2xs mr-2 shrink-0 select-none"
+                    aria-label="Movement I"
+                  >
+                    I
+                  </span>
+                  <span>Andante Lento : Allegro assai</span>{' '}
+                  <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
+                    (00:00)
+                  </span>
                 </button>
-                <p className="mt-1 text-stone-900 font-bold">
+                <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
                   String pizzicato in the slow introduction followed by a standard allegro with some erratic key changes in the development.
                 </p>
               </div>
@@ -323,13 +347,22 @@ export const FeaturedPost: React.FC = () => {
               <div>
                 <button
                   type="button"
-                  onClick={() => handleJumpToMovement(480, '2nd mov')}
-                  className="font-bold underline underline-offset-4 text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl block"
+                  onClick={() => handleJumpToMovement(571.0, '2nd mov')}
+                  className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-center flex-wrap gap-y-1"
                   title="Jump to 2nd movement in audio player"
                 >
-                  2nd movement &ndash; Andante poco Allegretto
+                  <span
+                    className="inline-flex items-center justify-center min-w-[2.2rem] h-7 px-2 rounded-full bg-gradient-to-b from-amber-50 to-amber-100/90 border border-amber-900/35 text-amber-950 font-serif font-bold text-xs sm:text-sm tracking-wider shadow-2xs mr-2 shrink-0 select-none"
+                    aria-label="Movement II"
+                  >
+                    II
+                  </span>
+                  <span>Andante poco Allegretto</span>{' '}
+                  <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
+                    (09:31)
+                  </span>
                 </button>
-                <p className="mt-1 text-stone-900 font-bold">
+                <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
                   In the manner of an intermezzo featuring the woodwind predominately.
                 </p>
               </div>
@@ -337,13 +370,22 @@ export const FeaturedPost: React.FC = () => {
               <div>
                 <button
                   type="button"
-                  onClick={() => handleJumpToMovement(760, '3rd mov')}
-                  className="font-bold underline underline-offset-4 text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl block"
+                  onClick={() => handleJumpToMovement(1015.5, '3rd mov')}
+                  className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-center flex-wrap gap-y-1"
                   title="Jump to 3rd movement in audio player"
                 >
-                  3rd mov: Scherzo &ndash; Allegretto Leggiero
+                  <span
+                    className="inline-flex items-center justify-center min-w-[2.2rem] h-7 px-2 rounded-full bg-gradient-to-b from-amber-50 to-amber-100/90 border border-amber-900/35 text-amber-950 font-serif font-bold text-xs sm:text-sm tracking-wider shadow-2xs mr-2 shrink-0 select-none"
+                    aria-label="Movement III"
+                  >
+                    III
+                  </span>
+                  <span>Scherzo &ndash; Allegretto Leggiero</span>{' '}
+                  <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
+                    (16:55)
+                  </span>
                 </button>
-                <p className="mt-1 text-stone-900 font-bold">
+                <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
                   A scherzo without a trio. Clarinets skip busily along with the main theme.
                 </p>
               </div>
@@ -351,13 +393,22 @@ export const FeaturedPost: React.FC = () => {
               <div>
                 <button
                   type="button"
-                  onClick={() => handleJumpToMovement(1045, '4th mov')}
-                  className="font-bold underline underline-offset-4 text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl block"
+                  onClick={() => handleJumpToMovement(1227.0, '4th mov')}
+                  className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-center flex-wrap gap-y-1"
                   title="Jump to 4th movement in audio player"
                 >
-                  4th movement &ndash; Andante Lento: Allegro con Maesta
+                  <span
+                    className="inline-flex items-center justify-center min-w-[2.2rem] h-7 px-2 rounded-full bg-gradient-to-b from-amber-50 to-amber-100/90 border border-amber-900/35 text-amber-950 font-serif font-bold text-xs sm:text-sm tracking-wider shadow-2xs mr-2 shrink-0 select-none"
+                    aria-label="Movement IV"
+                  >
+                    IV
+                  </span>
+                  <span>Andante Lento: Allegro con Maesta</span>{' '}
+                  <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
+                    (20:27)
+                  </span>
                 </button>
-                <p className="mt-1 text-stone-900 font-bold">
+                <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
                   The opening is a repeat of the 1st movement opening but now tutti. Material from the 2nd and 3rd movements is also reworked. There&apos;s a definite feel of a Finale in this Allegro.
                 </p>
               </div>

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ARTHUR_HERVEY_ORCHESTRAL_WORKS } from '../data/herveyData';
-import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft } from 'lucide-react';
+import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, BookOpen, PenLine } from 'lucide-react';
 
 interface ArthurHerveyPostProps {
   onBack?: () => void;
@@ -43,7 +43,7 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack }) =>
                 <span>To Follow</span>
               </button>
             )}
-            <span className="font-mono text-sm sm:text-base font-semibold tracking-widest text-stone-600 uppercase">
+            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
               ARTICLE TO FOLLOW
             </span>
           </div>
@@ -51,11 +51,11 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack }) =>
           <button
             type="button"
             onClick={() => scrollToSection('hervey-summer-workpage')}
-            className="inline-flex items-center gap-2 font-mono text-sm sm:text-base font-semibold tracking-widest text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer group"
+            className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer group"
             title="Jump to audio"
           >
             <span>JUMP TO AUDIO</span>
-            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-amber-900 group-hover:scale-110 transition-transform" />
+            <Volume2 className="w-4 h-4 text-amber-900 group-hover:scale-110 transition-transform" />
           </button>
         </div>
 
@@ -66,7 +66,7 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack }) =>
           </h1>
 
           {/* Subtitle / Quote */}
-          <p className="font-serif italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
+          <p className="font-times italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
             &ldquo;Writer, critic, promoter and composer&rdquo;
           </p>
         </header>
@@ -182,12 +182,17 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack }) =>
         </section>
 
         {/* Section 2: Orchestral Work List */}
-        <section className="mt-14 pt-8 border-t-2 border-stone-300/70">
-          <div className="mb-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
-              Orchestral work list:
-            </h2>
-            <div className="text-right">
+        <section className="mt-10 pt-6 border-t-2 border-stone-300/70">
+          <div className="mb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+            <div>
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
+                Orchestral work list
+              </h2>
+              <p className="font-serif italic text-stone-700 text-lg sm:text-xl mt-0.5">
+                Showing only surviving scores MS or published
+              </p>
+            </div>
+            <div className="text-left sm:text-right pb-0.5">
               <span className="font-serif text-xs sm:text-sm uppercase tracking-wider font-semibold text-stone-700">
                 WORKS IN <span className="text-[#B8860B] font-bold">GOLD</span> ARE LINKS TO THEIR WORK PAGES
               </span>
@@ -200,16 +205,17 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack }) =>
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-[#2A2621] text-stone-200 font-serif text-sm tracking-wider uppercase border-b border-stone-300">
-                    <th className="py-3 px-4 sm:px-6 font-semibold">Work</th>
-                    <th className="py-3 px-4 sm:px-6 font-semibold text-right">Date</th>
+                    <th className="py-2 px-4 sm:px-6 font-semibold">Work</th>
+                    <th className="py-2 px-4 sm:px-6 font-semibold text-right">Date</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-200 text-sm font-sans">
                   {ARTHUR_HERVEY_ORCHESTRAL_WORKS.map((work) => (
                     <tr key={work.id} className="hover:bg-amber-50/60 transition-colors">
-                      <td className="py-3.5 px-4 sm:px-6">
+                      <td className="py-2 px-4 sm:px-6">
                         {work.hasDedicatedPage ? (
                           <button
+                            type="button"
                             onClick={() => scrollToSection('hervey-summer-workpage')}
                             className="text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer"
                             title="Click to view Summer work page"
@@ -222,7 +228,7 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack }) =>
                           </span>
                         )}
                       </td>
-                      <td className="py-3.5 px-4 sm:px-6 font-mono text-xs sm:text-sm text-stone-700 text-right whitespace-nowrap">
+                      <td className="py-2 px-4 sm:px-6 font-serif text-base sm:text-lg text-stone-700 text-right tabular-nums">
                         {work.date}
                       </td>
                     </tr>
@@ -231,6 +237,14 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack }) =>
               </table>
             </div>
           </div>
+
+          {/* Other Scores (Undated) Note */}
+          <p className="mt-5 sm:mt-6 text-base sm:text-lg font-serif text-stone-800 leading-relaxed">
+            <span className="font-mono font-bold uppercase tracking-wider text-xs sm:text-sm text-stone-900 mr-2">
+              OTHER SCORES (UNDATED):
+            </span>
+            Vorspiel für grosses Orchester ; Serenade for solo violin and orchestra ; The Roll Call — tone poem ; In the Twilight — tone poem ; Romance - violon et orchestra ; &ldquo;Elfin revels&rdquo; - Scherzo ; Ouverture dramatique ; At sunset - tone poem
+          </p>
         </section>
 
         {/* Section 3: Work Page — Summer: Tone Poem */}
@@ -240,7 +254,7 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack }) =>
               WORK PAGE
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
-              Arthur Hervey &mdash; Summer (Tone Poem)
+              Summer (Tone Poem)
             </h2>
 
             {/* Audio player directly below title */}
@@ -263,18 +277,50 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack }) =>
               This is arguably Hervey&apos;s finest orchestral work. It comes five years after the <em>Two Tone Pictures</em> and the Concert Overture <em>Youth</em>. It was one of a series of commissions from the Cardiff Festival and it was first performed on the opening day, 25th September, 1907 with Hervey himself conducting the London Symphony Orchestra.
             </p>
 
-            <p className="border-l-4 border-amber-800 pl-4 sm:pl-5 py-1 font-bold text-stone-900 leading-relaxed">
-              Its musical landscape evokes the warmth and stillness of a summer day, interrupted by a thunderstorm. The work starts gently and builds to a glorious climax with bright, dazzling fanfare like flourishes. A storm begins to stir.{' '}
-              <button
-                type="button"
-                onClick={() => seekAudio(200)}
-                className="whitespace-nowrap font-['Arial',sans-serif] text-[0.78em] font-bold text-amber-900 hover:text-amber-700 transition-colors cursor-pointer align-baseline"
-                title="Jump to 03:20 in Summer audio"
-              >
-                (03:20)
-              </button>{' '}
-              It&apos;s not an especially dramatic portrayal but a more subtle, threatening rumbling. This middle section shows, very clearly, the skills Hervey possessed as an orchestral scene painter. The calm returns and the music builds to a bright finale.
-            </p>
+            {/* Section Heading above Brown Accent Line */}
+            <div className="flex items-center gap-2.5 pt-2">
+              <h3 className="font-serif italic text-xl sm:text-2xl font-bold text-amber-950 tracking-tight">
+                Some notes in passing ...
+              </h3>
+              <span className="inline-flex items-center text-amber-900" aria-label="Book with pen">
+                <BookOpen className="w-5 h-5 text-amber-900" />
+                <PenLine className="w-4 h-4 text-amber-800 -ml-1" />
+              </span>
+            </div>
+
+            {/* Notes on White Paper with Hole-Punched Left Margin */}
+            <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-4 text-left overflow-hidden">
+              {/* Hole Punches in Left Margin */}
+              <span
+                className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
+                aria-hidden="true"
+                title="Binder hole punch"
+              />
+              <span
+                className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
+                aria-hidden="true"
+                title="Binder hole punch"
+              />
+
+              {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
+              <div
+                className="absolute left-8 sm:left-10 -top-1 -bottom-1 w-[1.5px] bg-amber-800/40 pointer-events-none"
+                aria-hidden="true"
+              />
+
+              <p className="text-left m-0">
+                Its musical landscape evokes the warmth and stillness of a summer day, interrupted by a thunderstorm. The work starts gently and builds to a glorious climax with bright, dazzling fanfare like flourishes. A storm begins to stir.{' '}
+                <button
+                  type="button"
+                  onClick={() => seekAudio(200)}
+                  className="whitespace-nowrap font-['Arial',sans-serif] text-[0.78em] font-bold text-amber-900 hover:text-amber-700 transition-colors cursor-pointer align-baseline"
+                  title="Jump to 03:20 in Summer audio"
+                >
+                  (03:20)
+                </button>{' '}
+                It&apos;s not an especially dramatic portrayal but a more subtle, threatening rumbling. This middle section shows, very clearly, the skills Hervey possessed as an orchestral scene painter. The calm returns and the music builds to a bright finale.
+              </p>
+            </div>
 
             <p>
               The most extensive review of &lsquo;Summer&rsquo; was given in <em>The Times</em> (26 September). It began by reminding the reader that three of the composer&apos;s tone poems have been given at previous Cardiff Festivals: these included <em>On the Heights</em> and <em>On the March</em>, both performed in 1902 and <em>In the East</em> which was premiered in 1904.

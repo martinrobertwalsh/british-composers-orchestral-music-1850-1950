@@ -125,7 +125,7 @@ export const TasteMatcher: React.FC<TasteMatcherProps> = ({
                         Recommended Score Realisation
                       </span>
                       <h4 className="font-serif text-lg font-bold text-stone-900">
-                        {matchedWork.title} {matchedWork.opus && `(${matchedWork.opus})`}
+                        {matchedWork.title}
                       </h4>
                     </div>
                     <span className="text-xs font-mono text-stone-500">

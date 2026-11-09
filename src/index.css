@@ -7,6 +7,13 @@
     --font-body: 'Source Serif 4', Georgia, serif;
     --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
   }
+
+  *,
+  *::before,
+  *::after {
+    font-variant-numeric: no-slashed-zero !important;
+    font-feature-settings: "zero" 0 !important;
+  }
 }
 
 .font-serif {
@@ -19,6 +26,20 @@
 
 .font-sans {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, sans-serif !important;
+  font-variant-numeric: tabular-nums no-slashed-zero !important;
+  font-feature-settings: "tnum" 1, "zero" 0 !important;
+}
+
+.font-times,
+blockquote,
+blockquote p,
+blockquote q,
+q {
+  font-family: 'Times New Roman', Times, Baskerville, Georgia, serif !important;
 }
 
 /* Subtle archival parchment noise and antique rules */

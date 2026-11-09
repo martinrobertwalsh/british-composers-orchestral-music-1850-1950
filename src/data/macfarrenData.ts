@@ -122,72 +122,6 @@ export const WALTER_MACFARREN_SYMPHONY_BB_THEME: MusicalTheme = {
 
 export const MACFARREN_ORCHESTRAL_WORKS: MacfarrenWork[] = [
   {
-    id: 'winters-tale-overture',
-    title: 'The Winter’s Tale — overture',
-    date: '1844',
-    status: 'Lost',
-    isLost: true,
-    genre: 'Overture',
-    premiereVenue: 'Royal Academy of Music student concert, Hanover Square Rooms, London',
-    historicalNotes: 'Composed when Walter was just eighteen during his formative studies under Cipriani Potter and his brother George. Inspired by Shakespeare’s romance, the work demonstrated his early facility in vivid orchestral tone-painting. The full score and orchestral parts have never been traced in public library catalogues.',
-    instrumentation: 'Orchestra (Flutes, Oboes, Clarinets, Bassoons, Horns, Trumpets, Timpani, Strings)'
-  },
-  {
-    id: 'taming-shrew-overture',
-    title: 'The Taming of the Shrew — overture',
-    date: '1845',
-    status: 'Lost',
-    isLost: true,
-    genre: 'Overture',
-    premiereVenue: 'London Academy Concerts',
-    historicalNotes: 'A sprightly, combative Shakespearean overture composed immediately following Winter’s Tale. Highly commended in contemporary notices for its comedic rhythmic energy and sparkling woodwind counterpoint. Manuscript currently unlocated.',
-    instrumentation: 'Orchestra'
-  },
-  {
-    id: 'piano-concerto-b-minor',
-    title: 'Piano Concerto in B minor — now lost',
-    date: '1845',
-    status: 'Lost',
-    isLost: true,
-    genre: 'Concerto',
-    premiereVenue: 'Royal Academy of Music Public Concert, Hanover Square Rooms (Walter Macfarren, soloist)',
-    historicalNotes: 'A major romantic concerto performed by the composer himself to enthusiastic acclaim while still a student. Regarded as one of the most intriguing lost concertos of the early Victorian British piano school. No known complete copy survives.',
-    instrumentation: 'Solo Piano & Full Symphony Orchestra'
-  },
-  {
-    id: 'beppo-concert-overture',
-    title: 'Beppo — concert overture',
-    date: '1847',
-    status: 'Lost',
-    isLost: true,
-    genre: 'Overture',
-    premiereVenue: 'Society of British Musicians, London',
-    historicalNotes: 'Programmatic concert overture based on Lord Byron’s Venetian Carnival poem ‘Beppo’. Praised for its atmospheric Italianate melodies and festive orchestral colours, reflecting Walter’s love of literature and dramatic narrative.',
-    instrumentation: 'Orchestra'
-  },
-  {
-    id: 'pastoral-overture',
-    title: 'Pastoral Overture',
-    date: '1878',
-    status: 'Lost',
-    isLost: true,
-    genre: 'Overture',
-    premiereVenue: 'Covent Garden Promenade Concerts, conducted by Arthur Sullivan (Autumn 1878)',
-    historicalNotes: 'Premiered under Sir Arthur Sullivan at Covent Garden to an audience of thousands during the renowned Promenade season. Built on lyrical bucolic woodwind melodies and warm pastoral string textures. The orchestral materials disappeared from the Covent Garden music library following the season.',
-    instrumentation: 'Full Orchestra'
-  },
-  {
-    id: 'hero-leander-overture',
-    title: 'Hero and Leander — overture',
-    date: '1878',
-    status: 'Lost',
-    isLost: true,
-    genre: 'Overture',
-    premiereVenue: 'London Orchestral Concerts',
-    historicalNotes: 'A dramatic symphonic portrayal of Musaeus’ tragic lovers crossing the stormy Hellespont. Mentioned in contemporary periodicals and Macfarren’s personal journals as one of his most passionate orchestral compositions.',
-    instrumentation: 'Orchestra'
-  },
-  {
     id: 'symphony-in-bb',
     title: 'Symphony in Bb',
     date: '1879',
@@ -209,16 +143,5 @@ export const MACFARREN_ORCHESTRAL_WORKS: MacfarrenWork[] = [
     premiereVenue: 'Brighton Musical Festival, 1881',
     historicalNotes: 'Written for the Brighton Festival and featured with Macfarren himself or prominent students at the keyboard. Demonstrates Walter’s celebrated pianistic lineage tracing directly through Cipriani Potter to Beethoven. The work balances glittering virtuosity with dignified romantic lyricism.',
     instrumentation: 'Solo Piano and Full Orchestra'
-  },
-  {
-    id: 'henry-v-overture',
-    title: 'Henry V — overture',
-    date: '1881',
-    status: 'Lost',
-    isLost: true,
-    genre: 'Overture',
-    premiereVenue: 'Norwich Triennial Musical Festival (October 1881)',
-    historicalNotes: 'A grand heroic festival overture commissioned especially for the prestigious Norwich Festival. The score evoked Shakespeare’s warrior king with martial fanfares, choral-like hymns, and sweeping orchestral climaxes. The performance materials have not been found since the 1881 festival.',
-    instrumentation: 'Grand Orchestra with Extra Brass'
   }
 ];

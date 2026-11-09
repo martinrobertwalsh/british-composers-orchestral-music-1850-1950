@@ -174,7 +174,7 @@ export const ComposerModal: React.FC<ComposerModalProps> = ({
                   <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-3 border-b border-stone-100">
                     <div>
                       <h4 className="font-serif text-lg font-bold text-stone-900">
-                        {work.title} {work.opus && <span className="text-stone-500 font-normal">({work.opus})</span>}
+                        {work.title}
                       </h4>
                       <div className="flex items-center gap-2 text-xs text-stone-500 font-sans mt-0.5">
                         <span>Composed {work.yearComposed}</span>

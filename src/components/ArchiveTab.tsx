@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FeaturedPost } from './FeaturedPost';
+import { TobiasMatthayPost } from './TobiasMatthayPost';
 import { BookOpen, ArrowLeft, Search, X } from 'lucide-react';
 
 interface ArchiveArticle {
-  id: 'macfarren';
+  id: 'macfarren' | 'matthay';
   name: string;
   dates: string;
   image: string;
@@ -21,11 +22,20 @@ const ARCHIVE_ARTICLES: ArchiveArticle[] = [
     quote: '“A symphony missing for over a hundred years, finally turns up”',
     notableWork: 'Symphony in B flat (1879)',
     tags: ['Walter Macfarren', 'Symphony in Bb', 'Royal Academy of Music', 'Philharmonic']
+  },
+  {
+    id: 'matthay',
+    name: 'Tobias Matthay',
+    dates: '1858–1945',
+    image: `${import.meta.env.BASE_URL}assets/aistudio/tobias_matthay_portrait.jpg`,
+    quote: '“Master of touch whose symphonic voice fell silent”',
+    notableWork: 'In May — Tone Poem (1883)',
+    tags: ['Tobias Matthay', 'In May', 'Tone Poem', 'Bournemouth', 'Dan Godfrey', 'Piano Pedagogy', 'Royal Academy']
   }
 ];
 
 export const ArchiveTab: React.FC = () => {
-  const [selectedArticleId, setSelectedArticleId] = useState<'macfarren' | null>(null);
+  const [selectedArticleId, setSelectedArticleId] = useState<'macfarren' | 'matthay' | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const filteredArticles = ARCHIVE_ARTICLES.filter((article) => {
@@ -57,6 +67,34 @@ export const ArchiveTab: React.FC = () => {
         </div>
 
         <FeaturedPost />
+      </div>
+    );
+  }
+
+  if (selectedArticleId === 'matthay') {
+    return (
+      <div className="space-y-4">
+        {/* Back to Archive Cards bar */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
+          <button
+            onClick={() => {
+              setSelectedArticleId(null);
+              window.scrollTo({ top: 380, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 rounded font-serif text-sm font-semibold transition-colors cursor-pointer shadow-2xs group"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-amber-900" />
+            <span>Back to Archive Cards</span>
+          </button>
+        </div>
+
+        <TobiasMatthayPost
+          onBack={() => {
+            setSelectedArticleId(null);
+            window.scrollTo({ top: 380, behavior: 'smooth' });
+          }}
+          backLabel="Archive"
+        />
       </div>
     );
   }
@@ -108,7 +146,7 @@ export const ArchiveTab: React.FC = () => {
         </div>
       </div>
 
-      {/* Composer Cards Grid */}
+      {/* Composer Cards Grid - Fully clickable Archive cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredArticles.map((article) => (
           <article
@@ -119,20 +157,20 @@ export const ArchiveTab: React.FC = () => {
             }}
             className="bg-white rounded-lg border border-stone-200/90 overflow-hidden shadow-2xs hover:shadow-md transition-shadow flex flex-col group cursor-pointer"
           >
-            {/* Portrait Container - cleanly proportioned, left justified, clickable to open article */}
+            {/* Portrait Container - cleanly proportioned, left justified, clickable */}
             <div className="p-5 bg-stone-100/70 border-b border-stone-200/80 flex justify-start items-center">
               <div
                 onClick={() => {
                   setSelectedArticleId(article.id);
                   window.scrollTo({ top: 380, behavior: 'smooth' });
                 }}
-                className="w-36 sm:w-40 aspect-3/4 overflow-hidden rounded border border-stone-300 hover:border-amber-800 bg-white shadow-xs cursor-pointer transition-all duration-200 group/portrait"
-                title={`Open article on ${article.name}`}
+                className="w-36 sm:w-40 aspect-3/4 overflow-hidden rounded border border-stone-300 group-hover:border-amber-800 bg-white shadow-xs cursor-pointer transition-colors duration-200 group/portrait"
+                title={`Open archival article on ${article.name}`}
               >
                 <img
                   src={article.image}
                   alt={`${article.name} (${article.dates})`}
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/portrait:scale-105 filter grayscale contrast-105"
+                  className="w-full h-full object-cover object-top filter grayscale contrast-105 group-hover/portrait:scale-105 transition-transform duration-500"
                 />
               </div>
             </div>
@@ -151,7 +189,7 @@ export const ArchiveTab: React.FC = () => {
                   {article.name} ({article.dates})
                 </h3>
 
-                <p className="font-serif italic text-sm sm:text-base text-amber-950 leading-relaxed mt-2.5">
+                <p className="font-times italic text-sm sm:text-base text-amber-950 leading-relaxed mt-2.5">
                   {article.quote}
                 </p>
 
@@ -169,6 +207,7 @@ export const ArchiveTab: React.FC = () => {
               {/* Actions footer */}
               <div className="mt-5 pt-3 border-t border-stone-200/80 flex items-center justify-between">
                 <button
+                  type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     setSelectedArticleId(article.id);
@@ -187,4 +226,3 @@ export const ArchiveTab: React.FC = () => {
     </div>
   );
 };
-
