@@ -8,6 +8,7 @@ import { ToFollowTab } from './components/ToFollowTab';
 import { Composer, MusicalTheme } from './types/composer';
 import { HARVEY_LOHR_SYMPHONY_3_THEME } from './data/composersData';
 import { orchestralPlayer } from './audio/orchestralEngine';
+import { trackPage } from './lib/analytics';
 import { Mail, Send, CheckCircle2, Library, Music, FolderArchive } from 'lucide-react';
 
 export default function App() {
@@ -37,6 +38,15 @@ export default function App() {
 
   const handleTabChange = (tab: 'home' | 'welcome' | 'to-follow' | 'archive' | 'contact') => {
     setActiveTab(tab);
+    const labels = {
+      home: ['/', 'Home'],
+      welcome: ['/welcome', 'Curator’s Welcome'],
+      'to-follow': ['/to-follow', 'Articles to Follow'],
+      archive: ['/archive', 'Archive'],
+      contact: ['/contact', 'Contact'],
+    } as const;
+    const [path, title] = labels[tab];
+    trackPage(path, title);
     if (tab === 'to-follow') {
       setToFollowKey((prev) => prev + 1);
     }

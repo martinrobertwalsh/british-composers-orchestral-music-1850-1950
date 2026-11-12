@@ -5,6 +5,7 @@ import { PercyGodfreyPost } from './PercyGodfreyPost';
 import { ROMorrisPost } from './ROMorrisPost';
 import { CunninghamWoodsPost } from './CunninghamWoodsPost';
 import { BookOpen, ArrowLeft, Search, X } from 'lucide-react';
+import { trackPage } from '../lib/analytics';
 
 interface ToFollowArticle {
   id: 'arthur-hervey' | 'oneill' | 'godfrey' | 'morris' | 'cunningham-woods';
@@ -67,6 +68,11 @@ const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
 export const ToFollowTab: React.FC = () => {
   const [selectedArticleId, setSelectedArticleId] = useState<'arthur-hervey' | 'oneill' | 'godfrey' | 'morris' | 'cunningham-woods' | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const openArticle = (article: ToFollowArticle) => {
+    setSelectedArticleId(article.id);
+    trackPage(`/articles/${article.id}`, `${article.name} — Forgotten Composers`);
+    window.scrollTo({ top: 380, behavior: 'smooth' });
+  };
 
   const filteredArticles = TO_FOLLOW_ARTICLES.filter((article) => {
     if (!searchTerm.trim()) return true;
@@ -290,8 +296,7 @@ export const ToFollowTab: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    setSelectedArticleId(article.id);
-                    window.scrollTo({ top: 380, behavior: 'smooth' });
+                    openArticle(article);
                   }}
                   className="text-xs sm:text-sm font-semibold text-stone-800 hover:text-amber-900 flex items-center gap-1.5 transition-colors cursor-pointer"
                 >

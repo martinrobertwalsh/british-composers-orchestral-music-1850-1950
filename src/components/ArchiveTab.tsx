@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FeaturedPost } from './FeaturedPost';
 import { TobiasMatthayPost } from './TobiasMatthayPost';
 import { BookOpen, ArrowLeft, Search, X } from 'lucide-react';
+import { trackPage } from '../lib/analytics';
 
 interface ArchiveArticle {
   id: 'macfarren' | 'matthay';
@@ -37,6 +38,11 @@ const ARCHIVE_ARTICLES: ArchiveArticle[] = [
 export const ArchiveTab: React.FC = () => {
   const [selectedArticleId, setSelectedArticleId] = useState<'macfarren' | 'matthay' | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const openArticle = (article: ArchiveArticle) => {
+    setSelectedArticleId(article.id);
+    trackPage(`/articles/${article.id}`, `${article.name} — Forgotten Composers`);
+    window.scrollTo({ top: 380, behavior: 'smooth' });
+  };
 
   const filteredArticles = ARCHIVE_ARTICLES.filter((article) => {
     if (!searchTerm.trim()) return true;
@@ -151,19 +157,12 @@ export const ArchiveTab: React.FC = () => {
         {filteredArticles.map((article) => (
           <article
             key={article.id}
-            onClick={() => {
-              setSelectedArticleId(article.id);
-              window.scrollTo({ top: 380, behavior: 'smooth' });
-            }}
+            onClick={() => openArticle(article)}
             className="bg-white rounded-lg border border-stone-200/90 overflow-hidden shadow-2xs hover:shadow-md transition-shadow flex flex-col group cursor-pointer"
           >
             {/* Portrait Container - cleanly proportioned, left justified, clickable */}
             <div className="p-5 bg-stone-100/70 border-b border-stone-200/80 flex justify-start items-center">
               <div
-                onClick={() => {
-                  setSelectedArticleId(article.id);
-                  window.scrollTo({ top: 380, behavior: 'smooth' });
-                }}
                 className="w-36 sm:w-40 aspect-3/4 overflow-hidden rounded border border-stone-300 group-hover:border-amber-800 bg-white shadow-xs cursor-pointer transition-colors duration-200 group/portrait"
                 title={`Open archival article on ${article.name}`}
               >
@@ -179,13 +178,7 @@ export const ArchiveTab: React.FC = () => {
             <div className="p-5 flex-1 flex flex-col justify-between">
               <div>
                 {/* Name title with dates */}
-                <h3
-                  onClick={() => {
-                    setSelectedArticleId(article.id);
-                    window.scrollTo({ top: 380, behavior: 'smooth' });
-                  }}
-                  className="font-serif text-xl sm:text-2xl font-bold text-stone-900 group-hover:text-amber-900 transition-colors cursor-pointer"
-                >
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 group-hover:text-amber-900 transition-colors">
                   {article.name} ({article.dates})
                 </h3>
 
@@ -210,8 +203,7 @@ export const ArchiveTab: React.FC = () => {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setSelectedArticleId(article.id);
-                    window.scrollTo({ top: 380, behavior: 'smooth' });
+                    openArticle(article);
                   }}
                   className="text-xs sm:text-sm font-semibold text-stone-800 hover:text-amber-900 flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
