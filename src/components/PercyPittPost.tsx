@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { PERCY_PITT_ORCHESTRAL_WORKS, PercyPittWork } from '../data/percyPittData';
-import { Music, X, Calendar, BookOpen, ExternalLink, Mail, ArrowUp, Volume2, ZoomIn, PenLine } from 'lucide-react';
+import { Music, X, Calendar, BookOpen, ExternalLink, Mail, ArrowUp, Volume2, ZoomIn, PenLine, ArrowLeft } from 'lucide-react';
+import { QuaversIcon } from './QuaversIcon';
+import { WaveformAudioPlayer } from './WaveformAudioPlayer';
+import { HolePunchMargin } from './HolePunchMargin';
+import { ListenToItAllLink } from './ListenToItAllLink';
+import { seekWithFadeIn } from '../utils/audioFade';
 
-export const PercyPittPost: React.FC = () => {
+interface PercyPittPostProps {
+  onBack?: () => void;
+}
+
+export const PercyPittPost: React.FC<PercyPittPostProps> = ({ onBack }) => {
   const [selectedWork, setSelectedWork] = useState<PercyPittWork | null>(null);
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const seekAudio = (seconds: number) => {
+    seekWithFadeIn(audioRef.current, seconds);
+  };
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -16,11 +30,26 @@ export const PercyPittPost: React.FC = () => {
   return (
     <article id="percy-pitt-post" className="w-full bg-[#FAF8F5] text-stone-900 py-12 px-4 sm:px-6 lg:px-8 selection:bg-amber-200 selection:text-stone-900">
       <div className="max-w-4xl mx-auto">
-        {/* Header Bar: Featured Post label on left, Jump to Audio right-justified on same level */}
+        {/* Header Bar: Category label on left, Jump to Audio right-justified on same level */}
         <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
-            FEATURED POST
-          </span>
+          <div className="flex items-center gap-2">
+            {onBack && (
+              <button
+                type="button"
+                onClick={onBack}
+                className="inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm font-semibold tracking-wider text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer mr-2"
+                title="Back to Archive"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 text-amber-900" />
+                <span>Archive</span>
+              </button>
+            )}
+            {!onBack && (
+              <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
+                FEATURED POST
+              </span>
+            )}
+          </div>
 
           <button
             type="button"
@@ -225,10 +254,11 @@ export const PercyPittPost: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => scrollToSection('pitt-coronation-march')}
-                              className="text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer"
-                              title="Click to view Coronation March work page"
+                              className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer group"
+                              title="Click to view Coronation March work page and audio"
                             >
-                              {work.title}
+                              <span>{work.title}</span>
+                              <Volume2 className="w-4 h-4 text-[#B8860B] group-hover:text-[#D4AF37] shrink-0 group-hover:scale-110 transition-transform" />
                             </button>
                           ) : (
                             <span className="font-serif text-base sm:text-lg text-stone-900 font-semibold">
@@ -261,30 +291,31 @@ export const PercyPittPost: React.FC = () => {
         {/* Section 3: Work Page — Coronation March */}
         <section id="pitt-coronation-march" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-1">
+            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
               WORK PAGE
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
               Coronation March
             </h2>
 
-            {/* Audio player directly below title */}
-            <div className="max-w-xl mx-auto mt-3">
-              <audio
-                controls
-                preload="metadata"
-                className="w-full h-11 accent-amber-900 rounded focus:outline-none shadow-2xs"
+            {/* Audio player flanked by quavers (left standard, right mirrored) */}
+            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
+              <WaveformAudioPlayer
+                ref={audioRef}
+                title="Coronation March"
+                subtitle="Percy Pitt"
                 src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Pitt/Coronation%20March.mp3"
-              >
-                Your browser does not support the audio element.
-              </audio>
+                className="flex-1"
+              />
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
             </div>
           </div>
 
           {/* Narrative & Musical Analysis */}
           <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-6 my-8 text-left">
             <p className="text-left first-letter:text-5xl first-letter:font-bold first-letter:text-stone-900 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
-              Despite being given the title &ldquo;Coronation March&rdquo; this work was written specifically for Queen Victoria’s Diamond Jubilee in 1897. Bizarrely it was first performed in the previous year, 1896, in a Prom concert at the Queens Hall under Henry Wood. It was Pitt&apos;s first work for a full orchestra.
+              Despite being given the title &ldquo;Coronation March&rdquo; this work was written specifically for Queen Victoria’s Diamond Jubilee in 1897. Bizarrely it was first performed in the previous year, 1896, in a Prom concert at the Queens Hall under Henry Wood. It was Pitt&apos;s first work for a full orchestra written at the age of twenty-six.
             </p>
 
             {/* Section Heading above Brown Accent Line */}
@@ -301,16 +332,7 @@ export const PercyPittPost: React.FC = () => {
             {/* Notes on White Paper with Hole-Punched Left Margin */}
             <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-4 text-left overflow-hidden">
               {/* Hole Punches in Left Margin */}
-              <span
-                className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
-              <span
-                className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
+              <HolePunchMargin />
 
               {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
               <div
@@ -319,26 +341,62 @@ export const PercyPittPost: React.FC = () => {
               />
 
               <p className="text-left m-0">
-                Pitt&apos;s Coronation March is not in the classic, clearly defined ABA shape of marches such as Elgar&apos;s Pomp and Circumstance where a brisk, lively opening is followed by a contrasting slower part with a sustained legato melody and then a da capo of the opening. Pitt chooses to begin softly and gradually build the music through a series of gradual crescendos. It&apos;s as if Pitt has chosen to focus less on the ceremonial pomp and more on the regal serenity.
+                Pitt&apos;s Coronation March is not in the classic, clearly defined ABA shape of marches such as Elgar&apos;s Pomp and Circumstance where a brisk, lively opening is followed by a contrasting slower part with a sustained legato melody and then a da capo of the opening.
+              </p>
+              <p className="text-left m-0">
+                Pitt chooses to begin softly and gradually build the music through a series of gradual crescendos, for example{' '}
+                <button
+                  type="button"
+                  onClick={() => seekAudio(206)}
+                  className="font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
+                  title="Jump to 03:26 in Coronation March audio"
+                >
+                  (03:26)
+                </button>
+                . It&apos;s as if he has chosen to focus less on the ceremonial pomp and more on the regal serenity.
               </p>
               <p className="text-left m-0">
                 At the end he takes the slow legato theme and scores it passionately for unison strings. This departure from the norm left the reviewers, and no doubt the audience, somewhat perplexed.
               </p>
+
+              <ListenToItAllLink targetId="pitt-coronation-march" />
             </div>
 
             <p className="text-left">
               The premiere took place on the night of 23rd September. The concert clearly began with a rousing outpouring of patriotic fervour:
             </p>
 
-            {/* Review 1: The Times - Opening atmosphere */}
-            <blockquote className="my-8 p-6 sm:p-8 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
-              <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
-                &ldquo;Never since it was opened has Queen&apos;s Hall been so thronged as it was last night on the occasion of the special programme given at the Promenade Concerts in celebration of the longest reign in the history of England. Not only was every seat occupied, but even standing room was at a discount, and hundreds had to be turned away who could not obtain admission. The scene in the interior of the hall was certainly imposing and by its very simplicity worthy of the occasion. The hearty manner in which the huge audience joined in singing the last verse of the National Anthem produced a remarkable effect, and it was followed by such an outbreak of enthusiasm from every part of the hall that the performance had to be repeated, when it was given, if possible, with more vigour than before.&rdquo;
-              </p>
-              <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
-                — The Times (24th September 1896)
-              </footer>
-            </blockquote>
+            {/* Review 1: Queen's Hall Advert on Left & The Times Quote on Right */}
+            <div className="my-8 flex flex-col md:flex-row gap-6 items-start">
+              <figure className="w-full max-w-sm md:w-72 lg:w-80 shrink-0 mx-auto md:mx-0 p-2.5 bg-white border border-stone-300 rounded shadow-xs text-center">
+                <div
+                  className="overflow-hidden rounded-xs border border-stone-200 bg-stone-50 cursor-pointer group relative"
+                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/advert_79d54eef.jpg`)}
+                  title="Click to enlarge Queen's Hall Promenade Concerts advertisement"
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}assets/aistudio/advert_79d54eef.jpg`}
+                    alt="Queen's Hall Promenade Concerts advertisement listing Percy Pitt's Coronation March"
+                    className="w-full h-auto object-contain block group-hover:scale-101 transition-transform duration-200"
+                  />
+                  <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded flex items-center gap-1 font-sans">
+                      <ZoomIn className="w-3.5 h-3.5" /> Enlarge
+                    </span>
+                  </div>
+                </div>
+                <figcaption className="mt-2 font-serif text-xs text-stone-600 italic leading-snug">
+                  <span className="block">St James&apos;s Gazette</span>
+                  <span className="block">Monday, 21 September 1896</span>
+                </figcaption>
+              </figure>
+
+              <blockquote className="flex-1 min-w-0 p-6 sm:p-7 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
+                <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
+                  &ldquo;Never since it was opened has Queen&apos;s Hall been so thronged as it was last night on the occasion of the special programme given at the Promenade Concerts in celebration of the longest reign in the history of England. Not only was every seat occupied, but even standing room was at a discount, and hundreds had to be turned away who could not obtain admission.&rdquo;
+                </p>
+              </blockquote>
+            </div>
 
             <p>
               Pitt&apos;s Coronation March however, received a less rapturous reception in the eyes of the reviewer:
@@ -347,20 +405,30 @@ export const PercyPittPost: React.FC = () => {
             {/* Review 2: The Times - Pitt's Coronation March */}
             <blockquote className="my-8 p-6 sm:p-8 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
               <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
-                &ldquo;The rest of the first part consisted of Sir Alexander Mackenzie&apos;s &quot;Britannia&quot; overture and a new &quot;Coronation March&quot; specially composed for the occasion by Mr. Percy Pitt. Music written for celebrations of this description is very rarely of permanent value, and it is to be hoped that Mr. Pitt may have an opportunity before long of producing a work in which his talent may find better means of displaying itself. His march is laid out on elaborate lines, and scored with some pretension, but throughout the whole work the influence of Wagner is so strong that it is difficult to detect either in the themes or their treatment any individuality, or even a gleam of the national spirit which the subject might have been expected to have inspired.&rdquo;
+                &ldquo;Music written for celebrations of this description is very rarely of permanent value, and it is to be hoped that Mr. Pitt may have an opportunity before long of producing a work in which his talent may find better means of displaying itself. His march is laid out on elaborate lines, and scored with some pretension, but throughout the whole work the influence of Wagner is so strong that it is difficult to detect either in the themes or their treatment any individuality, or even a gleam of the national spirit which the subject might have been expected to have inspired.&rdquo;
               </p>
               <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
-                — The Times
+                — The Times (24th September 1896)
               </footer>
             </blockquote>
 
-            {/* Review: The Musical Times */}
+            {/* Review: Globe */}
             <blockquote className="my-8 p-6 sm:p-8 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
               <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
-                &ldquo;It had a rather solemn and religious character : almost too solemn, and insufficiently festive.&rdquo;
+                &ldquo;This is obviously the work of a young musician, whose individuality has not yet fully asserted itself. It is ambitious in design, but both the scoring and the treatment of the themes show that Mr. Pitt is at present strongly under the influence of modern Germany, and (though to a less degree) of modern France. It had a rather solemn and religious character : almost too solemn, and insufficiently festive.&rdquo;
               </p>
               <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
-                — The Musical Times
+                — Globe (24th September 1896)
+              </footer>
+            </blockquote>
+
+            {/* Review: The Referee */}
+            <blockquote className="my-8 p-6 sm:p-8 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
+              <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
+                &ldquo;The &lsquo;Coronation March&rsquo; by Mr. Percy Pitt, a young composer from whom, as he is only twenty-six years old, much may be expected. Judging from his present piece he knows Wagner&rsquo;s marches intimately, but small blame to him for that. He has penned a well-rounded march, melodious, not too noisily scored, and brilliant, with just a suggestion of gravity. Its melodic flow is undeniably agreeable, while the scoring is well studied and brilliant from beginning to end.&rdquo;
+              </p>
+              <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
+                — The Referee (27th September 1896)
               </footer>
             </blockquote>
 

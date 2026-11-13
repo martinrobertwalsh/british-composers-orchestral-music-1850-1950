@@ -1,6 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { NORMAN_ONEILL_ORCHESTRAL_WORKS } from '../data/normanONeillData';
 import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, BookOpen, PenLine } from 'lucide-react';
+import { QuaversIcon } from './QuaversIcon';
+import { WaveformAudioPlayer } from './WaveformAudioPlayer';
+import { HolePunchMargin } from './HolePunchMargin';
+import { ListenToItAllLink } from './ListenToItAllLink';
+import { seekWithFadeIn } from '../utils/audioFade';
 
 interface NormanONeillPostProps {
   onBack?: () => void;
@@ -11,12 +16,7 @@ export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) =>
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const seekAudio = (seconds: number) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = seconds;
-      audioRef.current.play().catch(() => {
-        // Autoplay policy fallback
-      });
-    }
+    seekWithFadeIn(audioRef.current, seconds);
   };
 
   const scrollToSection = (id: string) => {
@@ -161,10 +161,11 @@ export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) =>
                           <button
                             type="button"
                             onClick={() => scrollToSection('oneill-autumn-workpage')}
-                            className="text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer"
-                            title="Click to view In Autumn work page"
+                            className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer group"
+                            title="Click to view In Autumn work page and audio"
                           >
-                            {work.title}
+                            <span>{work.title}</span>
+                            <Volume2 className="w-4 h-4 text-[#B8860B] group-hover:text-[#D4AF37] shrink-0 group-hover:scale-110 transition-transform" />
                           </button>
                         ) : (
                           <span className="font-serif text-base sm:text-lg text-stone-900 font-semibold">
@@ -181,32 +182,39 @@ export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) =>
               </table>
             </div>
           </div>
+
+          {/* Acknowledgement */}
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base font-serif italic text-stone-700 leading-relaxed text-center">
+            I am grateful to Katherine Jessel, Norman O’Neill’s granddaughter, for permission to create and share realisations of his music.
+          </p>
         </section>
 
         {/* Section 3: Work Page — In Autumn (Tone Poem) */}
         <section id="oneill-autumn-workpage" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-1">
+            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
               WORK PAGE
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
               In Autumn (Tone Poem)
             </h2>
 
-            {/* Audio player directly below title */}
-            <div className="max-w-xl mx-auto mt-3">
-              <audio
+            {/* Audio player flanked by quavers (left standard, right mirrored) */}
+            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
+              <WaveformAudioPlayer
                 ref={audioRef}
-                controls
-                preload="metadata"
-                className="w-full h-11 accent-amber-900 rounded focus:outline-none shadow-2xs"
+                title="In Autumn (Tone Poem)"
+                subtitle="Norman O'Neill"
                 src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/O'Neill/In%20Autumn.mp3"
-              >
-                <source src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/O'Neill/In%20Autumn.mp3" type="audio/mpeg" />
-                <source src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/refs/heads/main/O%27Neill/In%20Autumn.mp3" type="audio/mpeg" />
-                <source src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/O%27Neill/In%20Autumn.mp3" type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
+                sources={[
+                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/O'Neill/In%20Autumn.mp3", type: "audio/mpeg" },
+                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/refs/heads/main/O%27Neill/In%20Autumn.mp3", type: "audio/mpeg" },
+                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/O%27Neill/In%20Autumn.mp3", type: "audio/mpeg" }
+                ]}
+                className="flex-1"
+              />
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
             </div>
           </div>
 
@@ -230,16 +238,7 @@ export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) =>
             {/* Notes on White Paper with Hole-Punched Left Margin */}
             <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-4 text-left overflow-hidden">
               {/* Hole Punches in Left Margin */}
-              <span
-                className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
-              <span
-                className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
+              <HolePunchMargin />
 
               {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
               <div
@@ -286,6 +285,8 @@ export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) =>
                 </button>{' '}
                 they are all the more impressive given the generally thin texture of the piece. As a sign to the onset of winter the music dies to nothing.
               </p>
+
+              <ListenToItAllLink targetId="oneill-autumn-workpage" />
             </div>
 
             <p>
@@ -326,7 +327,7 @@ export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) =>
               </p>
 
               <p>
-                Birmingham (The Halford Concerts Society) Feb 1903. (conducted myself)
+                Birmingham (The Halford Concerts Society) Feb 1903. (conducted O&apos;Neill)
               </p>
             </div>
           </div>

@@ -1,6 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { TOBIAS_MATTHAY_ORCHESTRAL_WORKS } from '../data/matthayData';
 import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, BookOpen, PenLine } from 'lucide-react';
+import { QuaversIcon } from './QuaversIcon';
+import { WaveformAudioPlayer } from './WaveformAudioPlayer';
+import { HolePunchMargin } from './HolePunchMargin';
+import { ListenToItAllLink } from './ListenToItAllLink';
+import { seekWithFadeIn } from '../utils/audioFade';
 
 interface TobiasMatthayPostProps {
   onBack?: () => void;
@@ -19,12 +24,7 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
   };
 
   const seekAudio = (seconds: number) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = seconds;
-      audioRef.current.play().catch(() => {
-        // Autoplay policy fallback
-      });
-    }
+    seekWithFadeIn(audioRef.current, seconds);
   };
 
   return (
@@ -44,9 +44,6 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
                 <span>{backLabel}</span>
               </button>
             )}
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
-              PREVIOUS ARTICLE
-            </span>
           </div>
 
           <button
@@ -67,7 +64,7 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
           </h1>
 
           <p className="font-times italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
-            &ldquo;Master of touch whose symphonic voice fell silent&rdquo;
+            &ldquo;Orchestral secrets from a master of the piano&rdquo;
           </p>
         </header>
 
@@ -169,6 +166,10 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
                 &lsquo;High Marley&rsquo;, Haslemere, Surrey &mdash; Tobias Matthay&apos;s country home and summer teaching retreat
               </figcaption>
             </figure>
+
+            <p>
+              Matthay finished composing for the orchestra by about the age of thirty. After this he devoted himself to the art of the piano, partly as a composer but more so as a theorist and teacher. However, we should not simply cast off his orchestral writing as &ldquo;student&rdquo; pieces, at least not before they are heard.
+            </p>
           </div>
         </section>
 
@@ -208,10 +209,11 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
                           <button
                             type="button"
                             onClick={() => scrollToSection('matthay-in-may-workpage')}
-                            className="text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer"
-                            title="Click to view In May work page"
+                            className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer group"
+                            title="Click to view In May work page and audio"
                           >
-                            {work.title}
+                            <span>{work.title}</span>
+                            <Volume2 className="w-4 h-4 text-[#B8860B] group-hover:text-[#D4AF37] shrink-0 group-hover:scale-110 transition-transform" />
                           </button>
                         ) : (
                           <span className="font-serif text-base sm:text-lg text-stone-900 font-semibold">
@@ -241,26 +243,28 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
         {/* Section 3: Work Page — In May (Tone Poem / Symphonic Overture) */}
         <section id="matthay-in-may-workpage" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-1">
+            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
               WORK PAGE
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
               In May - Symphonic Overture (1883)
             </h2>
 
-            {/* Audio player directly below title */}
-            <div className="max-w-xl mx-auto mt-3">
-              <audio
+            {/* Audio player flanked by quavers (left standard, right mirrored) */}
+            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
+              <WaveformAudioPlayer
                 ref={audioRef}
-                controls
-                preload="metadata"
-                className="w-full h-11 accent-amber-900 rounded focus:outline-none shadow-2xs"
+                title="In May - Symphonic Overture (1883)"
+                subtitle="Tobias Matthay"
                 src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Matthay/In%20May.mp3"
-              >
-                <source src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Matthay/In%20May.mp3" type="audio/mpeg" />
-                <source src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Matthay/In%20May.mp3" type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
+                sources={[
+                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Matthay/In%20May.mp3", type: "audio/mpeg" },
+                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Matthay/In%20May.mp3", type: "audio/mpeg" }
+                ]}
+                className="flex-1"
+              />
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
             </div>
           </div>
 
@@ -275,7 +279,7 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
             </p>
 
             {/* Section Heading above Brown Accent Line */}
-            <div className="flex items-center gap-2.5 pt-2">
+            <div className="flex flex-wrap items-center gap-2.5 pt-2">
               <h3 className="font-serif italic text-xl sm:text-2xl font-bold text-amber-950 tracking-tight">
                 Some notes in passing ...
               </h3>
@@ -283,21 +287,15 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
                 <BookOpen className="w-5 h-5 text-amber-900" />
                 <PenLine className="w-4 h-4 text-amber-800 -ml-1" />
               </span>
+              <span className="font-serif italic text-base sm:text-lg text-amber-900 font-medium">
+                As penned by Matthay himself
+              </span>
             </div>
 
             {/* Notes on White Paper with Hole-Punched Left Margin */}
             <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-5 text-left overflow-hidden">
               {/* Hole Punches in Left Margin */}
-              <span
-                className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
-              <span
-                className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
+              <HolePunchMargin />
 
               {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
               <div
@@ -356,6 +354,8 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
               <p className="text-right font-serif font-bold text-stone-700 text-sm sm:text-base pt-1 m-0">
                 [T.M.]
               </p>
+
+              <ListenToItAllLink targetId="matthay-in-may-workpage" />
             </div>
 
             <p>
@@ -379,6 +379,26 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
               </p>
               <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
                 — Bournemouth Guardian (November 1902)
+              </footer>
+            </blockquote>
+
+            {/* Contemporary Review Card 3: The Globe (1906) */}
+            <blockquote className="my-8 p-6 sm:p-8 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
+              <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
+                &ldquo;&hellip;. while the programme also included a new Symphonic Overture called &lsquo;In May,&rsquo; by Mr. Tobias Matthay, Miss Scharrer&rsquo;s master. Mr. Matthay has, however, yet to convince us that his powers as a composer are as great as his powers as a pianist.&rdquo;
+              </p>
+              <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
+                — The Globe &middot; 31 January 1906 &middot; Bechstein Hall &middot; Reduced Queens Hall orchestra under Henry Wood
+              </footer>
+            </blockquote>
+
+            {/* Contemporary Review Card 4: Bournemouth Times (1932) */}
+            <blockquote className="my-8 p-6 sm:p-8 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
+              <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
+                &ldquo;The Symphony Concert on Wednesday was an outstanding success from beginning to end. The Symphonic Overture, &lsquo;In May,&rsquo; conducted by the composer, Tobias Matthay, comprised an appropriate opening work. It has a tranquil beginning in which the composer introduces the French horns in a very clever manner. Running into Allegro, a very bright movement, it is followed by a &lsquo;tutti&rsquo; passage. After some clever development the original subject returns, rising to a magnificent finish.&rdquo;
+              </p>
+              <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
+                — Bournemouth Times &middot; Friday, 26 February 1932
               </footer>
             </blockquote>
           </div>

@@ -252,7 +252,10 @@ export const CatalogExplorer: React.FC<CatalogExplorerProps> = ({
                       <span>{composer.works.length} Documented Works</span>
                     </div>
 
-                    <h3 className="font-serif text-xl font-bold text-stone-900">
+                    <h3
+                      onClick={() => onSelectComposer(composer)}
+                      className="font-serif text-xl font-bold text-stone-900 group-hover:text-amber-900 transition-colors cursor-pointer"
+                    >
                       {composer.name}
                     </h3>
 

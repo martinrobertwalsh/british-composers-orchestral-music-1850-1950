@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HeroSection } from './components/HeroSection';
-import { PercyPittPost } from './components/PercyPittPost';
+import { WilliamSpeerPost } from './components/WilliamSpeerPost';
 import { ComposerModal } from './components/ComposerModal';
 import { WelcomeModal } from './components/WelcomeModal';
 import { ArchiveTab } from './components/ArchiveTab';
@@ -8,7 +8,6 @@ import { ToFollowTab } from './components/ToFollowTab';
 import { Composer, MusicalTheme } from './types/composer';
 import { HARVEY_LOHR_SYMPHONY_3_THEME } from './data/composersData';
 import { orchestralPlayer } from './audio/orchestralEngine';
-import { trackPage } from './lib/analytics';
 import { Mail, Send, CheckCircle2, Library, Music, FolderArchive } from 'lucide-react';
 
 export default function App() {
@@ -33,26 +32,25 @@ export default function App() {
   const [contactSubject, setContactSubject] = useState('Score Request');
   const [contactMessage, setContactMessage] = useState('');
   const [contactSent, setContactSent] = useState(false);
+  const [previousTab, setPreviousTab] = useState<'home' | 'to-follow' | 'archive'>('home');
   const [toFollowKey, setToFollowKey] = useState<number>(0);
   const [archiveKey, setArchiveKey] = useState<number>(0);
 
   const handleTabChange = (tab: 'home' | 'welcome' | 'to-follow' | 'archive' | 'contact') => {
-    setActiveTab(tab);
-    const labels = {
-      home: ['/', 'Home'],
-      welcome: ['/welcome', 'Curator’s Welcome'],
-      'to-follow': ['/to-follow', 'Articles to Follow'],
-      archive: ['/archive', 'Archive'],
-      contact: ['/contact', 'Contact'],
-    } as const;
-    const [path, title] = labels[tab];
-    trackPage(path, title);
+    if (tab === 'contact' && activeTab !== 'contact') {
+      if (activeTab === 'to-follow' || activeTab === 'archive') {
+        setPreviousTab(activeTab);
+      } else {
+        setPreviousTab('home');
+      }
+    }
     if (tab === 'to-follow') {
       setToFollowKey((prev) => prev + 1);
     }
     if (tab === 'archive') {
       setArchiveKey((prev) => prev + 1);
     }
+    setActiveTab(tab);
     // Smooth scroll just under the image so the top of the selected tab is in view
     const heroHeight = window.innerHeight * 0.50;
     window.scrollTo({ top: heroHeight - 60, behavior: 'smooth' });
@@ -102,9 +100,9 @@ export default function App() {
 
       {/* Main Tab Views */}
       <main className="flex-1">
-        {/* HOME TAB: Featured Composer Article (Percy Pitt) */}
+        {/* HOME TAB: Featured Composer Article (William Henry Speer) */}
         {activeTab === 'home' && (
-          <PercyPittPost />
+          <WilliamSpeerPost isFeatured={true} />
         )}
 
         {/* WELCOME TAB: Curator's Welcome & Historical Context */}
@@ -154,7 +152,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TO FOLLOW TAB: Arthur Hervey, Norman O'Neill, Percy Godfrey, Tobias Matthay */}
+        {/* TO FOLLOW TAB: Arthur Hervey, Norman O'Neill, Percy Godfrey, R. O. Morris, Francis Cunningham Woods */}
         {activeTab === 'to-follow' && (
           <ToFollowTab key={toFollowKey} />
         )}
@@ -167,13 +165,25 @@ export default function App() {
         {/* CONTACT TAB: Direct Inquiry Form */}
         {activeTab === 'contact' && (
           <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
-            <div className="bg-white border-2 border-stone-300 rounded-lg p-6 sm:p-8 shadow-sm">
-              <div className="text-xs font-serif uppercase tracking-widest text-amber-900 mb-2">
-                Correspondence & Collaboration
+            <div className="bg-white border-2 border-stone-300 rounded-lg p-6 sm:p-8 shadow-sm relative">
+              <div className="flex items-start justify-between pb-3 border-b border-stone-200 mb-4">
+                <div>
+                  <div className="text-xs font-serif uppercase tracking-widest text-amber-900 mb-1">
+                    Correspondence & Collaboration
+                  </div>
+                  <h2 className="font-serif text-3xl font-bold text-stone-900">
+                    Contact & Enquiries
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleTabChange(previousTab || 'home')}
+                  className="font-serif text-sm sm:text-base font-semibold text-amber-900 hover:text-amber-950 transition-colors cursor-pointer tracking-wide"
+                  aria-label="Close contact"
+                >
+                  Close
+                </button>
               </div>
-              <h2 className="font-serif text-3xl font-bold text-stone-900 mb-1">
-                Contact & Enquiries
-              </h2>
               <p className="font-serif text-sm text-stone-700 mb-6">
                 Feedback welcome whether it&apos;s highlighting inaccuracies or offering suggestions - thank you
               </p>

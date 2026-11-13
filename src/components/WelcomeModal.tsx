@@ -1,5 +1,4 @@
 import React from 'react';
-import { X, BookOpen, Music, Library, Sparkles, FolderArchive } from 'lucide-react';
 
 interface WelcomeModalProps {
   isOpen: boolean;
@@ -22,18 +21,10 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header bar */}
-        <div className="px-6 py-4 border-b border-stone-200 flex items-center justify-between bg-white/80 rounded-t-lg">
+        <div className="px-6 py-4 border-b border-stone-200 bg-white/80 rounded-t-lg">
           <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight">
             Welcome
           </h2>
-
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-full text-stone-500 hover:text-stone-900 hover:bg-stone-200/60 transition-colors cursor-pointer"
-            aria-label="Close welcome message"
-          >
-            <X className="w-5 h-5" />
-          </button>
         </div>
 
         {/* Content Body */}
@@ -50,8 +41,9 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
         <div className="bg-[#F3EFEA] px-6 py-3.5 border-t border-stone-200 flex items-center justify-between text-xs font-serif rounded-b-lg">
           <span className="text-stone-600 italic">British Orchestral Music 1850–1950</span>
           <button
+            type="button"
             onClick={onClose}
-            className="px-5 py-2 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded font-serif text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer shadow-xs"
+            className="font-serif text-xs sm:text-sm font-semibold tracking-wider uppercase text-amber-900 hover:text-amber-950 transition-colors cursor-pointer"
           >
             Close
           </button>

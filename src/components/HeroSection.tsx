@@ -1,4 +1,6 @@
 import React from 'react';
+import { ARCHIVE_ARTICLES } from './ArchiveTab';
+import { TO_FOLLOW_ARTICLES } from './ToFollowTab';
 
 interface HeroSectionProps {
   activeTab: 'home' | 'welcome' | 'to-follow' | 'archive' | 'contact';
@@ -6,7 +8,14 @@ interface HeroSectionProps {
   onOpenWelcome: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ activeTab, onTabChange, onOpenWelcome }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({
+  activeTab,
+  onTabChange,
+  onOpenWelcome
+}) => {
+  const toFollowTotal = TO_FOLLOW_ARTICLES.length;
+  const archiveTotal = ARCHIVE_ARTICLES.length;
+
   return (
     <>
       {/* Queen's Hall Historic Hero Photo (30% off top only, bottom anchored) */}
@@ -66,23 +75,37 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ activeTab, onTabChange
           </button>
           <button
             onClick={() => onTabChange('to-follow')}
-            className={`min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
+            className={`relative min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
               activeTab === 'to-follow'
                 ? 'bg-stone-900 text-stone-50 shadow-sm border border-stone-900 ring-1 ring-stone-900/30'
                 : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-2xs'
             }`}
           >
-            TO FOLLOW
+            <span>TO FOLLOW</span>
+            <span
+              className={`absolute bottom-1 right-2 text-[10px] sm:text-[11px] font-mono font-bold leading-none pointer-events-none transition-colors ${
+                activeTab === 'to-follow' ? 'text-amber-400' : 'text-stone-500'
+              }`}
+            >
+              {toFollowTotal}
+            </span>
           </button>
           <button
             onClick={() => onTabChange('archive')}
-            className={`min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
+            className={`relative min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
               activeTab === 'archive'
                 ? 'bg-stone-900 text-stone-50 shadow-sm border border-stone-900 ring-1 ring-stone-900/30'
                 : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-2xs'
             }`}
           >
-            ARCHIVE
+            <span>ARCHIVE</span>
+            <span
+              className={`absolute bottom-1 right-2 text-[10px] sm:text-[11px] font-mono font-bold leading-none pointer-events-none transition-colors ${
+                activeTab === 'archive' ? 'text-amber-400' : 'text-stone-500'
+              }`}
+            >
+              {archiveTotal}
+            </span>
           </button>
           <button
             onClick={() => onTabChange('contact')}

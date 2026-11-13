@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MACFARREN_ORCHESTRAL_WORKS } from '../data/macfarrenData';
 import { ZoomIn, Calendar, X, ArrowUp, Volume2, BookOpen, PenLine, Play } from 'lucide-react';
+import { QuaversIcon } from './QuaversIcon';
+import { WaveformAudioPlayer } from './WaveformAudioPlayer';
+import { HolePunchMargin } from './HolePunchMargin';
+import { ListenToItAllLink } from './ListenToItAllLink';
+import { seekDirect } from '../utils/audioFade';
 
 export const FeaturedPost: React.FC = () => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
@@ -38,20 +43,12 @@ export const FeaturedPost: React.FC = () => {
     }
 
     if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = time;
       setActiveJumpLabel(label);
+      seekDirect(audioRef.current, time);
 
-      // 1.5-second pause before playback begins
       jumpTimeoutRef.current = setTimeout(() => {
-        if (audioRef.current) {
-          const playPromise = audioRef.current.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(() => {});
-          }
-        }
         setActiveJumpLabel(null);
-      }, 1500);
+      }, 2400);
     }
   };
 
@@ -186,10 +183,11 @@ export const FeaturedPost: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => scrollToSection('macfarren-score-samples')}
-                              className="text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer"
-                              title="Click to view Symphony in B flat work page"
+                              className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer group"
+                              title="Click to view Symphony in B flat work page and audio"
                             >
-                              {work.title}
+                              <span>{work.title}</span>
+                              <Volume2 className="w-4 h-4 text-[#B8860B] group-hover:text-[#D4AF37] shrink-0 group-hover:scale-110 transition-transform" />
                             </button>
                           ) : (
                             <span className="font-serif text-base sm:text-lg text-stone-900 font-semibold">
@@ -222,23 +220,25 @@ export const FeaturedPost: React.FC = () => {
         {/* Section 3: Work Page */}
         <section id="macfarren-score-samples" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-1">
+            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
               WORK PAGE
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
               Symphony in B flat (1879)
             </h2>
 
-            <div className="max-w-xl mx-auto mt-3">
-              <audio
-                ref={audioRef}
-                controls
-                preload="metadata"
-                className="w-full h-11 accent-amber-900 rounded focus:outline-none shadow-2xs"
-                src={`${import.meta.env.BASE_URL}assets/aistudio/macfarren_symphony_in_bb_45c21c49.mp3`}
-              >
-                Your browser does not support the audio element.
-              </audio>
+            <div className="max-w-2xl mx-auto mt-3">
+              <div className="flex items-center justify-center gap-3.5">
+                <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
+                <WaveformAudioPlayer
+                  ref={audioRef}
+                  title="Symphony in B flat (1879)"
+                  subtitle="Sir George Alexander Macfarren"
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/macfarren_symphony_in_bb_45c21c49.mp3`}
+                  className="flex-1"
+                />
+                <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
+              </div>
 
               {/* Quick Movement Jump Buttons Bar under Audio */}
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
@@ -304,16 +304,7 @@ export const FeaturedPost: React.FC = () => {
             {/* Notes on White Paper with Hole-Punched Left Margin */}
             <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-6 text-left overflow-hidden">
               {/* Hole Punches in Left Margin */}
-              <span
-                className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
-              <span
-                className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
+              <HolePunchMargin />
 
               {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
               <div
@@ -412,6 +403,8 @@ export const FeaturedPost: React.FC = () => {
                   The opening is a repeat of the 1st movement opening but now tutti. Material from the 2nd and 3rd movements is also reworked. There&apos;s a definite feel of a Finale in this Allegro.
                 </p>
               </div>
+
+              <ListenToItAllLink targetId="macfarren-score-samples" />
             </div>
 
             <p>
@@ -495,6 +488,86 @@ export const FeaturedPost: React.FC = () => {
             <p>
               For a relatively &lsquo;minor&rsquo; composer this record of performance was impressive to say the least. However, it was not typical; many composers would achieve maybe one and if lucky a single repeat elsewhere. The work was even revived after a ten year gap just two years before Macfarren died.
             </p>
+          </div>
+        </section>
+
+        {/* Section 4: Obituary */}
+        <section id="macfarren-obituary" className="mt-14 pt-8 border-t-2 border-stone-300/70">
+          <div className="text-left mb-5">
+            <h2 className="font-serif text-lg sm:text-xl font-bold tracking-wider text-amber-900 uppercase">
+              OBITUARY
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
+            <figure className="p-2.5 bg-white border border-stone-300 rounded shadow-xs text-center flex flex-col justify-between">
+              <div
+                className="overflow-hidden rounded-xs border border-stone-200 bg-stone-50 flex-1 min-h-[260px] flex items-center justify-center p-2 cursor-pointer group relative"
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/ob1_4f6f05f3.jpg`)}
+                title="Click to enlarge obituary cutting: Death of Mr. Walter Macfarren"
+              >
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/ob1_4f6f05f3.jpg`}
+                  alt="Newspaper obituary cutting: Death of Mr. Walter Macfarren"
+                  className="max-w-full max-h-[360px] w-auto h-auto object-contain grayscale contrast-105 group-hover:scale-102 transition-transform duration-200"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded flex items-center gap-1 font-sans">
+                    <ZoomIn className="w-3.5 h-3.5" /> Enlarge
+                  </span>
+                </div>
+              </div>
+              <figcaption className="mt-2 font-serif text-xs sm:text-sm text-stone-600 italic">
+                West Sussex County Times - 9 September 1905
+              </figcaption>
+            </figure>
+
+            <figure className="p-2.5 bg-white border border-stone-300 rounded shadow-xs text-center flex flex-col justify-between">
+              <div
+                className="overflow-hidden rounded-xs border border-stone-200 bg-stone-50 flex-1 min-h-[260px] flex items-center justify-center p-2 cursor-pointer group relative"
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/ob2_d0b3efda.jpg`)}
+                title="Click to enlarge obituary cutting: The Conductor's Baton"
+              >
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/ob2_d0b3efda.jpg`}
+                  alt="Newspaper obituary cutting: The Conductor's Baton — anecdotes of Professor Walter Macfarren"
+                  className="max-w-full max-h-[360px] w-auto h-auto object-contain grayscale contrast-105 group-hover:scale-102 transition-transform duration-200"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded flex items-center gap-1 font-sans">
+                    <ZoomIn className="w-3.5 h-3.5" /> Enlarge
+                  </span>
+                </div>
+              </div>
+              <figcaption className="mt-2 font-serif text-xs sm:text-sm text-stone-600 italic">
+                Pall Mall Gazette - 5 September 1905
+              </figcaption>
+            </figure>
+
+            <figure className="p-2.5 bg-white border border-stone-300 rounded shadow-xs text-center flex flex-col justify-between">
+              <div
+                className="overflow-hidden rounded-xs border border-stone-200 bg-stone-50 flex-1 min-h-[260px] flex items-center justify-center p-2 cursor-pointer group relative"
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/ob3_d5abd297.jpg`)}
+                title="Click to enlarge obituary cutting: Musician's Death"
+              >
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/ob3_d5abd297.jpg`}
+                  alt="Newspaper obituary portrait: Musician's Death — Mr. Walter Cecil Macfarren"
+                  className="max-w-full max-h-[360px] w-auto h-auto object-contain grayscale contrast-105 group-hover:scale-102 transition-transform duration-200"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded flex items-center gap-1 font-sans">
+                    <ZoomIn className="w-3.5 h-3.5" /> Enlarge
+                  </span>
+                </div>
+              </div>
+              <figcaption className="mt-2 font-serif text-xs sm:text-sm text-stone-600 italic">
+                Daily Mirror - 5 September 1905
+              </figcaption>
+            </figure>
           </div>
         </section>
 

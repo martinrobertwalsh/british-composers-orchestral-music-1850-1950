@@ -1,6 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { RO_MORRIS_ORCHESTRAL_WORKS, RO_MORRIS_THEORETICAL_BOOKS } from '../data/roMorrisData';
 import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, Play, BookOpen, PenLine } from 'lucide-react';
+import { QuaversIcon } from './QuaversIcon';
+import { WaveformAudioPlayer } from './WaveformAudioPlayer';
+import { HolePunchMargin } from './HolePunchMargin';
+import { ListenToItAllLink } from './ListenToItAllLink';
+import { seekWithFadeIn, seekDirect } from '../utils/audioFade';
 
 interface ROMorrisPostProps {
   onBack?: () => void;
@@ -18,10 +23,11 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
   };
 
   const seekAudio = (seconds: number) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = seconds;
-      audioRef.current.play().catch(() => {});
-    }
+    seekWithFadeIn(audioRef.current, seconds);
+  };
+
+  const jumpToMovement = (seconds: number) => {
+    seekDirect(audioRef.current, seconds);
   };
 
   return (
@@ -249,10 +255,11 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
                           <button
                             type="button"
                             onClick={() => scrollToSection('morris-sinfonia-workpage')}
-                            className="text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer"
-                            title="Click to view Sinfonia in C major work page"
+                            className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer group"
+                            title="Click to view Sinfonia in C major work page and audio"
                           >
-                            {work.title}
+                            <span>{work.title}</span>
+                            <Volume2 className="w-4 h-4 text-[#B8860B] group-hover:text-[#D4AF37] shrink-0 group-hover:scale-110 transition-transform" />
                           </button>
                         ) : (
                           <div>
@@ -276,26 +283,28 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
         {/* Section 3: Work Page — Sinfonia in C major (1928) */}
         <section id="morris-sinfonia-workpage" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-1">
+            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
               WORK PAGE
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-3">
               Sinfonia in C major (1928)
             </h2>
 
-            {/* Audio player directly below title */}
-            <div className="max-w-xl mx-auto mt-4">
-              <audio
+            {/* Audio player flanked by quavers (left standard, right mirrored) */}
+            <div className="max-w-2xl mx-auto mt-4 flex items-center justify-center gap-3.5">
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
+              <WaveformAudioPlayer
                 ref={audioRef}
-                controls
-                preload="metadata"
-                className="w-full h-11 accent-amber-900 rounded focus:outline-none shadow-2xs"
+                title="Sinfonia in C major (1928)"
+                subtitle="R. O. Morris"
                 src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Morris/Full%20Sinfonia.mp3"
-              >
-                <source src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Morris/Full%20Sinfonia.mp3" type="audio/mpeg" />
-                <source src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Morris/Full%20Sinfonia.mp3" type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
+                sources={[
+                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Morris/Full%20Sinfonia.mp3", type: "audio/mpeg" },
+                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Morris/Full%20Sinfonia.mp3", type: "audio/mpeg" }
+                ]}
+                className="flex-1"
+              />
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
             </div>
 
             {/* Quick Movement Jump Buttons Bar */}
@@ -305,7 +314,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
               </span>
               <button
                 type="button"
-                onClick={() => seekAudio(0)}
+                onClick={() => jumpToMovement(0)}
                 className="inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-amber-50 text-stone-800 border border-stone-300 rounded font-serif text-xs sm:text-sm font-semibold transition-colors cursor-pointer shadow-2xs"
                 title="Jump to 1st movement (00:00)"
               >
@@ -314,7 +323,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
               </button>
               <button
                 type="button"
-                onClick={() => seekAudio(237)}
+                onClick={() => jumpToMovement(237)}
                 className="inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-amber-50 text-stone-800 border border-stone-300 rounded font-serif text-xs sm:text-sm font-semibold transition-colors cursor-pointer shadow-2xs"
                 title="Jump to 2nd movement (03:57)"
               >
@@ -323,7 +332,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
               </button>
               <button
                 type="button"
-                onClick={() => seekAudio(524)}
+                onClick={() => jumpToMovement(524)}
                 className="inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-amber-50 text-stone-800 border border-stone-300 rounded font-serif text-xs sm:text-sm font-semibold transition-colors cursor-pointer shadow-2xs"
                 title="Jump to 3rd movement (08:44)"
               >
@@ -332,7 +341,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
               </button>
               <button
                 type="button"
-                onClick={() => seekAudio(759)}
+                onClick={() => jumpToMovement(759)}
                 className="inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-amber-50 text-stone-800 border border-stone-300 rounded font-serif text-xs sm:text-sm font-semibold transition-colors cursor-pointer shadow-2xs"
                 title="Jump to 4th movement (12:39)"
               >
@@ -389,16 +398,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
             {/* Notes on White Paper with Hole-Punched Left Margin */}
             <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-6 text-left overflow-hidden">
               {/* Hole Punches in Left Margin */}
-              <span
-                className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
-              <span
-                className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                aria-hidden="true"
-                title="Binder hole punch"
-              />
+              <HolePunchMargin />
 
               {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
               <div
@@ -417,7 +417,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
                   <span>Allegro</span>{' '}
                   <button
                     type="button"
-                    onClick={() => seekAudio(0)}
+                    onClick={() => jumpToMovement(0)}
                     className="whitespace-nowrap font-['Arial',sans-serif] text-[0.78em] font-bold text-amber-900 hover:text-amber-700 transition-colors cursor-pointer align-baseline ml-1"
                     title="Jump to 00:00"
                   >
@@ -449,7 +449,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
                   <span>Andante mosso</span>{' '}
                   <button
                     type="button"
-                    onClick={() => seekAudio(237)}
+                    onClick={() => jumpToMovement(237)}
                     className="whitespace-nowrap font-['Arial',sans-serif] text-[0.78em] font-bold text-amber-900 hover:text-amber-700 transition-colors cursor-pointer align-baseline ml-1"
                     title="Jump to 03:57"
                   >
@@ -472,7 +472,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
                   <span>Tempo di Gavotto</span>{' '}
                   <button
                     type="button"
-                    onClick={() => seekAudio(524)}
+                    onClick={() => jumpToMovement(524)}
                     className="whitespace-nowrap font-['Arial',sans-serif] text-[0.78em] font-bold text-amber-900 hover:text-amber-700 transition-colors cursor-pointer align-baseline ml-1"
                     title="Jump to 08:44"
                   >
@@ -495,7 +495,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
                   <span>Maestoso assai</span>{' '}
                   <button
                     type="button"
-                    onClick={() => seekAudio(759)}
+                    onClick={() => jumpToMovement(759)}
                     className="whitespace-nowrap font-['Arial',sans-serif] text-[0.78em] font-bold text-amber-900 hover:text-amber-700 transition-colors cursor-pointer align-baseline ml-1"
                     title="Jump to 12:39"
                   >
@@ -506,6 +506,8 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
                   After the short tutti introduction cellos and bass start a ground bass sequence. A stately, legato melody is played over this. A series of variations follows with the contrapuntal writing becoming more complex.
                 </p>
               </div>
+
+              <ListenToItAllLink targetId="morris-sinfonia-workpage" />
             </div>
           </div>
         </section>

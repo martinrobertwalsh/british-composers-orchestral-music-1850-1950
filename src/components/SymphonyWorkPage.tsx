@@ -1,5 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowLeft, ZoomIn, Calendar, X, BookOpen, PenLine, Play } from 'lucide-react';
+import { QuaversIcon } from './QuaversIcon';
+import { WaveformAudioPlayer } from './WaveformAudioPlayer';
+import { HolePunchMargin } from './HolePunchMargin';
+import { ListenToItAllLink } from './ListenToItAllLink';
+import { seekDirect } from '../utils/audioFade';
 
 interface SymphonyWorkPageProps {
   onBack: () => void;
@@ -34,19 +39,12 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
     }
 
     if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = time;
       setActiveJumpLabel(label);
+      seekDirect(audioRef.current, time);
 
       jumpTimeoutRef.current = setTimeout(() => {
-        if (audioRef.current) {
-          const playPromise = audioRef.current.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(() => {});
-          }
-        }
         setActiveJumpLabel(null);
-      }, 1500);
+      }, 2400);
     }
   };
 
@@ -74,16 +72,18 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
             Symphony in B flat (1879)
           </h1>
 
-          <div className="max-w-xl mx-auto mt-3">
-            <audio
-              ref={audioRef}
-              controls
-              preload="metadata"
-              className="w-full h-11 accent-amber-900 rounded focus:outline-none shadow-2xs"
-              src={`${import.meta.env.BASE_URL}assets/aistudio/macfarren_symphony_in_bb_45c21c49.mp3`}
-            >
-              Your browser does not support the audio element.
-            </audio>
+          <div className="max-w-2xl mx-auto mt-3">
+            <div className="flex items-center justify-center gap-3.5">
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
+              <WaveformAudioPlayer
+                ref={audioRef}
+                title="Symphony in B flat (1879)"
+                subtitle="Sir George Alexander Macfarren"
+                src={`${import.meta.env.BASE_URL}assets/aistudio/macfarren_symphony_in_bb_45c21c49.mp3`}
+                className="flex-1"
+              />
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
+            </div>
 
             {/* Quick Movement Jump Buttons Bar under Audio */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
@@ -149,16 +149,7 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
           {/* Notes on White Paper with Hole-Punched Left Margin */}
           <div className="my-5 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-6 text-left overflow-hidden">
             {/* Hole Punches in Left Margin */}
-            <span
-              className="absolute left-3 sm:left-3.5 top-12 sm:top-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-              aria-hidden="true"
-              title="Binder hole punch"
-            />
-            <span
-              className="absolute left-3 sm:left-3.5 bottom-12 sm:bottom-14 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-              aria-hidden="true"
-              title="Binder hole punch"
-            />
+            <HolePunchMargin />
 
             {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
             <div
@@ -257,6 +248,8 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
                 The opening is a repeat of the 1st movement opening but now tutti. Material from the 2nd and 3rd movements is also reworked. There&apos;s a definite feel of a Finale in this Allegro.
               </p>
             </div>
+
+            <ListenToItAllLink targetId="symphony-work-page" />
           </div>
 
           {/* Autograph Score Performance Dates Row with Image on Left & Button on Right */}

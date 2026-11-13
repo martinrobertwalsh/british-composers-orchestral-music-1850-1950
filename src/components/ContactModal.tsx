@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Mail, Send, CheckCircle2, MessageSquare, FileText, MapPin } from 'lucide-react';
+import { Mail, Send, CheckCircle2, MessageSquare, FileText, MapPin } from 'lucide-react';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -43,11 +43,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           </div>
 
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 rounded-full text-stone-500 hover:text-stone-900 hover:bg-stone-200/60 transition-colors cursor-pointer"
-            title="Close contact modal"
+            className="font-serif text-sm sm:text-base font-semibold text-amber-900 hover:text-amber-950 transition-colors cursor-pointer tracking-wide"
+            aria-label="Close contact modal"
           >
-            <X className="w-5 h-5" />
+            Close
           </button>
         </div>
 

@@ -1,6 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { PERCY_GODFREY_ORCHESTRAL_WORKS } from '../data/godfreyData';
 import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, BookOpen, PenLine } from 'lucide-react';
+import { QuaversIcon } from './QuaversIcon';
+import { WaveformAudioPlayer } from './WaveformAudioPlayer';
+import { HolePunchMargin } from './HolePunchMargin';
+import { ListenToItAllLink } from './ListenToItAllLink';
+import { seekWithFadeIn } from '../utils/audioFade';
 
 interface PercyGodfreyPostProps {
   onBack?: () => void;
@@ -15,6 +20,10 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  };
+
+  const seekAudio = (seconds: number) => {
+    seekWithFadeIn(audioRef.current, seconds);
   };
 
   return (
@@ -107,7 +116,7 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
               >
                 <img
                   src={`${import.meta.env.BASE_URL}assets/aistudio/1910_Common_Room_df2c1dc6.jpg`}
-                  alt="The King's School, Canterbury 1910 (Percy Godfrey back row 5th from left)"
+                  alt="The King's School 1910 (Percy Godfrey back row 5th from left) THANKS TO KING'S SCHOOL FOR PHOTO"
                   className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-200"
                 />
                 <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -117,7 +126,10 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
                 </div>
               </div>
               <figcaption className="mt-2 text-xs sm:text-sm font-serif text-stone-600 italic">
-                The King&apos;s School, Canterbury 1910 (Percy Godfrey back row 5th from left) Thanks to King&apos;s School for this photo
+                <span>The King&apos;s School 1910 (Percy Godfrey back row 5th from left)</span>{' '}
+                <span className="inline-block text-[10px] sm:text-2xs font-sans not-italic text-stone-500 tracking-wide uppercase sm:ml-1">
+                  THANKS TO KING&apos;S SCHOOL FOR PHOTO
+                </span>
               </figcaption>
             </figure>
 
@@ -137,21 +149,45 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
           </p>
 
           <p className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed text-left my-6">
-            His later years saw a slide into obscurity. His fame was short lived and despite still avidly composing he never seemed to regain the recognition that he strived for. We have documentation which goes to show a rather melancholy figure still living in a bygone age:
+            His later years saw a slide into obscurity. His fame was short lived and despite still avidly composing he never seemed to regain the recognition that he strived for. We have documentation which goes to show a rather wistful figure still living in a bygone age:
           </p>
 
             <blockquote className="my-8 p-6 sm:p-8 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
               <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
-                &ldquo;One summer Sunday afternoon, as I sat practising at my turn-of-the-century, eight-foot Erard grand piano in our drawing room, a tall, imposing, elderly gentleman, wearing a panama and flannels rang the doorbell. He introduced himself as Percy Godfrey, a composer of whom I had vaguely heard, who had also recently left the Kent coast and was now living with his sister, Ethel Weir, at Sunningdale, No. 25 Spencer Road. He said he had heard me playing when passing the house on his way to watch the cricket at Molesey Cricket Club &mdash; William Graburn, the cricketer, was a neighbour of his in Spencer Road and Secretary of the Club. My mother invited Mr. Godfrey in for a cup of tea and a chat with me and with my father, who had been a professional violinist and played with the Plymouth Symphony Orchestra in his youth and from then on, it became a regular arrangement that he would call in on Sunday afternoons for an hour or so in order to discuss music, comment upon my pianistic progress (or lack of) and show me his latest compositions, which I was expected to sight read, without preparation, from his hand-written manuscript! These visits continued for a number of years, during which I had the benefit of his expertise and learned about his life in general.&rdquo;
+                &ldquo;One summer Sunday afternoon, as I sat practising at my turn-of-the-century, eight-foot Erard grand piano in our drawing room, a tall, imposing, elderly gentleman, wearing a panama and flannels rang the doorbell. He introduced himself as Percy Godfrey, a composer of whom I had vaguely heard, who had also recently left the Kent coast and was now living with his sister, Ethel Weir, at Sunningdale, No. 25 Spencer Road. He said he had heard me playing when passing the house on his way to watch the cricket at Molesey Cricket Club.&rdquo;
               </p>
               <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
-                &ldquo;Percy Godfrey had been Master of Music at King’s School, Canterbury for many years before retirement and had won a prize in a competition to write a March for the Coronation of Edward VII. The music was actually used during the ceremony itself and some forty years later he played me his piano arrangement of the work and gave me a copy. Percy composed prolifically and wrote for the piano, voice, choral and instrumental groups, as well as for full orchestra and he once did me the honour of copying, by hand, two piano compositions for me to play, the signed manuscripts of which I still have.&rdquo;
+                &ldquo;My mother invited Mr. Godfrey in for a cup of tea and a chat with me and with my father, who had been a professional violinist and played with the Plymouth Symphony Orchestra in his youth and from then on, it became a regular arrangement that he would call in on Sunday afternoons for an hour or so in order to discuss music, comment upon my pianistic progress (or lack of) and show me his latest compositions, which I was expected to sight read, without preparation, from his hand-written manuscript! These visits continued for a number of years, during which I had the benefit of his expertise and learned about his life in general.&rdquo;
               </p>
+              <div className="flex flex-col sm:flex-row gap-5 items-start">
+                <div
+                  className="w-40 sm:w-48 shrink-0 mx-auto sm:mx-0 p-1.5 bg-stone-50 border border-stone-300 rounded shadow-2xs cursor-pointer group relative"
+                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/1914_e19aefff.jpg`)}
+                  title="Click to enlarge photograph"
+                >
+                  <div className="overflow-hidden rounded-xs bg-stone-100">
+                    <img
+                      src={`${import.meta.env.BASE_URL}assets/aistudio/1914_e19aefff.jpg`}
+                      alt="Portrait of Percy Godfrey with pipe (1914)"
+                      className="w-full h-auto object-cover block group-hover:scale-102 transition-transform duration-200"
+                    />
+                  </div>
+                  <div className="absolute inset-1.5 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xs">
+                    <span className="bg-stone-900/90 text-white text-[11px] px-2 py-0.5 rounded flex items-center gap-1 font-sans">
+                      <ZoomIn className="w-3 h-3" /> Enlarge
+                    </span>
+                  </div>
+                </div>
+
+                <p className="flex-1 font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
+                  &ldquo;Percy Godfrey had been Master of Music at King’s School, Canterbury for many years before retirement and had won a prize in a competition to write a March for the Coronation of Edward VII. The music was actually used during the ceremony itself and some forty years later he played me his piano arrangement of the work and gave me a copy. Percy composed prolifically and wrote for the piano, voice, choral and instrumental groups, as well as for full orchestra and he once did me the honour of copying, by hand, two piano compositions for me to play, the signed manuscripts of which I still have.&rdquo;
+                </p>
+              </div>
               <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
                 &ldquo;Apparently, during the 1920s, Percy Godfrey was often confused with the, then, conductor of the Bournemouth Concert Orchestra, Sir Dan Godfrey, of the prominent musical family, who would sometimes include Percy’s compositions in his concerts with Percy himself conducting them. Percy didn’t seem to mind being associated with the better-known Dan, although they were not related in any way and it seems he was almost absorbed into the family!&rdquo;
               </p>
               <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
-                &ldquo;After a few years of very rewarding meetings and musical advice from Percy Godfrey and as WWII entered its final year, I had a telephone call from his sister, in February 1945, telling me that he had passed away suddenly in the house in Spencer Road. She asked me to call in to collect some items that he had wanted me to have, including some unpublished, signed and dated, manuscripts, which I still have in my possession. She also handed me a letter, in Percy’s own handwriting, detailing that he had bequeathed me, in a codicil to his will, his Virgil Practice Clavier, an instrument I have to this day.&rdquo;
+                &ldquo;After a few years of very rewarding meetings and musical advice from Percy Godfrey and as WWII entered its final year, I had a telephone call from his sister, in February 1945, telling me that he had passed away suddenly in the house in Spencer Road. She asked me to call in to collect some items that he had wanted me to have, including some unpublished, signed and dated, manuscripts, which I still have in my possession.&rdquo;
               </p>
               <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
                 — The recollections of John Edward Searle
@@ -163,18 +199,18 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
           </p>
 
             {/* 1938 Letter: Original Image (Left) & Styled Letter Transcript (Right) */}
-            <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto items-start">
-              {/* Left: Original Letter Photograph (No frame, top-aligned) */}
-              <figure className="flex flex-col items-center justify-start text-center">
+            <div className="my-8 md:w-[min(94vw,68rem)] md:relative md:left-1/2 md:-translate-x-1/2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6 items-stretch">
+                {/* Left: Original Letter Photograph (Matches height of transcript cleanly) */}
                 <div
-                  className="cursor-pointer group relative w-full flex items-start justify-center"
+                  className="cursor-pointer group relative w-full h-full flex items-center justify-center bg-[#D7D5CE] border border-[#C8C3B8] rounded-xs shadow-[0_8px_20px_rgba(45,36,22,0.12)] overflow-hidden"
                   onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/godfrey_letter.jpg`)}
                   title="Click to enlarge original letter"
                 >
                   <img
                     src={`${import.meta.env.BASE_URL}assets/aistudio/godfrey_letter.jpg`}
                     alt="Autograph letter from Percy Godfrey to Colonel Newton, 2nd March 1938"
-                    className="w-full h-auto object-contain block group-hover:scale-101 transition-transform duration-200"
+                    className="w-full h-full object-contain block group-hover:scale-101 transition-transform duration-200"
                   />
                   <div className="absolute inset-0 bg-stone-950/15 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
@@ -182,48 +218,49 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
                     </span>
                   </div>
                 </div>
-                <figcaption className="mt-2.5 text-xs font-serif text-stone-600 italic">
-                  Autograph letter to the Worshipful Company of Musicians, 2nd March 1938 (click to enlarge)
-                </figcaption>
-              </figure>
 
-              {/* Right: Letter Transcript styled like in the Pitt page */}
-              <div className="bg-gradient-to-b from-[#FAF6EB] via-[#F5EEDC] to-[#EFE7D2] border border-[#DCD3BD] rounded-xs shadow-[0_8px_20px_rgba(45,36,22,0.14),0_2px_6px_rgba(45,36,22,0.08)] p-5 sm:p-6 flex flex-col justify-between relative font-serif text-sm sm:text-base">
-                <div>
-                  {/* Address & Date header */}
-                  <div className="flex justify-between items-start text-xs sm:text-sm text-stone-700 pb-2 border-b border-[#E1D7BF]/60 mb-3">
-                    <span className="inline-block px-1.5 py-0.5 bg-stone-200/80 border border-stone-300 text-stone-600 font-mono text-[11px] rounded">
-                      [Received 3 March 1938]
-                    </span>
-                    <div className="text-right leading-tight">
-                      <p className="font-semibold text-stone-900">32, Bouverie Square,</p>
-                      <p>Folkestone.</p>
-                      <p className="font-semibold text-stone-800">2nd March, 1938</p>
+                {/* Right: Letter Transcript styled like in the Pitt page, matching size & readable */}
+                <div className="h-full bg-gradient-to-b from-[#FAF6EB] via-[#F5EEDC] to-[#EFE7D2] border border-[#DCD3BD] rounded-xs shadow-[0_8px_20px_rgba(45,36,22,0.14),0_2px_6px_rgba(45,36,22,0.08)] p-4 sm:p-5 flex flex-col justify-between relative font-serif text-sm sm:text-[15.5px]">
+                  <div>
+                    {/* Address & Date header */}
+                    <div className="flex justify-between items-start text-xs sm:text-sm text-stone-700 pb-2 border-b border-[#E1D7BF]/60 mb-3">
+                      <span className="inline-block px-1.5 py-0.5 bg-stone-200/80 border border-stone-300 text-stone-600 font-mono text-[11px] rounded">
+                        [Received 3 March 1938]
+                      </span>
+                      <div className="text-right leading-tight">
+                        <p className="font-semibold text-stone-900">32, Bouverie Square,</p>
+                        <p>Folkestone.</p>
+                        <p className="font-semibold text-stone-800">2nd March, 1938</p>
+                      </div>
+                    </div>
+
+                    <div className="text-stone-900 leading-[1.58] space-y-2.5 pt-0.5 text-sm sm:text-[15.5px]">
+                      <p className="font-bold text-amber-950">Dear Colonel Newton</p>
+
+                      <p>
+                        I am most grateful to the Musicians’ Company for giving a harbourage to my works. You will see by enclosed notices that I have some excuse for my unwillingness to destroy them. The Overture and one opera has had several performances, with good notices (I am keeping that work for the present on the chance of more performances).
+                      </p>
+
+                      <p>
+                        I am, more or less, laid by, owing to bronchitis nowadays, which makes it impossible to come to London, for instance, and make personal efforts for a hearing. Moreover, there is no chance of a hearing without substantial financial backing, and though a small income makes me independent to a certain extent, it is not enough to allow finding a fairly large sum for a hearing, even were I disposed to this. Some years ago I did get into touch with influential quarters in the theatrical world, only to be turned down without even a glance at the work after eighteen months. The piano and vocal scores are in one parcel, the orchestral score is in the white case, should anyone ever be anxious to look at them. I am asking you to accept the libretto of the Opera Bouffe for yourself as a curio or record of [handwritten words unclear]. I wonder if you will spot the hero. Both these works were written twenty years ago. It may interest you to learn that for the past fifteen years, if I make an average of £10 a year, I consider myself fortunate.
+                      </p>
+
+                      <p>
+                        Please convey my appreciative thanks to the Company. Possibly it would be more commonsensical to destroy them, but I haven’t the heart to do it myself, so I leave this to the future and the Company.
+                      </p>
                     </div>
                   </div>
 
-                  <div className="text-stone-900 leading-relaxed space-y-2.5 pt-0.5 text-xs sm:text-sm">
-                    <p className="font-bold text-amber-950">Dear Colonel Newton</p>
-
-                    <p>
-                      I am most grateful to the Musicians’ Company for giving a harbourage to my works. You will see by enclosed notices that I have some excuse for my unwillingness to destroy them. The Overture and one opera has had several performances, with good notices (I am keeping that work for the present on the chance of more performances).
-                    </p>
-
-                    <p>
-                      I am, more or less, laid by, owing to bronchitis nowadays, which makes it impossible to come to London, for instance, and make personal efforts for a hearing. Moreover, there is no chance of a hearing without substantial financial backing, and though a small income makes me independent to a certain extent, it is not enough to allow finding a fairly large sum for a hearing, even were I disposed to this. Some years ago I did get into touch with influential quarters in the theatrical world, only to be turned down without even a glance at the work after eighteen months. The piano and vocal scores are in one parcel, the orchestral score is in the white case, should anyone ever be anxious to look at them. I am asking you to accept the libretto of the Opera Bouffe for yourself as a curio or record of [handwritten words unclear]. I wonder if you will spot the hero. Both these works were written twenty years ago. It may interest you to learn that for the past fifteen years, if I make an average of £10 a year, I consider myself fortunate.
-                    </p>
-
-                    <p>
-                      Please convey my appreciative thanks to the Company. Possibly it would be more commonsensical to destroy them, but I haven’t the heart to do it myself, so I leave this to the future and the Company.
-                    </p>
+                  <div className="pt-3 text-right border-t border-[#E1D7BF]/60 mt-3 text-sm sm:text-base">
+                    <p className="text-stone-700 italic">Yours very sincerely,</p>
+                    <p className="font-bold text-stone-900 tracking-wide font-serif text-base sm:text-lg mt-0.5">Percy Godfrey</p>
                   </div>
                 </div>
-
-                <div className="pt-3 text-right border-t border-[#E1D7BF]/60 mt-3 text-xs sm:text-sm">
-                  <p className="text-stone-700 italic">Yours very sincerely,</p>
-                  <p className="font-bold text-stone-900 tracking-wide font-serif text-sm sm:text-base mt-0.5">Percy Godfrey</p>
-                </div>
               </div>
+
+              <p className="mt-2.5 text-center text-xs font-serif text-stone-600 italic">
+                Autograph letter to the Worshipful Company of Musicians, 2nd March 1938 (click letter image to enlarge)
+              </p>
             </div>
         </section>
 
@@ -263,14 +300,22 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
                           <button
                             type="button"
                             onClick={() => scrollToSection('godfrey-coronation-workpage')}
-                            className="text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer"
-                            title="Click to view Coronation March work page"
+                            className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer group"
+                            title="Click to view Coronation March work page and audio"
                           >
-                            {work.title}
+                            <span>{work.title}</span>
+                            <Volume2 className="w-4 h-4 text-[#B8860B] group-hover:text-[#D4AF37] shrink-0 group-hover:scale-110 transition-transform" />
                           </button>
                         ) : (
-                          <span className="font-serif text-base sm:text-lg text-stone-900 font-semibold">
-                            {work.title}
+                          <span className="inline-flex flex-wrap items-baseline gap-2.5">
+                            <span className="font-serif text-base sm:text-lg text-stone-900 font-semibold">
+                              {work.title}
+                            </span>
+                            {work.toFollow && (
+                              <span className="font-mono text-[11px] font-bold tracking-wider uppercase text-red-700">
+                                TO FOLLOW
+                              </span>
+                            )}
                           </span>
                         )}
                       </td>
@@ -296,26 +341,28 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
         {/* Section 3: Work Page — Coronation Prize-March */}
         <section id="godfrey-coronation-workpage" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-1">
+            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
               WORK PAGE
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
               Coronation Prize-March (1902)
             </h2>
 
-            {/* Audio player directly below title */}
-            <div className="max-w-xl mx-auto mt-3">
-              <audio
+            {/* Audio player flanked by quavers (left standard, right mirrored) */}
+            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
+              <WaveformAudioPlayer
                 ref={audioRef}
-                controls
-                preload="metadata"
-                className="w-full h-11 accent-amber-900 rounded focus:outline-none shadow-2xs"
+                title="Coronation Prize-March (1902)"
+                subtitle="Percy Godfrey"
                 src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Godfrey/Prize%20March.mp3"
-              >
-                <source src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Godfrey/Prize%20March.mp3" type="audio/mpeg" />
-                <source src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Godfrey/Prize%20March.mp3" type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
+                sources={[
+                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Godfrey/Prize%20March.mp3", type: "audio/mpeg" },
+                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Godfrey/Prize%20March.mp3", type: "audio/mpeg" }
+                ]}
+                className="flex-1"
+              />
+              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
             </div>
           </div>
 
@@ -414,16 +461,7 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
               {/* Notes on White Paper with Hole-Punched Left Margin */}
               <div className="flex-1 relative bg-white border border-stone-300 rounded-md shadow-sm font-serif font-normal text-stone-900 text-lg sm:text-xl leading-relaxed pl-12 sm:pl-16 pr-5 sm:pr-7 py-5 sm:py-6 space-y-4 text-left overflow-hidden">
                 {/* Hole Punches in Left Margin */}
-                <span
-                  className="absolute left-3 sm:left-3.5 top-10 sm:top-12 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                  aria-hidden="true"
-                  title="Binder hole punch"
-                />
-                <span
-                  className="absolute left-3 sm:left-3.5 bottom-10 sm:bottom-12 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FAF8F5] border border-stone-400/80 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.38)] pointer-events-none"
-                  aria-hidden="true"
-                  title="Binder hole punch"
-                />
+                <HolePunchMargin />
 
                 {/* Vertical Brown Margin Line - feinter and reaching all the way to top & bottom */}
                 <div
@@ -432,11 +470,37 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
                 />
 
                 <p className="m-0">
-                  Like most works in this genre the music is in an ABA shape. The principal march material is stately and memorable, the overall feel in this 5 minute offering is one of happiness and joy.
+                  Like most works in this genre the music is in an ABA shape. The principal march material is stately and memorable.
                 </p>
                 <p className="m-0">
-                  This is one reason the piece worked so well beyond its original occasion: its melodic construction was sufficiently straightforward and cheerful to be readily appreciated by a large audience.
+                  The slow middle section{' '}
+                  <button
+                    type="button"
+                    onClick={() => seekAudio(108)}
+                    className="font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
+                    title="Jump to 01:48 in Coronation Prize-March audio"
+                  >
+                    (01:48)
+                  </button>{' '}
+                  follows on with a simple but memorable legato theme.
                 </p>
+                <p className="m-0">
+                  The recap appears with a longer than expected coda{' '}
+                  <button
+                    type="button"
+                    onClick={() => seekAudio(260)}
+                    className="font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
+                    title="Jump to 04:20 in Coronation Prize-March audio"
+                  >
+                    (04:20)
+                  </button>
+                  , perfectly balanced and suitably dramatic.
+                </p>
+                <p className="m-0">
+                  The overall feel in this 5 minute offering is one of happiness and joy. Its melodic construction was sufficiently straightforward and cheerful to be readily appreciated by a large audience.
+                </p>
+
+                <ListenToItAllLink targetId="godfrey-coronation-workpage" />
               </div>
             </div>
 
@@ -505,7 +569,16 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
                     : activeImageModal.includes('godfrey_letter')
                     ? 'Percy Godfrey — Autograph Letter to Colonel Newton (2nd March 1938)'
                     : activeImageModal.includes('1910_Common_Room')
-                    ? 'The King’s School, Canterbury 1910 (Percy Godfrey back row 5th from left) Thanks to King’s School for this photo'
+                    ? (
+                      <span>
+                        The King’s School 1910 (Percy Godfrey back row 5th from left){' '}
+                        <span className="text-xs font-sans font-normal uppercase text-stone-500 tracking-wider">
+                          THANKS TO KING’S SCHOOL FOR PHOTO
+                        </span>
+                      </span>
+                    )
+                    : activeImageModal.includes('1914_e19aefff')
+                    ? 'Percy Godfrey (1914)'
                     : 'Percy Godfrey (1859–1945)'}
                 </h3>
                 <button

@@ -304,13 +304,13 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
           <div className="flex items-center gap-3 mb-1">
             <button
               onClick={handleTogglePlay}
-              className="w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-stone-950 flex items-center justify-center transition-colors cursor-pointer shadow-md"
+              className="p-1 text-stone-100 hover:text-white flex items-center justify-center transition-transform active:scale-95 cursor-pointer"
               title={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? (
-                <Pause className="w-4 h-4 fill-current" />
+                <Pause className="w-5 h-5 fill-current" />
               ) : (
-                <Play className="w-4 h-4 fill-current ml-0.5" />
+                <Play className="w-5 h-5 fill-current ml-0.5" />
               )}
             </button>
 
