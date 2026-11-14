@@ -73,14 +73,14 @@ export default function App() {
     }
   }, [bookmarkedIds]);
 
-  // Stay visible for 3 seconds, then fade away gently over 3 seconds
+  // Stay visible for 2 seconds, then fade away gently over 3 seconds
   useEffect(() => {
     const fadeTimer = window.setTimeout(() => {
       setIsArrivalFading(true);
-    }, 3000);
+    }, 2000);
     const hideTimer = window.setTimeout(() => {
       setShowArrivalPopup(false);
-    }, 6050);
+    }, 5050);
 
     return () => {
       window.clearTimeout(fadeTimer);

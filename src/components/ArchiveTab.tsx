@@ -85,7 +85,6 @@ export const ArchiveTab: React.FC<ArchiveTabProps> = ({ initialArticleId = null 
       <CardsCarousel
         cards={archiveCards}
         centerControls={true}
-        largeControls={true}
         onSelectCard={(id) => {
           setSelectedArticleId(id);
           window.scrollTo({ top: 380, behavior: 'smooth' });

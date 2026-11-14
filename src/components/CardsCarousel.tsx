@@ -14,7 +14,7 @@ export interface CarouselCard {
 
 interface CardsCarouselProps {
   cards: CarouselCard[];
-  onSelectCard: (id: string) => void;
+  onSelectCard?: (id: string) => void;
   centerControls?: boolean;
 }
 
@@ -208,7 +208,7 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
               <article
                 key={article.id}
                 onClick={
-                  isToFollow
+                  isToFollow || !onSelectCard
                     ? undefined
                     : () => {
                         if (!hasDraggedRef.current) {
@@ -309,7 +309,7 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
-                            onSelectCard(article.id);
+                            onSelectCard?.(article.id);
                             window.scrollTo({ top: 380, behavior: 'smooth' });
                           }}
                           className="text-xs sm:text-sm font-semibold text-stone-800 hover:text-amber-900 flex items-center gap-1.5 transition-colors cursor-pointer"
