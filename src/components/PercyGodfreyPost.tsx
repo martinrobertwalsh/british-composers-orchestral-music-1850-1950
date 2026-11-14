@@ -312,7 +312,7 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
                               {work.title}
                             </span>
                             {work.toFollow && (
-                              <span className="font-mono text-[11px] font-bold tracking-wider uppercase text-red-700">
+                              <span className="font-sans text-xs font-bold tracking-wider uppercase text-[#e60000]">
                                 TO FOLLOW
                               </span>
                             )}

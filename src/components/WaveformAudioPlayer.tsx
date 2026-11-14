@@ -15,7 +15,7 @@ import {
   VolumeX,
   Volume1
 } from 'lucide-react';
-import { cancelAudioFade } from '../utils/audioFade';
+import { cancelAudioFade, pauseOtherAudios } from '../utils/audioFade';
 
 export interface AudioSource {
   src: string;
@@ -263,6 +263,7 @@ export const WaveformAudioPlayer = forwardRef<HTMLAudioElement, WaveformAudioPla
     };
 
     const handlePlay = () => {
+      pauseOtherAudios(internalAudioRef.current);
       pendingResumeRef.current = false;
       setIsPlaying(true);
       if (onPlay) onPlay();

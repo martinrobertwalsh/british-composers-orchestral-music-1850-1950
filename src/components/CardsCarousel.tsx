@@ -203,21 +203,30 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {cards.map((article) => {
+            const isToFollow = article.category === 'to-follow';
             return (
               <article
                 key={article.id}
-                onClick={() => {
-                  if (!hasDraggedRef.current) {
-                    onSelectCard(article.id);
-                    window.scrollTo({ top: 380, behavior: 'smooth' });
-                  }
-                }}
-                className="w-[310px] sm:w-[350px] md:w-[370px] shrink-0 snap-start bg-white rounded-lg border border-stone-200/90 overflow-hidden shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col group cursor-pointer select-none"
+                onClick={
+                  isToFollow
+                    ? undefined
+                    : () => {
+                        if (!hasDraggedRef.current) {
+                          onSelectCard(article.id);
+                          window.scrollTo({ top: 380, behavior: 'smooth' });
+                        }
+                      }
+                }
+                className={`w-[310px] sm:w-[350px] md:w-[370px] shrink-0 snap-start bg-white rounded-lg border border-stone-200/90 overflow-hidden shadow-2xs transition-all duration-200 flex flex-col select-none ${
+                  isToFollow
+                    ? 'cursor-default'
+                    : 'hover:shadow-md group cursor-pointer'
+                }`}
               >
                 {/* Portrait Container - cleanly proportioned photo, centered for archive */}
                 <div
                   className={`p-5 bg-stone-100/70 border-b border-stone-200/80 flex items-center ${
-                    article.category === 'to-follow'
+                    isToFollow
                       ? 'justify-between gap-4'
                       : 'justify-center'
                   }`}
@@ -225,26 +234,28 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
                   {/* Photo */}
                   <div
                     className={`${
-                      article.category === 'to-follow'
+                      isToFollow
                         ? 'w-36 sm:w-40'
-                        : 'w-40 sm:w-44'
-                    } aspect-3/4 overflow-hidden rounded border border-stone-300 group-hover:border-amber-800 bg-white shadow-xs shrink-0 transition-colors duration-200 group/portrait`}
-                    title={`Open article on ${article.name}`}
+                        : 'w-40 sm:w-44 group-hover:border-amber-800 group/portrait'
+                    } aspect-3/4 overflow-hidden rounded border border-stone-300 bg-white shadow-xs shrink-0 transition-colors duration-200`}
+                    title={isToFollow ? `${article.name} — To Follow` : `Open article on ${article.name}`}
                   >
                     <img
                       src={article.image}
                       alt={`${article.name} (${article.dates})`}
-                      className="w-full h-full object-cover object-top filter grayscale contrast-105 pointer-events-none group-hover/portrait:scale-105 transition-transform duration-500"
+                      className={`w-full h-full object-cover object-top filter grayscale contrast-105 pointer-events-none ${
+                        isToFollow ? '' : 'group-hover/portrait:scale-105 transition-transform duration-500'
+                      }`}
                       draggable={false}
                     />
                   </div>
 
                   {/* Category Stamp to the right of photo - only for To Follow */}
-                  {article.category === 'to-follow' && (
+                  {isToFollow && (
                     <div className="flex-1 flex items-center justify-center p-2">
                       <div className="transform -rotate-7 select-none">
-                        <div className="border border-stone-700/80 p-[2px] rounded-xs bg-stone-50/70 shadow-2xs">
-                          <div className="border border-stone-700/80 px-2.5 py-1 text-stone-800 font-serif font-bold text-xs sm:text-xs tracking-widest uppercase text-center">
+                        <div className="border border-[#dc2626]/85 p-[2px] rounded-xs bg-red-50/40 shadow-2xs">
+                          <div className="border border-[#dc2626]/85 px-2.5 py-1 text-[#dc2626] font-serif font-bold text-xs sm:text-xs tracking-widest uppercase text-center">
                             TO FOLLOW
                           </div>
                         </div>
@@ -257,7 +268,11 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
                     {/* Name title with dates */}
-                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 group-hover:text-amber-900 transition-colors">
+                    <h3
+                      className={`font-serif text-xl sm:text-2xl font-bold text-stone-900 transition-colors ${
+                        isToFollow ? '' : 'group-hover:text-amber-900'
+                      }`}
+                    >
                       {article.name} ({article.dates})
                     </h3>
 
@@ -278,21 +293,35 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
 
                   {/* Actions / Status footer */}
                   <div className="mt-5 pt-3 border-t border-stone-200/80 flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onSelectCard(article.id);
-                        window.scrollTo({ top: 380, behavior: 'smooth' });
-                      }}
-                      className="text-xs sm:text-sm font-semibold text-stone-800 hover:text-amber-900 flex items-center gap-1.5 transition-colors cursor-pointer"
-                    >
-                      <BookOpen className="w-4 h-4 text-amber-900" />
-                      <span>Full Archival Page</span>
-                    </button>
-                    <span className="font-mono text-[10px] text-stone-400 uppercase tracking-widest font-semibold">
-                      {article.category === 'archive' ? 'Published' : 'To Follow'}
-                    </span>
+                    {isToFollow ? (
+                      <>
+                        <span className="text-xs sm:text-sm font-serif italic text-stone-500 flex items-center gap-1.5 select-none">
+                          <BookOpen className="w-4 h-4 text-stone-400" />
+                          <span>Forthcoming</span>
+                        </span>
+                        <span className="font-mono text-[10px] text-[#dc2626] uppercase tracking-widest font-bold">
+                          To Follow
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSelectCard(article.id);
+                            window.scrollTo({ top: 380, behavior: 'smooth' });
+                          }}
+                          className="text-xs sm:text-sm font-semibold text-stone-800 hover:text-amber-900 flex items-center gap-1.5 transition-colors cursor-pointer"
+                        >
+                          <BookOpen className="w-4 h-4 text-amber-900" />
+                          <span>Full Archival Page</span>
+                        </button>
+                        <span className="font-mono text-[10px] text-stone-400 uppercase tracking-widest font-semibold">
+                          Published
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
               </article>

@@ -274,7 +274,7 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header bar: Centred title on the page */}
       <div className="border-b border-stone-200/80 pb-4 text-center">
-        <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-wide text-amber-900">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-wide text-[#dc2626]">
           TO FOLLOW
         </h2>
       </div>

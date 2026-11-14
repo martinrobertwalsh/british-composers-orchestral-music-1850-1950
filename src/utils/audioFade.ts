@@ -65,6 +65,18 @@ function applySeekSafely(audio: HTMLAudioElement, seconds: number): void {
 }
 
 /**
+ * Pauses any other playing <audio> elements on the page so only one work plays at a time.
+ */
+export function pauseOtherAudios(except?: HTMLAudioElement | null): void {
+  document.querySelectorAll('audio').forEach((other) => {
+    if (other !== except && !other.paused) {
+      cancelAudioFade(other, true);
+      other.pause();
+    }
+  });
+}
+
+/**
  * Seeks an HTMLAudioElement to `seconds` and smoothly fades the audio volume in
  * once playback actually commences at the new timestamp (preventing abrupt cuts
  * even if the browser briefly buffers after seeking).
@@ -75,6 +87,8 @@ export function seekWithFadeIn(
   fadeDurationMs = 2400
 ): void {
   if (!audio) return;
+
+  pauseOtherAudios(audio);
 
   const targetVolume = getTargetVolume(audio);
   cancelAudioFade(audio, false);
@@ -141,6 +155,7 @@ export function seekWithFadeIn(
 export function seekDirect(audio: HTMLAudioElement | null, seconds: number): void {
   if (!audio) return;
 
+  pauseOtherAudios(audio);
   cancelAudioFade(audio, true);
   applySeekSafely(audio, seconds);
 
