@@ -414,16 +414,7 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
             <ArrowUp className="w-4 h-4 text-amber-900" />
             <span>Return to top</span>
           </button>
-          {onBack && (
-            <button
-              type="button"
-              onClick={onBack}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded-lg font-serif text-sm font-semibold shadow-2xs transition-all cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4 text-amber-300" />
-              <span>Back to {backLabel} Cards</span>
-            </button>
-          )}
+
         </div>
 
         {/* Image Modal */}
