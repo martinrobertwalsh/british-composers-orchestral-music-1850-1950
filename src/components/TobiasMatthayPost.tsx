@@ -421,7 +421,7 @@ export const TobiasMatthayPost: React.FC<TobiasMatthayPostProps> = ({ onBack, ba
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded-lg font-serif text-sm font-semibold shadow-2xs transition-all cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 text-amber-300" />
-              <span>Back to To Follow Cards</span>
+              <span>Back to {backLabel} Cards</span>
             </button>
           )}
         </div>
