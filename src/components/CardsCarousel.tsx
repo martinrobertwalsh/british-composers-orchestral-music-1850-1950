@@ -254,8 +254,8 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
                   {isToFollow && (
                     <div className="flex-1 flex items-center justify-center p-2">
                       <div className="transform -rotate-7 select-none">
-                        <div className="border border-[#dc2626]/85 p-[2px] rounded-xs bg-red-50/40 shadow-2xs">
-                          <div className="border border-[#dc2626]/85 px-2.5 py-1 text-[#dc2626] font-serif font-bold text-xs sm:text-xs tracking-widest uppercase text-center">
+                        <div className="border border-amber-900/75 p-[2px] rounded-xs bg-amber-50/40 shadow-2xs">
+                          <div className="border border-amber-900/75 px-2.5 py-1 text-amber-900 font-serif font-bold text-xs sm:text-xs tracking-widest uppercase text-center">
                             TO FOLLOW
                           </div>
                         </div>
@@ -299,7 +299,7 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
                           <BookOpen className="w-4 h-4 text-stone-400" />
                           <span>Forthcoming</span>
                         </span>
-                        <span className="font-mono text-[10px] text-[#dc2626] uppercase tracking-widest font-bold">
+                        <span className="font-mono text-[10px] text-stone-400 uppercase tracking-widest font-semibold">
                           To Follow
                         </span>
                       </>

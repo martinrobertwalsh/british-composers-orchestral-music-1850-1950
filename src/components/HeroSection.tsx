@@ -77,14 +77,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             onClick={() => onTabChange('to-follow')}
             className={`relative min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
               activeTab === 'to-follow'
-                ? 'bg-[#dc2626] text-white shadow-sm border border-[#dc2626] ring-1 ring-[#dc2626]/30'
-                : 'bg-white text-[#dc2626] hover:bg-red-50 hover:text-[#b91c1c] border border-[#dc2626]/60 shadow-2xs'
+                ? 'bg-stone-900 text-stone-50 shadow-sm border border-stone-900 ring-1 ring-stone-900/30'
+                : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-2xs'
             }`}
           >
             <span>TO FOLLOW</span>
             <span
               className={`absolute bottom-1 right-2 text-[10px] sm:text-[11px] font-mono font-bold leading-none pointer-events-none transition-colors ${
-                activeTab === 'to-follow' ? 'text-red-100' : 'text-[#dc2626]/80'
+                activeTab === 'to-follow' ? 'text-amber-400' : 'text-stone-500'
               }`}
             >
               {toFollowTotal}
