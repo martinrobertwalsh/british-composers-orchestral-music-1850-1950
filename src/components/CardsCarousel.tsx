@@ -254,8 +254,8 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
                   {isToFollow && (
                     <div className="flex-1 flex items-center justify-center p-2">
                       <div className="transform -rotate-7 select-none">
-                        <div style={{ borderColor: '#78716c', backgroundColor: '#fafaf9' }} className="border border-stone-500 p-[2px] rounded-xs bg-stone-50 shadow-2xs">
-                          <div style={{ borderColor: '#78716c', color: '#57534e' }} className="border border-stone-500 px-2.5 py-1 text-stone-600 font-serif font-bold text-xs sm:text-xs tracking-widest uppercase text-center">
+                        <div className="border border-amber-900/75 p-[2px] rounded-xs bg-amber-50/40 shadow-2xs">
+                          <div className="border border-amber-900/75 px-2.5 py-1 text-amber-900 font-serif font-bold text-xs sm:text-xs tracking-widest uppercase text-center">
                             TO FOLLOW
                           </div>
                         </div>
