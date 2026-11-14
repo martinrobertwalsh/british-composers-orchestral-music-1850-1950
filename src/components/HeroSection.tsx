@@ -6,12 +6,18 @@ interface HeroSectionProps {
   activeTab: 'home' | 'welcome' | 'to-follow' | 'archive' | 'contact';
   onTabChange: (tab: 'home' | 'welcome' | 'to-follow' | 'archive' | 'contact') => void;
   onOpenWelcome: () => void;
+  showArrivalPopup?: boolean;
+  isArrivalFading?: boolean;
+  onDismissArrival?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   activeTab,
   onTabChange,
-  onOpenWelcome
+  onOpenWelcome,
+  showArrivalPopup = false,
+  isArrivalFading = false,
+  onDismissArrival,
 }) => {
   const toFollowTotal = TO_FOLLOW_ARTICLES.length;
   const archiveTotal = ARCHIVE_ARTICLES.length;
@@ -51,6 +57,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <h2 className="font-serif text-lg sm:text-2xl md:text-3xl lg:text-3xl text-amber-300 font-normal italic tracking-wide drop-shadow-lg">
             British Orchestral Music 1850–1950
           </h2>
+
+          {/* Arrival Notification Popup just under the subtitle */}
+          {showArrivalPopup && (
+            <div className="relative w-full">
+              <div
+                className={`absolute inset-x-0 top-3 sm:top-4 z-30 flex justify-center px-4 transition-all duration-[3000ms] ease-out ${
+                  isArrivalFading ? 'opacity-0 scale-98 pointer-events-none' : 'opacity-100 scale-100'
+                }`}
+                role="status"
+                aria-live="polite"
+              >
+                <div
+                  onClick={onDismissArrival}
+                  className="bg-[#FAF8F5]/95 border-2 border-amber-900/75 rounded-lg px-5 py-2.5 sm:px-8 sm:py-3.5 shadow-2xl text-center max-w-md cursor-pointer"
+                >
+                  <p className="font-serif text-sm sm:text-lg font-bold tracking-widest uppercase text-amber-900">
+                    NEW ADDITIONS TO THE ARCHIVE
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

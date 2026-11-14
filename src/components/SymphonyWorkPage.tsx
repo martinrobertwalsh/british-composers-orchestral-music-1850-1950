@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, ZoomIn, Calendar, X, BookOpen, PenLine, Play } from 'lucide-react';
+import { ArrowLeft, ArrowUp, ZoomIn, Calendar, X, BookOpen, PenLine, Play } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
 import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
@@ -106,6 +106,18 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
                   <span>{jump.label}</span>
                 </button>
               ))}
+            </div>
+
+            <div className="mt-4 flex justify-center">
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-stone-100 text-stone-700 hover:text-amber-900 border border-stone-300 rounded-md font-mono text-xs font-semibold tracking-wider uppercase shadow-2xs transition-colors cursor-pointer"
+                title="Read from the top while you listen"
+              >
+                <ArrowUp className="w-3.5 h-3.5 text-amber-900" />
+                <span>READ FROM THE TOP WHILE YOU LISTEN</span>
+              </button>
             </div>
           </div>
         </header>

@@ -42,35 +42,13 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
   return (
     <article id="william-speer-post" className="w-full bg-[#FAF8F5] text-stone-900 py-12 px-4 sm:px-6 lg:px-8 selection:bg-amber-200 selection:text-stone-900">
       <div className="max-w-4xl mx-auto">
-        {/* Header Bar: Category label on left, Jump to Audio right-justified on same level */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            {onBack && !isFeatured && (
-              <button
-                type="button"
-                onClick={onBack}
-                className="inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm font-semibold tracking-wider text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer mr-2"
-                title="Back to To Follow"
-              >
-                <ArrowLeft className="w-3.5 h-3.5 text-amber-900" />
-                <span>To Follow</span>
-              </button>
-            )}
+        {isFeatured && (
+          <div className="flex items-center justify-between mb-3">
             <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
-              {isFeatured || !onBack ? 'FEATURED POST' : 'ARTICLE TO FOLLOW'}
+              FEATURED POST
             </span>
           </div>
-
-          <button
-            type="button"
-            onClick={() => scrollToSection('speer-audio-selector')}
-            className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer group"
-            title="Jump to audio"
-          >
-            <span>JUMP TO AUDIO</span>
-            <Volume2 className="w-4 h-4 text-amber-900 group-hover:scale-110 transition-transform" />
-          </button>
-        </div>
+        )}
 
         {/* Post Title */}
         <header className="text-center mb-8 pb-6 border-b border-stone-200">
@@ -79,13 +57,13 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
           </h1>
 
           {/* Subtitle / Quote */}
-          <p className="font-times italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
+          <p className="font-times italic text-xl sm:text-2xl text-black max-w-2xl mx-auto leading-relaxed mt-3">
             &ldquo;In the shadow of the Malverns and Elgar&rdquo;
           </p>
         </header>
 
-        {/* William Speer Photo on Left & Early Life Narrative to Right */}
-        <div className="my-8 flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
+        {/* William Speer Photo on Left & Compact Audio Realisations + Opening Paragraph on Right */}
+        <div className="mt-8 mb-4 flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start">
           <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
             <div
               className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
@@ -109,19 +87,58 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
             </figcaption>
           </figure>
 
-          <div className="flex-1 font-serif text-stone-800 text-lg sm:text-xl leading-relaxed pt-1 space-y-4 text-left">
-            <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-stone-900 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
-              William Henry Speer was born in London in 1863. He studied with Charles Harford Lloyd at Gloucester and later enrolled at the Royal College of Organists in London, where he eventually gained a Doctorate. Here he joined the long list of aspiring musicians who were taught by Charles Villiers Stanford, who had so much influence at Trinity College Cambridge, which William also attended.
-            </p>
+          <div className="flex-1 min-w-0 w-full flex flex-col gap-5">
+            {/* Audio Realisations Work-Page Selector */}
+            <div
+              id="speer-audio-selector"
+              className="w-full sm:w-1/2 scroll-mt-24"
+            >
+              <div className="w-full bg-white border border-stone-300 rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-3 shadow-2xs text-left">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="font-serif text-base sm:text-lg font-bold tracking-wider text-amber-900 uppercase">
+                    Audio Realisations
+                  </span>
+                  <QuaversIcon ascending className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
+                </div>
 
-            <p>
-              His working life included church appointments, notably at Bexhill from 1903, but he composed regularly and as well as a large amount of choral/organ music a substantial body of his output extended into the concert hall.
+                <div className="grid grid-cols-1 gap-2 w-full">
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('speer-rhapsody-workpage')}
+                    className="flex items-center justify-between gap-2 px-3 py-2 bg-[#FAF8F5] hover:bg-amber-50/70 border border-stone-300 hover:border-amber-800/60 rounded-md text-left transition-colors cursor-pointer group"
+                  >
+                    <div className="min-w-0 font-serif text-sm sm:text-base font-bold text-stone-900 group-hover:text-amber-950 leading-snug">
+                      Rhapsody in E&#9837;
+                    </div>
+                    <Volume2 className="w-4 h-4 text-amber-900 shrink-0 transition-transform group-hover:scale-110" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('speer-nocturne-workpage')}
+                    className="flex items-center justify-between gap-2 px-3 py-2 bg-[#FAF8F5] hover:bg-amber-50/70 border border-stone-300 hover:border-amber-800/60 rounded-md text-left transition-colors cursor-pointer group"
+                  >
+                    <div className="min-w-0 font-serif text-sm sm:text-base font-bold text-stone-900 group-hover:text-amber-950 leading-snug">
+                      Nocturne for strings
+                    </div>
+                    <Volume2 className="w-4 h-4 text-amber-900 shrink-0 transition-transform group-hover:scale-110" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <p className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed text-left first-letter:text-5xl first-letter:font-bold first-letter:text-stone-900 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
+              William Henry Speer was born in London in 1863. He studied with Charles Harford Lloyd at Gloucester and later enrolled at the Royal College of Organists in London, where he eventually gained a Doctorate. Here he joined the long list of aspiring musicians who were taught by Charles Villiers Stanford, who had so much influence at Trinity College Cambridge, which William also attended.
             </p>
           </div>
         </div>
 
-        {/* Biographical Narrative: Memoir from Caroline Hart */}
-        <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed mt-6 text-left">
+        {/* Early Life Narrative & Memoir from Caroline Hart */}
+        <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed mt-4 space-y-4 text-left">
+          <p>
+            His working life included church appointments, notably at Bexhill from 1903, but he composed regularly and as well as a large amount of choral/organ music a substantial body of his output extended into the concert hall.
+          </p>
+
           <p>
             Caroline Hart, grand-daughter of William Henry Speer, has kindly provided some background on the life of her grandfather:
           </p>
@@ -185,20 +202,13 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
 
         {/* Orchestral Work List Section */}
         <section id="speer-works" className="mt-10 pt-6 border-t-2 border-stone-300/70 scroll-mt-20">
-          <div className="mb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-            <div>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
-                Orchestral work list
-              </h2>
-              <p className="font-serif italic text-stone-700 text-lg sm:text-xl mt-0.5">
-                Showing only surviving scores MS or published
-              </p>
-            </div>
-            <div className="text-left sm:text-right pb-0.5">
-              <span className="font-serif text-xs sm:text-sm uppercase tracking-wider font-semibold text-stone-700">
-                WORKS IN <span className="text-[#B8860B] font-bold">GOLD</span> ARE LINKS TO THEIR WORK PAGES
-              </span>
-            </div>
+          <div className="mb-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
+              Orchestral work list
+            </h2>
+            <p className="font-serif italic text-stone-700 text-lg sm:text-xl sm:text-right">
+              Showing only surviving scores MS or published
+            </p>
           </div>
 
           {/* Works Table */}
@@ -224,11 +234,11 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
                             <button
                               type="button"
                               onClick={() => scrollToSection(work.targetSectionId || 'speer-nocturne-workpage')}
-                              className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer group"
+                              className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-black hover:text-amber-950 font-bold transition-all cursor-pointer group"
                               title={`Click to view ${work.title} work page and audio`}
                             >
                               <span>{work.title}</span>
-                              <Volume2 className="w-4 h-4 text-[#B8860B] group-hover:text-[#D4AF37] shrink-0 group-hover:scale-110 transition-transform" />
+                              <Volume2 className="w-4 h-4 text-amber-900 shrink-0 group-hover:scale-110 transition-transform" />
                             </button>
                           ) : (
                             <span className="font-serif text-base sm:text-lg text-stone-900 font-semibold">
@@ -252,68 +262,15 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
           {/* Missing Scores Note Under Table */}
           <p className="mt-5 sm:mt-6 text-base sm:text-lg font-serif text-stone-800 leading-relaxed">
             <span className="font-mono font-bold uppercase tracking-wider text-xs sm:text-sm text-stone-900 mr-2">
-              MISSING SCORES:
+              MISSING SCORE:
             </span>
-            Symphony in E flat (first performed on 5 March 1906 under Dan Godfrey at the Bournemouth Symphony Concerts, now lost) ; miscellaneous early sketches and unpublished part manuscripts.
+            Symphony in E&#9837;
           </p>
 
-          {/* Acknowledgement */}
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base font-serif italic text-stone-700 leading-relaxed text-center">
-            I am grateful to Caroline Hart, William Henry Speer’s granddaughter, for permission to create and share realisations of his music.
-          </p>
         </section>
 
-        {/* Audio Realisations Work-Page Selector */}
-        <div
-          id="speer-audio-selector"
-          className="mt-12 pt-8 border-t-2 border-stone-300/70 scroll-mt-24"
-        >
-          <div className="bg-white border border-stone-300 rounded-lg p-5 sm:p-6 shadow-2xs text-center">
-            <span className="font-mono text-xs font-semibold tracking-widest text-amber-900 uppercase block mb-1.5">
-              Audio Realisations
-            </span>
-            <p className="font-serif italic text-base sm:text-lg text-stone-700 mb-5">
-              Choose a work below to read the notes and listen to its realisation:
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-w-2xl mx-auto">
-              <button
-                type="button"
-                onClick={() => scrollToSection('speer-rhapsody-workpage')}
-                className="flex items-center justify-between gap-3 px-4 py-3.5 bg-[#FAF8F5] hover:bg-amber-50/70 border border-stone-300 hover:border-amber-800/60 rounded-md text-left transition-colors cursor-pointer group"
-              >
-                <div className="min-w-0">
-                  <div className="font-mono text-[11px] uppercase tracking-wider text-stone-500 tabular-nums">
-                    Work Page 1 · c1905
-                  </div>
-                  <div className="font-serif text-lg sm:text-xl font-bold text-stone-900 group-hover:text-amber-950 truncate mt-0.5">
-                    Rhapsody in E&#9837;
-                  </div>
-                </div>
-                <Volume2 className="w-5 h-5 text-amber-900 shrink-0 transition-transform group-hover:scale-110" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => scrollToSection('speer-nocturne-workpage')}
-                className="flex items-center justify-between gap-3 px-4 py-3.5 bg-[#FAF8F5] hover:bg-amber-50/70 border border-stone-300 hover:border-amber-800/60 rounded-md text-left transition-colors cursor-pointer group"
-              >
-                <div className="min-w-0">
-                  <div className="font-mono text-[11px] uppercase tracking-wider text-stone-500 tabular-nums">
-                    Work Page 2 · Op. 17 (c1912)
-                  </div>
-                  <div className="font-serif text-lg sm:text-xl font-bold text-stone-900 group-hover:text-amber-950 truncate mt-0.5">
-                    Nocturne for strings
-                  </div>
-                </div>
-                <Volume2 className="w-5 h-5 text-amber-900 shrink-0 transition-transform group-hover:scale-110" />
-              </button>
-            </div>
-          </div>
-        </div>
-
         {/* Section: Work Page — Rhapsody in Eb */}
-        <section id="speer-rhapsody-workpage" className="mt-12 pt-8 border-t border-stone-200 scroll-mt-20">
+        <section id="speer-rhapsody-workpage" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
             <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
               WORK PAGE
@@ -343,6 +300,18 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
                 className="flex-1"
               />
               <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
+            </div>
+
+            <div className="mt-4 flex justify-center">
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-stone-100 text-stone-700 hover:text-amber-900 border border-stone-300 rounded-md font-mono text-xs font-semibold tracking-wider uppercase shadow-2xs transition-colors cursor-pointer"
+                title="Read from the top while you listen"
+              >
+                <ArrowUp className="w-3.5 h-3.5 text-amber-900" />
+                <span>READ FROM THE TOP WHILE YOU LISTEN</span>
+              </button>
             </div>
           </div>
 
@@ -558,6 +527,18 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
               />
               <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
             </div>
+
+            <div className="mt-4 flex justify-center">
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-stone-100 text-stone-700 hover:text-amber-900 border border-stone-300 rounded-md font-mono text-xs font-semibold tracking-wider uppercase shadow-2xs transition-colors cursor-pointer"
+                title="Read from the top while you listen"
+              >
+                <ArrowUp className="w-3.5 h-3.5 text-amber-900" />
+                <span>READ FROM THE TOP WHILE YOU LISTEN</span>
+              </button>
+            </div>
           </div>
 
           {/* Narrative & Musical Analysis */}
@@ -761,6 +742,11 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
             </button>
           )}
         </div>
+
+        {/* Acknowledgement */}
+        <p className="mt-8 pt-6 border-t border-stone-200/80 text-sm sm:text-base font-serif italic text-stone-700 leading-relaxed text-center">
+          I am grateful to Caroline Hart, William Henry Speer’s granddaughter, for permission to create and share realisations of his music.
+        </p>
       </div>
 
       {/* Image Modal */}

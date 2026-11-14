@@ -50,35 +50,6 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
   return (
     <article id="cunningham-woods-post" className="w-full bg-[#FAF8F5] text-stone-900 py-12 px-4 sm:px-6 lg:px-8 selection:bg-amber-200 selection:text-stone-900">
       <div className="max-w-4xl mx-auto">
-        {/* Header Bar */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            {onBack && (
-              <button
-                type="button"
-                onClick={onBack}
-                className="inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm font-semibold tracking-wider text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer mr-2"
-                title="Back to To Follow"
-              >
-                <ArrowLeft className="w-3.5 h-3.5 text-amber-900" />
-                <span>To Follow</span>
-              </button>
-            )}
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
-              ARTICLE TO FOLLOW
-            </span>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => scrollToSection('woods-gressenhall-workpage')}
-            className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 hover:text-amber-900 uppercase transition-colors cursor-pointer group"
-            title="Jump to audio"
-          >
-            <span>JUMP TO AUDIO</span>
-            <Volume2 className="w-3.5 h-3.5 text-amber-900 group-hover:scale-110 transition-transform" />
-          </button>
-        </div>
 
         {/* Post Title & Subtitle */}
         <header className="text-center mb-8 pb-6 border-b border-stone-200">
@@ -93,8 +64,8 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
 
         {/* Section 1: Biography */}
         <section id="woods-bio">
-          {/* Portrait on Left & First Paragraph to Right */}
-          <div className="my-8 flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
+          {/* Portrait on Left & Compact Audio Realisations + Opening Paragraph on Right */}
+          <div className="mt-8 mb-4 flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start">
             <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
@@ -117,18 +88,44 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               </figcaption>
             </figure>
 
-            <div className="flex-1 font-serif text-stone-800 text-lg sm:text-xl leading-relaxed pt-1 space-y-4 text-left">
-              <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-stone-900 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
+            <div className="flex-1 min-w-0 w-full flex flex-col gap-5">
+              {/* Audio Realisations Work-Page Selector */}
+              <div
+                id="woods-audio-selector"
+                className="w-full sm:w-1/2 scroll-mt-24"
+              >
+                <div className="w-full bg-white border border-stone-300 rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-3 shadow-2xs text-left">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="font-serif text-base sm:text-lg font-bold tracking-wider text-amber-900 uppercase">
+                      Audio Realisation
+                    </span>
+                    <QuaversIcon ascending className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('woods-gressenhall-workpage')}
+                    className="w-full flex items-center justify-between gap-2 px-3 py-2 bg-[#FAF8F5] hover:bg-amber-50/70 border border-stone-300 hover:border-amber-800/60 rounded-md text-left transition-colors cursor-pointer group"
+                  >
+                    <div className="min-w-0 font-serif text-sm sm:text-base font-bold text-stone-900 group-hover:text-amber-950 leading-snug">
+                      The Gressenhall Suite for strings (1915)
+                    </div>
+                    <Volume2 className="w-4 h-4 text-amber-900 shrink-0 transition-transform group-hover:scale-110" />
+                  </button>
+                </div>
+              </div>
+
+              <p className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed text-left first-letter:text-5xl first-letter:font-bold first-letter:text-stone-900 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
                 Born in London, Cunningham Woods was the son of court dressmaker Alfred Woods. From 1877 to 1880 he attended the National Training School for Music.
-              </p>
-              <p>
-                This was a music conservatory located in Kensington, which in 1882 was absorbed into the newly created Royal College of Music, opening its doors to pupils in 1883. At the National Training School, Woods was taught by Sir Arthur Sullivan and Ebenezer Prout.
               </p>
             </div>
           </div>
 
           {/* Narrative & Oxford / Highgate School */}
-          <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-6 mt-6 text-left">
+          <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-6 mt-4 text-left">
+            <p>
+              This was a music conservatory located in Kensington, which in 1882 was absorbed into the newly created Royal College of Music, opening its doors to pupils in 1883. At the National Training School, Woods was taught by Sir Arthur Sullivan and Ebenezer Prout.
+            </p>
             <p>
               He was employed as an organist, first at Brasenose College and then at Exeter College Oxford, where he was awarded his MA degree in 1891. Whilst in Oxford he wrote music for the theatre, mainly productions of Shakespeare, including incidental scores for <em>The Two Gentlemen of Verona</em> (1893) and <em>The Tempest</em> (1894). He later served as private organist to the Duke of Marlborough at Blenheim Palace.
             </p>
@@ -244,20 +241,13 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
 
         {/* Section 2: Complete List of Orchestral Works */}
         <section id="woods-works-table" className="mt-10 pt-6 border-t-2 border-stone-300/70">
-          <div className="mb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-            <div>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
-                Orchestral work list
-              </h2>
-              <p className="font-serif italic text-stone-700 text-lg sm:text-xl mt-0.5">
-                Showing only surviving scores MS or published
-              </p>
-            </div>
-            <div className="text-left sm:text-right pb-0.5">
-              <span className="font-serif text-xs sm:text-sm uppercase tracking-wider font-semibold text-stone-700">
-                WORKS IN <span className="text-[#B8860B] font-bold">GOLD</span> ARE LINKS TO THEIR WORK PAGES
-              </span>
-            </div>
+          <div className="mb-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
+              Orchestral work list
+            </h2>
+            <p className="font-serif italic text-stone-700 text-lg sm:text-xl sm:text-right">
+              Showing only surviving scores MS or published
+            </p>
           </div>
 
           {/* Works Table */}
@@ -278,11 +268,11 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
                           <button
                             type="button"
                             onClick={() => scrollToSection('woods-gressenhall-workpage')}
-                            className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-[#B8860B] hover:text-[#D4AF37] font-bold transition-all cursor-pointer group"
+                            className="inline-flex items-center gap-2 text-left font-serif text-lg sm:text-xl text-black hover:text-amber-950 font-bold transition-all cursor-pointer group"
                             title="Click to view The Gressenhall Suite work page and audio"
                           >
                             <span>{work.title}</span>
-                            <Volume2 className="w-4 h-4 text-[#B8860B] group-hover:text-[#D4AF37] shrink-0 group-hover:scale-110 transition-transform" />
+                            <Volume2 className="w-4 h-4 text-amber-900 shrink-0 group-hover:scale-110 transition-transform" />
                           </button>
                         ) : (
                           <span className="font-serif text-base sm:text-lg text-stone-900 font-semibold">
@@ -360,6 +350,18 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
                   <span>{mov.label}</span>
                 </button>
               ))}
+            </div>
+
+            <div className="mt-4 flex justify-center">
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-stone-100 text-stone-700 hover:text-amber-900 border border-stone-300 rounded-md font-mono text-xs font-semibold tracking-wider uppercase shadow-2xs transition-colors cursor-pointer"
+                title="Read from the top while you listen"
+              >
+                <ArrowUp className="w-3.5 h-3.5 text-amber-900" />
+                <span>READ FROM THE TOP WHILE YOU LISTEN</span>
+              </button>
             </div>
           </div>
 

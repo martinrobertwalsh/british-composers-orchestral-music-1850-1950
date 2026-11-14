@@ -13,6 +13,8 @@ import { Mail, Send, CheckCircle2, Library, Music, FolderArchive } from 'lucide-
 export default function App() {
   const [activeTab, setActiveTab] = useState<'home' | 'welcome' | 'to-follow' | 'archive' | 'contact'>('home');
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState<boolean>(false);
+  const [showArrivalPopup, setShowArrivalPopup] = useState<boolean>(true);
+  const [isArrivalFading, setIsArrivalFading] = useState<boolean>(false);
   const [selectedComposer, setSelectedComposer] = useState<Composer | null>(null);
   const [currentTheme, setCurrentTheme] = useState<MusicalTheme>(HARVEY_LOHR_SYMPHONY_3_THEME);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -71,6 +73,21 @@ export default function App() {
     }
   }, [bookmarkedIds]);
 
+  // Stay visible for 3 seconds, then fade away gently over 3 seconds
+  useEffect(() => {
+    const fadeTimer = window.setTimeout(() => {
+      setIsArrivalFading(true);
+    }, 3000);
+    const hideTimer = window.setTimeout(() => {
+      setShowArrivalPopup(false);
+    }, 6050);
+
+    return () => {
+      window.clearTimeout(fadeTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, []);
+
   const handleToggleBookmark = (id: string) => {
     setBookmarkedIds((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
@@ -96,6 +113,9 @@ export default function App() {
         activeTab={activeTab}
         onTabChange={handleTabChange}
         onOpenWelcome={() => setIsWelcomeModalOpen(true)}
+        showArrivalPopup={showArrivalPopup}
+        isArrivalFading={isArrivalFading}
+        onDismissArrival={() => setShowArrivalPopup(false)}
       />
 
       {/* Main Tab Views */}
