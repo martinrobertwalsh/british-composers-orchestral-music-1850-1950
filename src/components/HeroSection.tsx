@@ -75,6 +75,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </button>
           <button
             onClick={() => onTabChange('to-follow')}
+            style={{ backgroundColor: activeTab === 'to-follow' ? '#292524' : '#ffffff', color: activeTab === 'to-follow' ? '#fafaf9' : '#44403c', borderColor: '#d6d3d1' }}
             className={`relative min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
               activeTab === 'to-follow'
                 ? 'bg-stone-900 text-stone-50 shadow-sm border border-stone-900 ring-1 ring-stone-900/30'
