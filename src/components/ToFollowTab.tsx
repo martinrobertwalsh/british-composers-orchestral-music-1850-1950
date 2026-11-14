@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { trackPage } from '../lib/analytics';
+import React, { useState, useEffect } from 'react';
 import { NormanONeillPost } from './NormanONeillPost';
 import { PercyGodfreyPost } from './PercyGodfreyPost';
 import { ROMorrisPost } from './ROMorrisPost';
@@ -122,6 +123,11 @@ export interface ToFollowTabProps {
 export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = null }) => {
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(initialArticleId);
 
+  useEffect(() => {
+    const article = TO_FOLLOW_ARTICLES.find((item) => item.id === selectedArticleId);
+    if (article) trackPage('/articles/' + article.id, article.name + ' — Forgotten Composers');
+    else trackPage('/to-follow', 'To Follow');
+  }, [selectedArticleId]);
   // Convert to CarouselCard items
   const toFollowCards: CarouselCard[] = TO_FOLLOW_ARTICLES.map((a) => ({
     ...a,

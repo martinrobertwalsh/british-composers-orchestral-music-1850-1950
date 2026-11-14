@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { trackPage } from '../lib/analytics';
+import React, { useState, useEffect } from 'react';
 import { FeaturedPost } from './FeaturedPost';
 import { TobiasMatthayPost } from './TobiasMatthayPost';
 import { PercyPittPost } from './PercyPittPost';
@@ -51,6 +52,11 @@ export interface ArchiveTabProps {
 export const ArchiveTab: React.FC<ArchiveTabProps> = ({ initialArticleId = null }) => {
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(initialArticleId);
 
+  useEffect(() => {
+    const article = ARCHIVE_ARTICLES.find((item) => item.id === selectedArticleId);
+    if (article) trackPage('/articles/' + article.id, article.name + ' — Forgotten Composers');
+    else trackPage('/archive', 'Archive');
+  }, [selectedArticleId]);
   // Convert to CarouselCard items
   const archiveCards: CarouselCard[] = ARCHIVE_ARTICLES.map((a) => ({
     ...a,

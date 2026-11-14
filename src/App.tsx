@@ -1,3 +1,4 @@
+import { trackPage } from './lib/analytics';
 import React, { useState, useEffect } from 'react';
 import { HeroSection } from './components/HeroSection';
 import { WilliamSpeerPost } from './components/WilliamSpeerPost';
@@ -38,6 +39,16 @@ export default function App() {
   const [toFollowKey, setToFollowKey] = useState<number>(0);
   const [archiveKey, setArchiveKey] = useState<number>(0);
 
+  useEffect(() => {
+    // The carousel tabs record their own list and article views.
+    if (activeTab === 'archive' || activeTab === 'to-follow') return;
+    const title = activeTab === 'home' ? 'Home — William Henry Speer' : activeTab === 'welcome' ? 'Welcome' : 'Contact';
+    trackPage(activeTab === 'home' ? '/' : `/${activeTab}`, title);
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (isWelcomeModalOpen) trackPage('/welcome', 'Welcome');
+  }, [isWelcomeModalOpen]);
   const handleTabChange = (tab: 'home' | 'welcome' | 'to-follow' | 'archive' | 'contact') => {
     if (tab === 'contact' && activeTab !== 'contact') {
       if (activeTab === 'to-follow' || activeTab === 'archive') {

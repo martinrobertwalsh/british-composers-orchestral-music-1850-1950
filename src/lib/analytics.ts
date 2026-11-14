@@ -1,18 +1,26 @@
-type GoatCounter = {
-  count: (data: { path: string; title: string }) => void;
-};
+type PageView = { path: string; title: string };
+type GoatCounter = { count: (data: PageView) => void };
 
 declare global {
-  interface Window {
-    goatcounter?: GoatCounter;
-  }
+  interface Window { goatcounter?: GoatCounter; }
 }
 
-/**
- * Record a meaningful view in this single-page app. GoatCounter normally
- * tracks browser page loads; these virtual paths make in-app articles visible
- * separately in its Pages report.
- */
+const pendingViews: PageView[] = [];
+
 export const trackPage = (path: string, title: string) => {
-  window.goatcounter?.count({ path, title });
+  const view = { path, title };
+  if (window.goatcounter?.count) window.goatcounter.count(view);
+  else pendingViews.push(view);
+};
+
+export const initializeAnalytics = () => {
+  const script = document.createElement('script');
+  script.dataset.goatcounter = 'https://forgotten-british-composers.goatcounter.com/count';
+  script.dataset.goatcounterSettings = JSON.stringify({ no_onload: true });
+  script.async = true;
+  script.src = 'https://gc.zgo.at/count.js';
+  script.addEventListener('load', () => {
+    for (const view of pendingViews.splice(0)) window.goatcounter?.count(view);
+  });
+  document.head.appendChild(script);
 };
