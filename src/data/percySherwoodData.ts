@@ -30,7 +30,7 @@ export const PERCY_SHERWOOD_ORCHESTRAL_WORKS: PercySherwoodWork[] = [
     genre: 'Symphony',
     hasDedicatedPage: true,
     isLost: false,
-    audioUrl: `${import.meta.env.BASE_URL}assets/aistudio/Sherwood_Symphony_2.mp3`
+    audioUrl: 'https://martinrobertwalsh.github.io/british-composers-orchestral-music-1850-1950/assets/aistudio/Sherwood_Symphony_2.mp3'
   },
   {
     id: 'symphony-3',

@@ -18,7 +18,7 @@ const SHERWOOD_MOVEMENTS = [
 
 const SHERWOOD_AUDIO_SOURCES = [
   {
-    src: `${import.meta.env.BASE_URL}assets/aistudio/Sherwood_Symphony_2.mp3`,
+    src: 'https://martinrobertwalsh.github.io/british-composers-orchestral-music-1850-1950/assets/aistudio/Sherwood_Symphony_2.mp3',
     type: 'audio/mpeg'
   },
   {

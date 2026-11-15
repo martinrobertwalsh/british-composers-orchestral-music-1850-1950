@@ -75,7 +75,7 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
                 ref={audioRef}
                 title="Symphony in B flat (1879)"
                 subtitle="Sir George Alexander Macfarren"
-                src={`${import.meta.env.BASE_URL}assets/aistudio/macfarren_symphony_in_bb_45c21c49.mp3`}
+                src="https://martinrobertwalsh.github.io/british-composers-orchestral-music-1850-1950/assets/aistudio/macfarren_symphony_in_bb_45c21c49.mp3"
                 className="flex-1"
               />
               <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
