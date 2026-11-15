@@ -277,24 +277,27 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
               It was first performed as part of a Bournemouth Municipal Orchestra Concert given at the Bournemouth Winter Gardens on 10 January 1918.
             </p>
 
-            <p className="text-stone-800 text-lg sm:text-xl leading-relaxed">
-              <em>The Bournemouth Guardian</em> reported that &ldquo;Thursday afternoon’s symphony concert at the Bournemouth Winter Gardens included two novelties by Mr William Fenney, who is associated with the Midland Institute, and is a special protégé of Professor Granville Bantock, the distinguished composer.&rdquo; The critic explained that this was Fenney’s first appearance at these concerts. It was also to be his last.
-            </p>
-
-            <blockquote className="my-6 p-6 sm:p-7 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
-              <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
-                They continued, &ldquo;Great interest was shown in the two pieces, <em>Pastoral</em> and the tone poem <em>Nineveh</em>, both of which must have struck the hearers with the fact that there was individuality therein, although with a strong tendency to modern harmonies.&rdquo;
-              </p>
-              <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
-                Slightly critical was the comment that &ldquo;The only point that hearing these items conveyed was a wish that Mr Fenney would somewhat vary the treatment of his compositions more as there is a feeling of rather undue heaviness, and if some lighter vein were introduced it would surely help in the appreciation of such promising work.&rdquo; Looking at each work, the critic felt that the &ldquo;<em>Pastoral</em> was very pleasing and in [<em>Nineveh</em>] the composer has caught something of the still amazing glories of the great lost empire of the past.&rdquo;
-              </p>
-              <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
-                Finally, &ldquo;Mr Fenney is to be congratulated, and he well deserved the plaudits of an audience, many of whom are accustomed to expect great things at these concerts.&rdquo;
-              </p>
-              <footer className="mt-3 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold not-italic">
-                &mdash; The Bournemouth Guardian (January 1918)
-              </footer>
-            </blockquote>
+            <figure className="my-8 bg-white border border-stone-300 rounded-sm shadow-xs overflow-hidden">
+              <figcaption className="px-5 py-5 sm:px-8 sm:py-6 border-b border-stone-200 text-center">
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
+                  A Descriptive Symphony and a British Novelty.
+                </h3>
+                <p className="mt-3 font-serif text-sm sm:text-base text-stone-600">
+                  <cite className="not-italic">The Bournemouth Guardian</cite>, 12 January 1918, p. 5
+                </p>
+              </figcaption>
+              <blockquote className="px-5 py-6 sm:px-8 sm:py-8 font-serif text-[17px] sm:text-lg leading-[1.8] text-stone-800 text-left columns-1 md:columns-2 gap-8 lg:gap-10 md:[column-rule:1px_solid_#e7e5e4] [orphans:3] [widows:3]">
+                <p className="mb-5">
+                  Thursday afternoon&rsquo;s symphony concert at the Bournemouth Winter Gardens, the fourteenth of the series, included two novelties by Mr. William Fenney, who is associated with the Midland Institute, and a special protege of Professor Granville Bantock, the distinguished composer. As this was his first appearance at these concerts great interest was shown in the two pieces, &ldquo;Pastoral&rdquo; and the tone poem &ldquo;Nineveh,&rdquo; both of which must have struck the hearers with the fact that there was individuality therein, although with a strong tendency to modern harmonies.
+                </p>
+                <p className="mb-5">
+                  The only point that hearing these items conveyed was a wish that Mr. Fenney would somewhat vary the treatment of his compositions more as there is a feeling of rather undue heaviness, and if some lighter vein were introduced it would surely help in the appreciation of such promising work. The &ldquo;Pastoral&rdquo; was very pleasing, and in the &ldquo;Tone Poem&rdquo; the composer has caught something of the still amazing glories of the great lost empire of the past.
+                </p>
+                <p>
+                  Mr. Fenney is to be congratulated, and he well deserved the plaudits of an audience, many of whom are accustomed to expect great things at these concerts.
+                </p>
+              </blockquote>
+            </figure>
           </div>
 
         </section>
