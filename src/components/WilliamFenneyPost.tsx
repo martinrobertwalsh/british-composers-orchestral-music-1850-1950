@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { FENNEY_ORCHESTRAL_WORKS, FENNEY_CHAMBER_AND_OTHER_SCORES } from '../data/fenneyData';
+import { FENNEY_ORCHESTRAL_WORKS } from '../data/fenneyData';
 import { ZoomIn, X, ArrowLeft, ArrowUp, BookOpen, PenLine, Volume2 } from 'lucide-react';
 import { HolePunchMargin } from './HolePunchMargin';
 import { WaveformAudioPlayer } from './WaveformAudioPlayer';
@@ -90,7 +90,7 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
                     className="w-full flex items-center justify-between gap-2 px-3 py-2 bg-[#FAF8F5] hover:bg-amber-50/70 border border-stone-300 hover:border-amber-800/60 rounded-md text-left transition-colors cursor-pointer group"
                   >
                     <div className="min-w-0 font-serif text-sm sm:text-base font-bold text-stone-900 group-hover:text-amber-950 leading-snug">
-                      Pastoral for Small Orchestra (1917)
+                      Pastoral for Small Orchestra (1916)
                     </div>
                     <Volume2 className="w-4 h-4 text-amber-900 shrink-0 transition-transform group-hover:scale-110" />
                   </button>
@@ -98,27 +98,27 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
               </div>
 
               <p className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed text-left first-letter:text-5xl first-letter:font-bold first-letter:text-stone-900 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
-                William Fenney was born in Handsworth, Birmingham. Despite having a very keen interest in music early on he went into the insurance business as a clerk at the age of 20. In his spare time he worked hard at composition, completely self taught.
+                William Fenney was born in Handsworth, Birmingham. Despite having a very keen interest in music early on he went into the insurance business as a clerk at the age of 20. In his spare time he worked hard at composition, completely self taught. He was soon fortunate enough to then study composition with Granville Bantock at the Midland Institute School of Music.
               </p>
             </div>
           </div>
 
-          <p className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed text-left mt-4 mb-6">
-            He was soon fortunate enough to then study composition with Granville Bantock at the Midland Institute School of Music.
-          </p>
-
           {/* Fenney's Personal Reflection Quotation */}
-          <div className="border-l-4 border-amber-800 pl-4 sm:pl-5 py-3 my-8 space-y-2 text-stone-900 leading-relaxed text-base sm:text-lg bg-amber-50/40 rounded-r font-times">
-            <p className="italic">
+          <blockquote className="my-8 p-6 sm:p-8 bg-white border border-stone-200 rounded shadow-xs space-y-4">
+            <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
               &ldquo;From early years I studied the great masters, &ndash; Beethoven and Chopin were my first teachers; I liked Wagner only on the stage. I have never liked the modernist school; my own style owes to Elgar.&rdquo;
             </p>
-            <footer className="text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold not-italic pt-1">
+            <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold not-italic">
               &mdash; From a short written note by William Fenney
             </footer>
-          </div>
+          </blockquote>
 
-          {/* Joseph Holbrooke Critique */}
+          {/* Financial Difficulty & Copyist Context + Joseph Holbrooke Critique */}
           <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-6 mt-6 text-left">
+            <p>
+              His early career combined musical promise with financial difficulty. In August 1915, writing to Bantock as &ldquo;Master&rdquo;, Fenney asked for help paying a publishing fee connected with <em>Flower Fairies</em>. The same letter reveals his fascination with Scriabin. He also worked as a copyist: Birmingham&rsquo;s Bantock collection preserves a full score of the <em>Hebridean Symphony</em> copied by Fenney in 1916.
+            </p>
+
             <p>
               Joseph Holbrooke&apos;s book, <em>Contemporary British Composers</em>, mentions Fenney as follows:
             </p>
@@ -141,7 +141,7 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
               Orchestral work list
             </h2>
             <p className="font-serif italic text-stone-700 text-lg sm:text-xl sm:text-right">
-              Surviving scores and contemporary performance documentation
+              Showing only surviving scores MS or published
             </p>
           </div>
 
@@ -185,32 +185,21 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
             </div>
           </div>
 
-          {/* Chamber & Other Works Note */}
-          <div className="mt-5 sm:mt-6 text-base sm:text-lg font-serif text-stone-800 leading-relaxed">
+          {/* Missing Scores Note Under Table */}
+          <p className="mt-5 sm:mt-6 text-base sm:text-lg font-serif text-stone-800 leading-relaxed">
             <span className="font-mono font-bold uppercase tracking-wider text-xs sm:text-sm text-stone-900 mr-2">
-              NOTABLE CHAMBER &amp; OTHER SCORES:
+              MISSING SCORES:
             </span>
-            {FENNEY_CHAMBER_AND_OTHER_SCORES.map((item, idx) => (
-              <span key={idx}>
-                <em>{item.title}</em>
-                {idx < FENNEY_CHAMBER_AND_OTHER_SCORES.length - 1 ? ' ; ' : '.'}
-              </span>
-            ))}
-          </div>
+            Symphonic Poem, In the Woods for strings, Nineveh - tone poem
+          </p>
         </section>
 
         {/* Section 3: Feature on Pastoral for Small Orchestra */}
         <section id="fenney-pastoral-section" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
-              WORK SPOTLIGHT
-            </span>
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-2">
-              Pastoral for Small Orchestra (1917)
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
+              Pastoral for Small Orchestra (1916)
             </h2>
-            <p className="font-serif italic text-base sm:text-lg text-stone-700">
-              Op. 5 &middot; First published orchestral work
-            </p>
 
             {/* Audio player flanked by quavers (left standard, right descending) */}
             <div className="max-w-2xl mx-auto mt-6 flex items-center justify-center gap-3.5">
@@ -244,11 +233,7 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
 
           <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-6 text-left">
             <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-stone-900 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
-              Fenney&apos;s first published orchestral work was his <em>Pastoral for Small Orchestra</em> (1917).
-            </p>
-
-            <p>
-              The short descriptive text is tantalising. Although signed &ldquo;Anon&rdquo; it most likely was written by the composer:
+              Fenney&rsquo;s <em>Pastoral</em> is described as for small orchestra. In fact all the surviving single movement works are labelled such except for &ldquo;Dawn&rdquo; which is for just orchestra.
             </p>
 
             {/* Section Heading above Brown Accent Line */}
@@ -273,8 +258,16 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
                 aria-hidden="true"
               />
 
+              <p className="text-left m-0 text-amber-900 pb-1">
+                These notes were signed &ldquo;Anon&rdquo; but are assumed to be by the composer.
+              </p>
+
               <p className="text-left m-0 italic">
-                &ldquo;This work expresses the feeling with which one looks on a quiet countryside. It does not echo the songs of rustic folk or the music of the shepherd’s pipe and is essentially modern English. Even on the brightest day our country scenery has at least a hint of melancholy for us, and the music, composed in autumn, is bright in colour and sad in feeling.&rdquo;
+                &ldquo;This work expresses the feeling with which one looks on a quiet countryside. It does not echo the songs of rustic folk or the music of the shepherd&rsquo;s pipe and is essentially modern English. Even on the brightest day our country scenery has at least a hint of melancholy for us, and the music, composed in autumn, is bright in colour and sad in feeling.
+              </p>
+
+              <p className="text-left m-0 italic">
+                It begins with one note on the horn, followed by bright chromatic harmonies in the strings; several fragmentary themes appear. The episode is more flowing, beginning in the woodwind instruments and leading to a brief climax. The work ends with various references to the opening themes.&rdquo;
               </p>
 
               <ListenToItAllLink targetId="fenney-pastoral-section" />
@@ -305,6 +298,35 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
           </div>
 
         </section>
+
+        {/* Section 4: Obituary */}
+        <section id="fenney-obituary" className="mt-14 pt-8 border-t border-stone-300/80 scroll-mt-20">
+          <div className="text-left mb-4">
+            <h2 className="font-serif text-lg sm:text-xl font-bold tracking-wider text-amber-900 uppercase">
+              OBITUARY
+            </h2>
+          </div>
+
+          <div className="bg-white border border-stone-300 rounded-md shadow-xs p-6 sm:p-8 font-serif text-stone-800 text-base sm:text-lg leading-relaxed space-y-5 text-left">
+            <p>
+              Accounts of Fenney&rsquo;s death conflict. Hughes and Stradling, in <em>The English Musical Renaissance, 1840&ndash;1940</em> (2001, p. xvii), describe him dying alone in an Epsom bedsitter, his body undiscovered for several days. However, his obituary in <em>The Times</em> (25 June 1957, p. 14) states that he died in hospital in Epsom.
+            </p>
+          </div>
+        </section>
+
+        {/* Acknowledgement */}
+        <p className="mt-8 pt-6 border-t border-stone-200/80 text-base sm:text-lg font-serif italic text-stone-700 leading-relaxed">
+          With thanks to John France, whose article{' '}
+          <a
+            href="https://landofllostcontent.blogspot.com/2022/03/some-fugitive-notes-on-william-john.html?m=1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-900 hover:text-amber-950 no-underline transition-colors"
+          >
+            &ldquo;Some Fugitive Notes on William John Fenney, Composer (1891&ndash;1957)&rdquo;
+          </a>
+          , published on <em>The Land of Lost Content</em> on 11 March 2022, provided valuable biographical research for this account.
+        </p>
 
         {/* Bottom Navigation Buttons */}
         <div className="mt-14 pt-8 border-t border-stone-300 flex flex-wrap items-center justify-center gap-3 text-center">

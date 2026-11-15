@@ -1,9 +1,10 @@
-import { trackPage } from '../lib/analytics';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FeaturedPost } from './FeaturedPost';
 import { TobiasMatthayPost } from './TobiasMatthayPost';
 import { PercyPittPost } from './PercyPittPost';
+import { WilliamFenneyPost } from './WilliamFenneyPost';
 import { CardsCarousel, CarouselCard } from './CardsCarousel';
+import { trackPage } from '../lib/analytics';
 
 export interface ArchiveArticle {
   id: string;
@@ -42,6 +43,28 @@ export const ARCHIVE_ARTICLES: ArchiveArticle[] = [
     quote: '“A life on the podium, a composer in the shadows”',
     notableWork: 'Coronation March (1897)',
     tags: ['Percy Pitt', 'Coronation March', 'Queen\'s Hall', 'Covent Garden', 'BBC Music Director', 'Promenade Concerts']
+  },
+  {
+    id: 'fenney',
+    name: 'William Fenney',
+    dates: '1891–1957',
+    image: `${import.meta.env.BASE_URL}assets/aistudio/fenney_in_shadow_score_flat.jpg`,
+    quote: '“Bright in colour and sad in feeling”',
+    notableWork: 'Pastoral for Small Orchestra (1916)',
+    tags: [
+      'William Fenney',
+      'William J. Fenney',
+      'Pastoral for Small Orchestra',
+      'In Shadow',
+      'Dawn',
+      'Tragic Poem',
+      'Granville Bantock',
+      'Handsworth',
+      'Birmingham',
+      'Bournemouth',
+      'Dan Godfrey',
+      'Joseph Holbrooke'
+    ]
   }
 ];
 
@@ -51,12 +74,22 @@ export interface ArchiveTabProps {
 
 export const ArchiveTab: React.FC<ArchiveTabProps> = ({ initialArticleId = null }) => {
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(initialArticleId);
+  const lastTrackedIdRef = useRef<string | null>(null);
 
   useEffect(() => {
-    const article = ARCHIVE_ARTICLES.find((item) => item.id === selectedArticleId);
-    if (article) trackPage('/articles/' + article.id, article.name + ' — Forgotten Composers');
-    else trackPage('/archive', 'Archive');
+    if (!selectedArticleId) {
+      lastTrackedIdRef.current = null;
+      return;
+    }
+    if (lastTrackedIdRef.current === selectedArticleId) return;
+    lastTrackedIdRef.current = selectedArticleId;
+    const article = ARCHIVE_ARTICLES.find((a) => a.id === selectedArticleId);
+    const title = article
+      ? `${article.name} (${article.dates}) — Forgotten Composers`
+      : `${selectedArticleId} — Forgotten Composers`;
+    trackPage(`/archive/${selectedArticleId}`, title);
   }, [selectedArticleId]);
+
   // Convert to CarouselCard items
   const archiveCards: CarouselCard[] = ARCHIVE_ARTICLES.map((a) => ({
     ...a,
@@ -74,6 +107,10 @@ export const ArchiveTab: React.FC<ArchiveTabProps> = ({ initialArticleId = null 
 
   if (selectedArticleId === 'pitt') {
     return <PercyPittPost />;
+  }
+
+  if (selectedArticleId === 'fenney') {
+    return <WilliamFenneyPost />;
   }
 
 

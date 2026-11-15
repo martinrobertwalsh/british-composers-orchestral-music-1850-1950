@@ -275,9 +275,6 @@ export const PercyPittPost: React.FC = () => {
         {/* Section 3: Work Page — Coronation March */}
         <section id="pitt-coronation-march" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
-              WORK PAGE
-            </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
               Coronation March
             </h2>

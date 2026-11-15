@@ -1,15 +1,15 @@
-import { trackPage } from '../lib/analytics';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NormanONeillPost } from './NormanONeillPost';
 import { PercyGodfreyPost } from './PercyGodfreyPost';
 import { ROMorrisPost } from './ROMorrisPost';
 import { CunninghamWoodsPost } from './CunninghamWoodsPost';
 import { WilliamSpeerPost } from './WilliamSpeerPost';
 import { ArthurHerveyPost } from './ArthurHerveyPost';
-import { WilliamFenneyPost } from './WilliamFenneyPost';
 import { PercySherwoodPost } from './PercySherwoodPost';
+import { SamHartleyBraithwaitePost } from './SamHartleyBraithwaitePost';
 import { CardsCarousel, CarouselCard } from './CardsCarousel';
 import { ArrowLeft } from 'lucide-react';
+import { trackPage } from '../lib/analytics';
 
 export interface ToFollowArticle {
   id: string;
@@ -27,7 +27,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     name: 'Arthur Hervey',
     dates: '1855–1922',
     image: `${import.meta.env.BASE_URL}assets/aistudio/arthur_hervey_portrait.jpg`,
-    quote: '“From the critic’s desk to the Queen’s Hall rostrum”',
+    quote: '“Writer, critic, promoter and composer”',
     notableWork: 'Tone Poem: In the East (1904)',
     tags: [
       'Arthur Hervey',
@@ -52,7 +52,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'godfrey',
     name: 'Percy Godfrey',
     dates: '1859–1945',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/percy_godfrey_portrait.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/percy_godfrey_portrait.jpg?v=2`,
     quote: '“From prizewinner to obscurity”',
     notableWork: 'Coronation Prize-March (1902)',
     tags: ['Percy Godfrey', 'Coronation March', 'Worshipful Company of Musicians', 'Canterbury', 'Edward VII', 'Dan Godfrey']
@@ -76,27 +76,6 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     tags: ['Francis Cunningham Woods', 'Cunningham Woods', 'The Gressenhall Suite', 'Suite in F major', 'The Village Organist', 'John Stainer', 'Arthur Sullivan', 'Highgate School', 'Oxford']
   },
   {
-    id: 'fenney',
-    name: 'William Fenney',
-    dates: '1891–1957',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/fenney_in_shadow_score_flat.jpg`,
-    quote: '“Bright in colour and sad in feeling”',
-    notableWork: 'Pastoral for Small Orchestra (1917)',
-    tags: [
-      'William Fenney',
-      'William J. Fenney',
-      'Pastoral for Small Orchestra',
-      'In Shadow',
-      'Nineveh',
-      'Granville Bantock',
-      'Handsworth',
-      'Birmingham',
-      'Bournemouth',
-      'Dan Godfrey',
-      'Joseph Holbrooke'
-    ]
-  },
-  {
     id: 'percy-sherwood',
     name: 'Percy Sherwood',
     dates: '1866–1939',
@@ -113,6 +92,25 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
       'SLUB Dresden',
       'Piano Concerto'
     ]
+  },
+  {
+    id: 'braithwaite',
+    name: 'Sam Hartley Braithwaite',
+    dates: '1883–1947',
+    image: `${import.meta.env.BASE_URL}assets/aistudio/sam_hartley_braithwaite_portrait.jpg`,
+    quote: '“Orchestral colourist and etcher of dark, moody landscapes”',
+    notableWork: 'Elegy for Orchestra (1926)',
+    tags: [
+      'Sam Hartley Braithwaite',
+      'Elegy',
+      'Snow Picture',
+      'Carnegie Collection',
+      'Bournemouth',
+      'Arnold Bax',
+      'Royal Academy of Music',
+      'Eric Coates',
+      'Passmore Edwards Settlement'
+    ]
   }
 ];
 
@@ -122,12 +120,25 @@ export interface ToFollowTabProps {
 
 export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = null }) => {
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(initialArticleId);
+  const lastTrackedIdRef = useRef<string | null>(null);
 
   useEffect(() => {
-    const article = TO_FOLLOW_ARTICLES.find((item) => item.id === selectedArticleId);
-    if (article) trackPage('/articles/' + article.id, article.name + ' — Forgotten Composers');
-    else trackPage('/to-follow', 'To Follow');
+    if (!selectedArticleId) {
+      lastTrackedIdRef.current = null;
+      return;
+    }
+    if (lastTrackedIdRef.current === selectedArticleId) return;
+    lastTrackedIdRef.current = selectedArticleId;
+    const article = TO_FOLLOW_ARTICLES.find((a) => a.id === selectedArticleId);
+    const title =
+      selectedArticleId === 'speer'
+        ? 'William Henry Speer (1863–1937) — Forgotten Composers'
+        : article
+        ? `${article.name} (${article.dates}) — Forgotten Composers`
+        : `${selectedArticleId} — Forgotten Composers`;
+    trackPage(`/to-follow/${selectedArticleId}`, title);
   }, [selectedArticleId]);
+
   // Convert to CarouselCard items
   const toFollowCards: CarouselCard[] = TO_FOLLOW_ARTICLES.map((a) => ({
     ...a,
@@ -242,23 +253,6 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
     );
   }
 
-  if (selectedArticleId === 'fenney') {
-    return (
-      <div className="space-y-4">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
-          <button
-            onClick={handleBackToCarousel}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 rounded font-serif text-sm font-semibold transition-colors cursor-pointer shadow-2xs group"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-amber-900" />
-            <span>Back to Cards Carousel</span>
-          </button>
-        </div>
-        <WilliamFenneyPost onBack={handleBackToCarousel} />
-      </div>
-    );
-  }
-
   if (selectedArticleId === 'percy-sherwood') {
     return (
       <div className="space-y-4">
@@ -272,6 +266,23 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
           </button>
         </div>
         <PercySherwoodPost onBack={handleBackToCarousel} />
+      </div>
+    );
+  }
+
+  if (selectedArticleId === 'braithwaite') {
+    return (
+      <div className="space-y-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
+          <button
+            onClick={handleBackToCarousel}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 rounded font-serif text-sm font-semibold transition-colors cursor-pointer shadow-2xs group"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-amber-900" />
+            <span>Back to Cards Carousel</span>
+          </button>
+        </div>
+        <SamHartleyBraithwaitePost onBack={handleBackToCarousel} />
       </div>
     );
   }

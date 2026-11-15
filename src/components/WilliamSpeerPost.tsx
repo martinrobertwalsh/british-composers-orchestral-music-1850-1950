@@ -57,7 +57,7 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
           </h1>
 
           {/* Subtitle / Quote */}
-          <p className="font-times italic text-xl sm:text-2xl text-black max-w-2xl mx-auto leading-relaxed mt-3">
+          <p className="font-times italic text-xl sm:text-2xl text-amber-900 max-w-2xl mx-auto leading-relaxed mt-3">
             &ldquo;In the shadow of the Malverns and Elgar&rdquo;
           </p>
         </header>
@@ -272,9 +272,6 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
         {/* Section: Work Page — Rhapsody in Eb */}
         <section id="speer-rhapsody-workpage" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
-              WORK PAGE
-            </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
               Rhapsody in E&#9837;
             </h2>
@@ -498,9 +495,6 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
         {/* Section: Work Page — Nocturne for strings */}
         <section id="speer-nocturne-workpage" className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20">
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-amber-900 uppercase block mb-3 sm:mb-4">
-              WORK PAGE
-            </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
               Nocturne for strings (Op. 17)
             </h2>
@@ -731,14 +725,14 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
             <ArrowUp className="w-4 h-4 text-amber-900" />
             <span>Return to top</span>
           </button>
-          {onBack && !isFeatured && (
+          {onBack && (
             <button
               type="button"
               onClick={onBack}
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded-lg font-serif text-sm font-semibold shadow-2xs transition-all cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 text-amber-300" />
-              <span>Back to To Follow Cards</span>
+              <span>{isFeatured ? 'Back to Home' : 'Back to To Follow Cards'}</span>
             </button>
           )}
         </div>

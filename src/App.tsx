@@ -1,6 +1,6 @@
-import { trackPage } from './lib/analytics';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { HeroSection } from './components/HeroSection';
+import { HomeColumns } from './components/HomeColumns';
 import { WilliamSpeerPost } from './components/WilliamSpeerPost';
 import { ComposerModal } from './components/ComposerModal';
 import { WelcomeModal } from './components/WelcomeModal';
@@ -9,6 +9,7 @@ import { ToFollowTab } from './components/ToFollowTab';
 import { Composer, MusicalTheme } from './types/composer';
 import { HARVEY_LOHR_SYMPHONY_3_THEME } from './data/composersData';
 import { orchestralPlayer } from './audio/orchestralEngine';
+import { trackPage } from './lib/analytics';
 import { Mail, Send, CheckCircle2, Library, Music, FolderArchive } from 'lucide-react';
 
 export default function App() {
@@ -38,17 +39,10 @@ export default function App() {
   const [previousTab, setPreviousTab] = useState<'home' | 'to-follow' | 'archive'>('home');
   const [toFollowKey, setToFollowKey] = useState<number>(0);
   const [archiveKey, setArchiveKey] = useState<number>(0);
+  const [isFeaturedOpen, setIsFeaturedOpen] = useState<boolean>(false);
+  const lastTrackedTabRef = useRef<string>('');
+  const wasWelcomeOpenRef = useRef<boolean>(false);
 
-  useEffect(() => {
-    // The carousel tabs record their own list and article views.
-    if (activeTab === 'archive' || activeTab === 'to-follow') return;
-    const title = activeTab === 'home' ? 'Home — William Henry Speer' : activeTab === 'welcome' ? 'Welcome' : 'Contact';
-    trackPage(activeTab === 'home' ? '/' : `/${activeTab}`, title);
-  }, [activeTab]);
-
-  useEffect(() => {
-    if (isWelcomeModalOpen) trackPage('/welcome', 'Welcome');
-  }, [isWelcomeModalOpen]);
   const handleTabChange = (tab: 'home' | 'welcome' | 'to-follow' | 'archive' | 'contact') => {
     if (tab === 'contact' && activeTab !== 'contact') {
       if (activeTab === 'to-follow' || activeTab === 'archive') {
@@ -56,6 +50,9 @@ export default function App() {
       } else {
         setPreviousTab('home');
       }
+    }
+    if (tab === 'home') {
+      setIsFeaturedOpen(false);
     }
     if (tab === 'to-follow') {
       setToFollowKey((prev) => prev + 1);
@@ -67,6 +64,12 @@ export default function App() {
     // Smooth scroll just under the image so the top of the selected tab is in view
     const heroHeight = window.innerHeight * 0.50;
     window.scrollTo({ top: heroHeight - 60, behavior: 'smooth' });
+  };
+
+  const handleOpenFeaturedFromHome = () => {
+    setIsFeaturedOpen(true);
+    setActiveTab('home');
+    window.scrollTo({ top: 340, behavior: 'smooth' });
   };
 
   const handleSearchFromFolder = (composerName: string) => {
@@ -98,6 +101,43 @@ export default function App() {
       window.clearTimeout(hideTimer);
     };
   }, []);
+
+  // Track Home and top-level tab views without duplicate counts
+  useEffect(() => {
+    const viewKey = `${activeTab}:${isFeaturedOpen}:${archiveKey}:${toFollowKey}`;
+    if (lastTrackedTabRef.current === viewKey) return;
+    lastTrackedTabRef.current = viewKey;
+
+    switch (activeTab) {
+      case 'home':
+        if (isFeaturedOpen) {
+          trackPage('/featured/speer', 'William Henry Speer (1863–1937) — Forgotten Composers');
+        } else {
+          trackPage('/', 'Home — Forgotten Composers');
+        }
+        break;
+      case 'welcome':
+        trackPage('/welcome', 'Welcome — Forgotten Composers');
+        break;
+      case 'to-follow':
+        trackPage('/to-follow', 'To Follow — Forgotten Composers');
+        break;
+      case 'archive':
+        trackPage('/archive', 'Archive — Forgotten Composers');
+        break;
+      case 'contact':
+        trackPage('/contact', 'Contact — Forgotten Composers');
+        break;
+    }
+  }, [activeTab, isFeaturedOpen, archiveKey, toFollowKey]);
+
+  // Track Welcome modal views when opened
+  useEffect(() => {
+    if (isWelcomeModalOpen && !wasWelcomeOpenRef.current) {
+      trackPage('/welcome', 'Welcome — Forgotten Composers');
+    }
+    wasWelcomeOpenRef.current = isWelcomeModalOpen;
+  }, [isWelcomeModalOpen]);
 
   const handleToggleBookmark = (id: string) => {
     setBookmarkedIds((prev) =>
@@ -131,9 +171,23 @@ export default function App() {
 
       {/* Main Tab Views */}
       <main className="flex-1">
-        {/* HOME TAB: Featured Composer Article (William Henry Speer) */}
-        {activeTab === 'home' && (
-          <WilliamSpeerPost isFeatured={true} />
+        {/* HOME TAB: 3 Short Clickable Columns or Featured Composer Article */}
+        {activeTab === 'home' && !isFeaturedOpen && (
+          <HomeColumns
+            onOpenFeatured={handleOpenFeaturedFromHome}
+            onOpenArchive={() => handleTabChange('archive')}
+            onOpenToFollow={() => handleTabChange('to-follow')}
+          />
+        )}
+
+        {activeTab === 'home' && isFeaturedOpen && (
+          <WilliamSpeerPost
+            isFeatured={true}
+            onBack={() => {
+              setIsFeaturedOpen(false);
+              window.scrollTo({ top: 300, behavior: 'smooth' });
+            }}
+          />
         )}
 
         {/* WELCOME TAB: Curator's Welcome & Historical Context */}
@@ -183,12 +237,12 @@ export default function App() {
           </div>
         )}
 
-        {/* TO FOLLOW TAB: Arthur Hervey, Norman O'Neill, Percy Godfrey, R. O. Morris, Francis Cunningham Woods */}
+        {/* TO FOLLOW TAB: Arthur Hervey, Norman O'Neill, Percy Godfrey, R. O. Morris, Francis Cunningham Woods, Percy Sherwood, Sam Hartley Braithwaite */}
         {activeTab === 'to-follow' && (
           <ToFollowTab key={toFollowKey} />
         )}
 
-        {/* ARCHIVE TAB: Walter Macfarren Card View */}
+        {/* ARCHIVE TAB: Walter Macfarren, Tobias Matthay, Percy Pitt, William Fenney */}
         {activeTab === 'archive' && (
           <ArchiveTab key={archiveKey} />
         )}

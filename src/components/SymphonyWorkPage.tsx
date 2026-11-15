@@ -60,10 +60,6 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             <span>Back to Walter Macfarren</span>
           </button>
-
-          <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
-            WORK PAGE
-          </span>
         </div>
 
         {/* Post Title & Audio Player */}

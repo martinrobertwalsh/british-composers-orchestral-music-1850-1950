@@ -24,14 +24,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <>
-      {/* Queen's Hall Historic Hero Photo (30% off top only, bottom anchored) */}
-      <section className="relative w-full h-[46vh] sm:h-[50vh] lg:h-[55vh] min-h-[336px] flex items-center justify-center overflow-hidden bg-[#141210]">
-        {/* Background Queen's Hall Photo (object-bottom anchors the bottom, cropping strictly from top) */}
+      {/* Queen's Hall Historic Hero Photo (trimmed to just above organ pipes and just short of stage) */}
+      <section className="relative w-full aspect-[1011/300] min-h-[260px] max-h-[440px] flex items-center justify-center overflow-hidden bg-[#141210]">
+        {/* Background Queen's Hall Photo */}
         <div className="absolute inset-0">
           <img
-            src={`${import.meta.env.BASE_URL}assets/aistudio/queens_hall_clean.jpg`}
+            src={`${import.meta.env.BASE_URL}assets/aistudio/queens_hall_clean.jpg?v=3`}
             alt="Queen's Hall, Langham Place, London - The lost acoustic heart of the British Musical Renaissance and the Proms, before its destruction in May 1941"
-            className="w-full h-full object-cover object-bottom filter brightness-125 contrast-105"
+            className="w-full h-full object-cover object-center filter brightness-125 contrast-105"
             referrerPolicy="no-referrer"
           />
           {/* Very light scrim to maintain brightness of the hall while keeping titles readable */}
