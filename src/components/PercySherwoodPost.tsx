@@ -1,33 +1,70 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   PERCY_SHERWOOD_ORCHESTRAL_WORKS
 } from '../data/percySherwoodData';
-import { ZoomIn, X, ArrowLeft, ArrowUp, BookOpen, PenLine, Volume2, Play } from 'lucide-react';
+import { ZoomIn, X, ArrowLeft, ArrowUp, BookOpen, PenLine, Volume2, ExternalLink, Play } from 'lucide-react';
 import { HolePunchMargin } from './HolePunchMargin';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { QuaversIcon } from './QuaversIcon';
-import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekDirect } from '../utils/audioFade';
+import { pauseOtherAudios } from '../utils/audioFade';
 
-const SHERWOOD_MOVEMENTS = [
-  { num: 1, label: '1st mov - Adagio - Allegro molto', time: 0, timeStr: '00:00' },
-  { num: 2, label: '2nd mov - Adagio', time: 890, timeStr: '14:50' },
-  { num: 3, label: '3rd mov - Scherzo prestissimo', time: 1532, timeStr: '25:32' },
-  { num: 4, label: '4th mov - Allegro con fuoco', time: 2009, timeStr: '33:29' }
+const SHERWOOD_YT_VIDEO_ID = 'mzjZDheV0Ks';
+
+interface SherwoodMovement {
+  num: number;
+  label: string;
+  time: number;
+  timeStr: string;
+}
+
+const SHERWOOD_MOVEMENTS: SherwoodMovement[] = [
+  { num: 1, label: '1st mov – Adagio – Allegro molto', time: 0, timeStr: '00:00' },
+  { num: 2, label: '2nd mov – Adagio', time: 894, timeStr: '14:54' },
+  { num: 3, label: '3rd mov – Scherzo prestissimo', time: 1537, timeStr: '25:37' },
+  { num: 4, label: '4th mov – Allegro con fuoco', time: 2013, timeStr: '33:33' },
 ];
 
-const SHERWOOD_AUDIO_SOURCES = [
-  {
-    src: 'https://martinrobertwalsh.github.io/british-composers-orchestral-music-1850-1950/assets/aistudio/Sherwood_Symphony_2.mp3',
-    type: 'audio/mpeg'
-  },
-  {
-    src: 'https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/refs/heads/main/SYMPHONY%20NO%202.mp4'
-  },
-  {
-    src: 'https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/SYMPHONY%20NO%202.mp4'
+interface YTPlayer {
+  seekTo: (seconds: number, allowSeekAhead?: boolean) => void;
+  playVideo: () => void;
+  getVolume?: () => number;
+  setVolume?: (volume: number) => void;
+  getPlayerState?: () => number;
+  isMuted?: () => boolean;
+}
+
+interface YTNamespace {
+  Player: new (
+    element: HTMLIFrameElement | string,
+    options?: {
+      events?: {
+        onReady?: (event: { target: YTPlayer }) => void;
+      };
+    }
+  ) => YTPlayer;
+}
+
+declare global {
+  interface Window {
+    YT?: YTNamespace;
+    onYouTubeIframeAPIReady?: () => void;
   }
-];
+}
+
+const getSherwoodEmbedUrl = (startSeconds?: number): string => {
+  const params = new URLSearchParams({
+    enablejsapi: '1',
+    rel: '0',
+    cb: '202611151003',
+  });
+  if (typeof window !== 'undefined' && window.location.origin) {
+    params.set('origin', window.location.origin);
+  }
+  if (typeof startSeconds === 'number') {
+    params.set('start', String(startSeconds));
+    params.set('autoplay', '1');
+  }
+  return `https://www.youtube.com/embed/${SHERWOOD_YT_VIDEO_ID}?${params.toString()}`;
+};
 
 interface PercySherwoodPostProps {
   onBack?: () => void;
@@ -40,12 +77,206 @@ export const PercySherwoodPost: React.FC<PercySherwoodPostProps> = ({
 }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
   const [imageFailed, setImageFailed] = useState<boolean>(false);
-  const [activeMovement, setActiveMovement] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [activeMovement, setActiveMovement] = useState<number | null>(null);
+  const [iframeSrc, setIframeSrc] = useState<string>(() => getSherwoodEmbedUrl());
 
-  const handleJumpToMovement = (seconds: number, label: string) => {
-    setActiveMovement(label);
-    seekDirect(audioRef.current, seconds);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const ytPlayerRef = useRef<YTPlayer | null>(null);
+  const isPlayerReadyRef = useRef<boolean>(false);
+  const fadeIntervalRef = useRef<number | null>(null);
+  const targetVolumeRef = useRef<number>(100);
+  const isFadingRef = useRef<boolean>(false);
+  const pendingFadeInRef = useRef<boolean>(false);
+
+  const cancelYTFade = useCallback((restoreVolume = true) => {
+    if (fadeIntervalRef.current !== null) {
+      window.clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
+    }
+    isFadingRef.current = false;
+    if (restoreVolume && ytPlayerRef.current?.setVolume) {
+      try {
+        ytPlayerRef.current.setVolume(targetVolumeRef.current);
+      } catch {
+        // Ignore if player is unmounted
+      }
+    }
+  }, []);
+
+  const startYTFadeIn = useCallback(
+    (player: YTPlayer, fadeDurationMs = 2400) => {
+      if (!player.setVolume) return;
+
+      if (!isFadingRef.current && player.getVolume) {
+        try {
+          const currentVol = player.getVolume();
+          if (Number.isFinite(currentVol) && currentVol > 0) {
+            targetVolumeRef.current = Math.max(0, Math.min(100, currentVol));
+          }
+        } catch {
+          // Keep existing targetVolumeRef
+        }
+      }
+
+      cancelYTFade(false);
+
+      try {
+        if (player.isMuted?.() || targetVolumeRef.current === 0) {
+          cancelYTFade(true);
+          return;
+        }
+      } catch {
+        // Continue with fade attempt
+      }
+
+      const targetVol = targetVolumeRef.current;
+      isFadingRef.current = true;
+      try {
+        player.setVolume(0);
+      } catch {
+        cancelYTFade(true);
+        return;
+      }
+
+      const initiatedAt = performance.now();
+      let fadeStartedAt: number | null = null;
+
+      fadeIntervalRef.current = window.setInterval(() => {
+        const now = performance.now();
+        let state: number | undefined;
+        try {
+          state = player.getPlayerState?.();
+        } catch {
+          cancelYTFade(true);
+          return;
+        }
+
+        // Abort cleanly if user paused (2) or video ended (0)
+        if ((state === 2 || state === 0) && now - initiatedAt > 500) {
+          cancelYTFade(true);
+          return;
+        }
+
+        // Wait until playback actually begins (1 = PLAYING) at the target timestamp
+        if (fadeStartedAt === null) {
+          const isPlaying = state === 1;
+          const timedOutWaiting = now - initiatedAt > 2500;
+          if (isPlaying || timedOutWaiting) {
+            fadeStartedAt = now;
+          } else {
+            try {
+              player.setVolume?.(0);
+            } catch {
+              cancelYTFade(true);
+            }
+            return;
+          }
+        }
+
+        const elapsed = now - fadeStartedAt;
+        const progress = Math.min(1, elapsed / fadeDurationMs);
+        const eased = Math.pow(progress, 1.5);
+        try {
+          player.setVolume?.(Math.round(targetVol * eased));
+        } catch {
+          cancelYTFade(true);
+          return;
+        }
+
+        if (progress >= 1) {
+          cancelYTFade(true);
+        }
+      }, 30);
+    },
+    [cancelYTFade]
+  );
+
+  const initYTPlayer = useCallback(() => {
+    if (!iframeRef.current || !window.YT?.Player) return;
+    isPlayerReadyRef.current = false;
+    try {
+      ytPlayerRef.current = new window.YT.Player(iframeRef.current, {
+        events: {
+          onReady: (event) => {
+            ytPlayerRef.current = event.target;
+            isPlayerReadyRef.current = true;
+            if (pendingFadeInRef.current) {
+              pendingFadeInRef.current = false;
+              startYTFadeIn(event.target);
+            }
+          },
+        },
+      });
+    } catch {
+      // Fallback to URL-based seeking if IFrame API fails to bind
+    }
+  }, [startYTFadeIn]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const attach = () => {
+      if (!cancelled) {
+        initYTPlayer();
+      }
+    };
+
+    if (window.YT?.Player) {
+      attach();
+    } else {
+      const previousReady = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        if (typeof previousReady === 'function') {
+          previousReady();
+        }
+        attach();
+      };
+
+      if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+        const script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+    }
+
+    return () => {
+      cancelled = true;
+      cancelYTFade(false);
+      ytPlayerRef.current = null;
+      isPlayerReadyRef.current = false;
+    };
+  }, [initYTPlayer, cancelYTFade]);
+
+  const handleJumpToMovement = (mov: SherwoodMovement) => {
+    pauseOtherAudios();
+    setActiveMovement(mov.num);
+    if (ytPlayerRef.current && isPlayerReadyRef.current) {
+      const player = ytPlayerRef.current;
+      if (!isFadingRef.current && player.getVolume) {
+        try {
+          const currentVol = player.getVolume();
+          if (Number.isFinite(currentVol) && currentVol > 0) {
+            targetVolumeRef.current = Math.max(0, Math.min(100, currentVol));
+          }
+        } catch {
+          // Ignore
+        }
+      }
+      try {
+        player.setVolume?.(0);
+      } catch {
+        // Ignore
+      }
+      player.seekTo(mov.time, true);
+      player.playVideo();
+      startYTFadeIn(player);
+    } else {
+      pendingFadeInRef.current = true;
+      isPlayerReadyRef.current = false;
+      ytPlayerRef.current = null;
+      setIframeSrc(getSherwoodEmbedUrl(mov.time));
+    }
   };
 
   const portraitSrc = `${import.meta.env.BASE_URL}assets/aistudio/photo2_199f64f0.jpg`;
@@ -247,21 +478,43 @@ export const PercySherwoodPost: React.FC<PercySherwoodPostProps> = ({
               Symphony No. 2 in G major (1905)
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right descending) */}
-            <div className="max-w-2xl mx-auto mt-6 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="Symphony No. 2 in G major (1905)"
-                subtitle="Percy Sherwood"
-                src={SHERWOOD_AUDIO_SOURCES[0].src}
-                sources={SHERWOOD_AUDIO_SOURCES}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
+            {/* Embedded YouTube Recording */}
+            <div className="max-w-xl mx-auto mt-6">
+              <div className="bg-white border-2 border-stone-300 rounded-lg p-2 sm:p-2.5 shadow-sm">
+                <div className="relative w-full aspect-video overflow-hidden rounded border border-stone-200 bg-stone-950">
+                  <iframe
+                    ref={iframeRef}
+                    id="sherwood-youtube-player"
+                    src={iframeSrc}
+                    onLoad={() => {
+                      if (!isPlayerReadyRef.current && window.YT?.Player) {
+                        initYTPlayer();
+                      }
+                    }}
+                    title="Percy Sherwood - Symphony No 2"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full border-0"
+                  />
+                </div>
+                <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 px-1 text-xs font-serif text-stone-600">
+                  <span className="italic">
+                    Percy Sherwood — <em>Symphony No. 2 in G major</em> (1905)
+                  </span>
+                  <a
+                    href={`https://www.youtube.com/watch?v=${SHERWOOD_YT_VIDEO_ID}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-amber-900 hover:text-amber-950 font-semibold underline underline-offset-2 transition-colors"
+                  >
+                    <span>Watch on YouTube</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
             </div>
 
-            {/* Quick Movement Jump Buttons Bar under Audio */}
+            {/* Interactive Movement Timestamp Buttons */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
               <span className="font-mono text-xs uppercase tracking-wider text-stone-600 font-semibold mr-1">
                 Movements:
@@ -270,9 +523,9 @@ export const PercySherwoodPost: React.FC<PercySherwoodPostProps> = ({
                 <button
                   key={mov.num}
                   type="button"
-                  onClick={() => handleJumpToMovement(mov.time, mov.label)}
+                  onClick={() => handleJumpToMovement(mov)}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 border border-stone-300 rounded font-serif text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-2xs whitespace-nowrap ${
-                    activeMovement === mov.label
+                    activeMovement === mov.num
                       ? 'bg-amber-100 ring-2 ring-amber-800 text-stone-900 shadow-xs'
                       : 'bg-white hover:bg-amber-50 text-stone-800 hover:border-amber-400'
                   }`}
@@ -280,6 +533,9 @@ export const PercySherwoodPost: React.FC<PercySherwoodPostProps> = ({
                 >
                   <Play className="w-3 h-3 text-amber-900 shrink-0" />
                   <span>{mov.label}</span>
+                  <span className="font-mono text-[11px] text-amber-900">
+                    ({mov.timeStr})
+                  </span>
                 </button>
               ))}
             </div>
@@ -299,7 +555,7 @@ export const PercySherwoodPost: React.FC<PercySherwoodPostProps> = ({
 
           <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-6 text-left">
             <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-stone-900 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
-              Written in 1905 during the golden decade of Sherwood&apos;s Dresden professorship, the <em>Symphony No. 2 in G major</em> reveals an altogether sunnier, pastoral breadth than his stormy early works. Scored for full romantic orchestra, it stands among the most substantial symphonic statements composed by any British-born musician working in Germany before the Great War.
+              Written in 1905 during the decade of Sherwood&apos;s Dresden professorship, the <em>Symphony No. 2 in G major</em> reveals a more mature symphonic palette. Scored for full romantic orchestra, it stands among the most substantial symphonic works composed by any British-born musician working in Germany before the Great War.
             </p>
 
             {/* Section Heading above Manuscript Notes */}
@@ -325,8 +581,6 @@ export const PercySherwoodPost: React.FC<PercySherwoodPostProps> = ({
               <p className="text-left m-0">
                 Full movement notes and detailed archival commentary for Sherwood&apos;s <em>2nd Symphony</em> will follow shortly.
               </p>
-
-              <ListenToItAllLink targetId="sherwood-symphony-2-section" />
             </div>
           </div>
         </section>

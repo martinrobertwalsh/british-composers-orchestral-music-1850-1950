@@ -34,8 +34,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             className="w-full h-full object-cover object-center filter brightness-125 contrast-105"
             referrerPolicy="no-referrer"
           />
-          {/* Very light scrim to maintain brightness of the hall while keeping titles readable */}
-          <div className="absolute inset-0 bg-stone-950/15 via-transparent to-stone-950/30" />
+          {/* Subtle scrim to preserve text legibility without hiding the bright hall */}
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/15 via-transparent to-stone-950/30" />
         </div>
 
         {/* Top-Right Queen's Hall Lettering */}
@@ -48,9 +48,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </span>
         </div>
 
-        {/* Center: Pure Title & Subtitle directly over Queen's Hall */}
+        {/* Centred Title & Subtitle directly over Queen's Hall */}
         <div className="relative z-10 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 text-center">
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] drop-shadow-2xl mb-2 sm:mb-3.5">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] drop-shadow-2xl mb-2 sm:mb-3">
             Forgotten Composers
           </h1>
 

@@ -26,7 +26,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'hervey',
     name: 'Arthur Hervey',
     dates: '1855–1922',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/arthur_hervey_portrait.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/arthur_hervey_portrait.jpg?v=2`,
     quote: '“Writer, critic, promoter and composer”',
     notableWork: 'Tone Poem: In the East (1904)',
     tags: [
@@ -61,7 +61,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'morris',
     name: 'R. O. Morris',
     dates: '1886–1948',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/ro_morris_portrait.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/ro_morris_portrait.jpg?v=2`,
     quote: '“The quiet composer behind the great teacher”',
     notableWork: 'Sinfonia in C major (A Little Symphony) (1928)',
     tags: ['R. O. Morris', 'Reginald Owen Morris', 'Sinfonia in C major', 'A Little Symphony', 'Arthur Bliss', 'Adrian Boult', 'Howard Ferguson', 'Gerald Finzi', 'Counterpoint']
@@ -300,6 +300,10 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
       <CardsCarousel
         cards={toFollowCards}
         centerControls={true}
+        onSelectCard={(id) => {
+          setSelectedArticleId(id);
+          window.scrollTo({ top: 380, behavior: 'smooth' });
+        }}
       />
     </div>
   );
