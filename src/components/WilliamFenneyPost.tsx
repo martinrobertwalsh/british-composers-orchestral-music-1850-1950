@@ -12,7 +12,7 @@ interface WilliamFenneyPostProps {
 }
 
 export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, isFeatured = false }) => {
-  const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
+  const [activeImageModal, setActiveImageModal] = useState<{ src: string; title: string } | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const scrollToSection = (id: string) => {
@@ -51,7 +51,12 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
             <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/fenney_in_shadow_score_flat.jpg`)}
+                onClick={() =>
+                  setActiveImageModal({
+                    src: `${import.meta.env.BASE_URL}assets/aistudio/fenney_in_shadow_score_flat.jpg`,
+                    title: 'William J. Fenney — In Shadow, Op. 15 (Score Title Page)',
+                  })
+                }
                 title="Click to enlarge score cover of In Shadow"
               >
                 <img
@@ -274,29 +279,34 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
             </div>
 
             <p className="text-stone-800 text-lg sm:text-xl leading-relaxed pt-1">
-              It was first performed as part of a Bournemouth Municipal Orchestra Concert given at the Bournemouth Winter Gardens on 10 January 1918.
+              It was first performed as part of a Bournemouth Municipal Orchestra Concert given at the Bournemouth Winter Gardens on 10 January 1918. This was Fenney&rsquo;s first appearance at these concerts; it was also to be his last.
             </p>
 
-            <figure className="my-8 bg-white border border-stone-300 rounded-sm shadow-xs overflow-hidden">
-              <figcaption className="px-5 py-5 sm:px-8 sm:py-6 border-b border-stone-200 text-center">
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 leading-tight">
-                  A Descriptive Symphony and a British Novelty.
-                </h3>
-                <p className="mt-3 font-serif text-sm sm:text-base text-stone-600">
-                  <cite className="not-italic">The Bournemouth Guardian</cite>, 12 January 1918, p. 5
-                </p>
+            <figure className="my-6 max-w-2xl mx-auto p-2.5 sm:p-3 bg-white border-2 border-stone-300 rounded-lg shadow-sm">
+              <div
+                className="overflow-hidden rounded border border-stone-200 bg-[#F8F4EA] cursor-pointer group relative"
+                onClick={() =>
+                  setActiveImageModal({
+                    src: `${import.meta.env.BASE_URL}assets/aistudio/pastoral_review_2col.jpg`,
+                    title: 'The Bournemouth Guardian — Review of Pastoral and Nineveh (January 1918)',
+                  })
+                }
+                title="Click to enlarge The Bournemouth Guardian review"
+              >
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/pastoral_review_2col.jpg`}
+                  alt="The Bournemouth Guardian review of William Fenney's Pastoral and Nineveh (January 1918)"
+                  className="w-full h-auto block group-hover:scale-101 transition-transform duration-200"
+                />
+                <div className="absolute inset-0 bg-stone-950/15 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
+                    <ZoomIn className="w-3.5 h-3.5" /> Enlarge
+                  </span>
+                </div>
+              </div>
+              <figcaption className="mt-2.5 text-center text-xs sm:text-sm font-serif text-stone-600 italic">
+                <em>The Bournemouth Guardian</em> (January 1918) — click to enlarge
               </figcaption>
-              <blockquote className="px-5 py-6 sm:px-8 sm:py-8 font-serif text-[17px] sm:text-lg leading-[1.8] text-stone-800 text-left columns-1 md:columns-2 gap-8 lg:gap-10 md:[column-rule:1px_solid_#e7e5e4] [orphans:3] [widows:3]">
-                <p className="mb-5">
-                  Thursday afternoon&rsquo;s symphony concert at the Bournemouth Winter Gardens, the fourteenth of the series, included two novelties by Mr. William Fenney, who is associated with the Midland Institute, and a special protege of Professor Granville Bantock, the distinguished composer. As this was his first appearance at these concerts great interest was shown in the two pieces, &ldquo;Pastoral&rdquo; and the tone poem &ldquo;Nineveh,&rdquo; both of which must have struck the hearers with the fact that there was individuality therein, although with a strong tendency to modern harmonies.
-                </p>
-                <p className="mb-5">
-                  The only point that hearing these items conveyed was a wish that Mr. Fenney would somewhat vary the treatment of his compositions more as there is a feeling of rather undue heaviness, and if some lighter vein were introduced it would surely help in the appreciation of such promising work. The &ldquo;Pastoral&rdquo; was very pleasing, and in the &ldquo;Tone Poem&rdquo; the composer has caught something of the still amazing glories of the great lost empire of the past.
-                </p>
-                <p>
-                  Mr. Fenney is to be congratulated, and he well deserved the plaudits of an audience, many of whom are accustomed to expect great things at these concerts.
-                </p>
-              </blockquote>
             </figure>
           </div>
 
@@ -360,12 +370,12 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
             onClick={() => setActiveImageModal(null)}
           >
             <div
-              className="bg-white border-2 border-[#765B37] rounded-lg max-w-2xl w-full p-4 shadow-2xl relative"
+              className="bg-white border-2 border-[#765B37] rounded-lg max-w-4xl w-full p-4 shadow-2xl relative"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between pb-2 mb-3 border-b border-stone-200">
                 <h3 className="font-serif text-lg font-bold text-stone-900">
-                  William J. Fenney — In Shadow, Op. 15 (Score Title Page)
+                  {activeImageModal.title}
                 </h3>
                 <button
                   type="button"
@@ -378,8 +388,8 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
               </div>
               <div className="overflow-hidden rounded border border-stone-200 bg-stone-100">
                 <img
-                  src={activeImageModal}
-                  alt="Archival document enlargement"
+                  src={activeImageModal.src}
+                  alt={activeImageModal.title}
                   className="w-full h-auto max-h-[75vh] object-contain mx-auto"
                 />
               </div>
