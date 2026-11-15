@@ -215,8 +215,7 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
                 subtitle="William Fenney"
                 src={`${import.meta.env.BASE_URL}assets/aistudio/Pastoral_3704f15a.mp3`}
                 sources={[
-                  { src: `${import.meta.env.BASE_URL}assets/aistudio/Pastoral_3704f15a.mp3`, type: "audio/mpeg" },
-                  { src: `${import.meta.env.BASE_URL}assets/aistudio/Pastoral_fenney.mp3`, type: "audio/mpeg" }
+                  { src: `${import.meta.env.BASE_URL}assets/aistudio/Pastoral_3704f15a.mp3`, type: "audio/mpeg" }
                 ]}
                 className="flex-1"
               />
