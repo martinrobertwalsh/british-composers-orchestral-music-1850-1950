@@ -13,7 +13,7 @@ const GOATCOUNTER_ENDPOINT = 'https://forgotten-british-composers.goatcounter.co
 const GOATCOUNTER_SCRIPT_SRC = 'https://gc.zgo.at/count.js';
 
 let initialized = false;
-const pendingPages: { path: string; title: string }[] = [];
+let pendingPage: { path: string; title: string } | null = null;
 let lastSentKey = '';
 let lastSentAt = 0;
 
@@ -39,10 +39,10 @@ export const initAnalytics = () => {
   script.src = GOATCOUNTER_SCRIPT_SRC;
   script.dataset.goatcounter = GOATCOUNTER_ENDPOINT;
   script.onload = () => {
-    if (window.goatcounter?.count) {
-      for (const view of pendingPages.splice(0)) {
-        window.goatcounter.count(view);
-      }
+    if (pendingPage && window.goatcounter?.count) {
+      const next = pendingPage;
+      pendingPage = null;
+      window.goatcounter.count(next);
     }
   };
   document.head.appendChild(script);
@@ -65,8 +65,9 @@ export const trackPage = (path: string, title: string) => {
   lastSentAt = now;
 
   if (window.goatcounter?.count) {
+    pendingPage = null;
     window.goatcounter.count({ path, title });
   } else {
-    pendingPages.push({ path, title });
+    pendingPage = { path, title };
   }
 };

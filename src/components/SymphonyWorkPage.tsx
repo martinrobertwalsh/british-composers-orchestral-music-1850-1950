@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, ArrowUp, ZoomIn, Calendar, X, BookOpen, PenLine, Play } from 'lucide-react';
-import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
+import { ArrowLeft, ArrowUp, ZoomIn, Calendar, X, BookOpen, PenLine, Play, ExternalLink } from 'lucide-react';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekDirect } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const MACFARREN_YT_VIDEO_ID = 'bMRjgkb7tpM';
 
 interface SymphonyWorkPageProps {
   onBack: () => void;
@@ -14,8 +15,8 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
   const [showDatesPopup, setShowDatesPopup] = useState<boolean>(false);
   const [activeJumpLabel, setActiveJumpLabel] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const jumpTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const symphonyPlayer = useYouTubeWorkPlayer(MACFARREN_YT_VIDEO_ID);
 
   useEffect(() => {
     return () => {
@@ -38,14 +39,16 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
       jumpTimeoutRef.current = null;
     }
 
-    if (audioRef.current) {
-      setActiveJumpLabel(label);
-      seekDirect(audioRef.current, time);
-
-      jumpTimeoutRef.current = setTimeout(() => {
-        setActiveJumpLabel(null);
-      }, 2400);
+    setActiveJumpLabel(label);
+    if (time === 0) {
+      symphonyPlayer.playFromStart();
+    } else {
+      symphonyPlayer.seekWithFade(time);
     }
+
+    jumpTimeoutRef.current = setTimeout(() => {
+      setActiveJumpLabel(null);
+    }, 2400);
   };
 
   return (
@@ -69,17 +72,17 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
           </h1>
 
           <div className="max-w-2xl mx-auto mt-3">
-            <div className="flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="Symphony in B flat (1879)"
-                subtitle="Sir George Alexander Macfarren"
-                src="https://martinrobertwalsh.github.io/british-composers-orchestral-music-1850-1950/assets/aistudio/macfarren_symphony_in_bb_45c21c49.mp3"
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Embedded YouTube Recording */}
+            <FramedYouTubePlayer
+              player={symphonyPlayer}
+              iframeId="macfarren-workpage-youtube-player"
+              title="Walter Macfarren - Symphony in B flat major"
+              caption={
+                <>
+                  Walter Macfarren — <em>Symphony in B&#9837;</em> (1879)
+                </>
+              }
+            />
 
             {/* Quick Movement Jump Buttons Bar under Audio */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
@@ -257,7 +260,11 @@ export const SymphonyWorkPage: React.FC<SymphonyWorkPageProps> = ({ onBack }) =>
               </p>
             </div>
 
-            <ListenToItAllLink targetId="symphony-work-page" />
+            <ListenToItAllLink
+              targetId="symphony-work-page"
+              onPlayFromStart={symphonyPlayer.playFromStart}
+              isPlaying={symphonyPlayer.isPlaying}
+            />
           </div>
 
           {/* Autograph Score Performance Dates Row with Image on Left & Button on Right */}

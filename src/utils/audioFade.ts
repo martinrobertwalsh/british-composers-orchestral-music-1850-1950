@@ -65,15 +65,31 @@ function applySeekSafely(audio: HTMLAudioElement, seconds: number): void {
 }
 
 /**
- * Pauses any other playing <audio> elements on the page so only one work plays at a time.
+ * Pauses any other playing <audio> or YouTube <iframe> elements on the page
+ * so only one work plays at a time.
  */
-export function pauseOtherAudios(except?: HTMLAudioElement | null): void {
+export function pauseOtherAudios(except?: HTMLAudioElement | HTMLIFrameElement | null): void {
   document.querySelectorAll('audio').forEach((other) => {
     if (other !== except && !other.paused) {
       cancelAudioFade(other, true);
       other.pause();
     }
   });
+
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('fc-pause-other-youtube', { detail: { except } }));
+  }
+
+  document
+    .querySelectorAll<HTMLIFrameElement>('iframe[src*="youtube.com/embed"]')
+    .forEach((ytIframe) => {
+      if (ytIframe !== except && ytIframe.contentWindow) {
+        ytIframe.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
+          '*'
+        );
+      }
+    });
 }
 
 /**

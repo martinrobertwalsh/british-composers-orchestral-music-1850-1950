@@ -300,6 +300,10 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
       <CardsCarousel
         cards={toFollowCards}
         centerControls={true}
+        onSelectCard={(id) => {
+          setSelectedArticleId(id);
+          window.scrollTo({ top: 380, behavior: 'smooth' });
+        }}
       />
     </div>
   );

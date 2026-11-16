@@ -1,13 +1,14 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   PERCY_SHERWOOD_ORCHESTRAL_WORKS
 } from '../data/percySherwoodData';
 import { ZoomIn, X, ArrowLeft, ArrowUp, BookOpen, PenLine, Volume2, ExternalLink, Play } from 'lucide-react';
 import { HolePunchMargin } from './HolePunchMargin';
 import { QuaversIcon } from './QuaversIcon';
-import { pauseOtherAudios } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
 
-const SHERWOOD_YT_VIDEO_ID = 'mzjZDheV0Ks';
+const SHERWOOD_YT_VIDEO_ID = 'oL3Yt4PrJ9c';
 
 interface SherwoodMovement {
   num: number;
@@ -23,49 +24,6 @@ const SHERWOOD_MOVEMENTS: SherwoodMovement[] = [
   { num: 4, label: '4th mov – Allegro con fuoco', time: 2013, timeStr: '33:33' },
 ];
 
-interface YTPlayer {
-  seekTo: (seconds: number, allowSeekAhead?: boolean) => void;
-  playVideo: () => void;
-  getVolume?: () => number;
-  setVolume?: (volume: number) => void;
-  getPlayerState?: () => number;
-  isMuted?: () => boolean;
-}
-
-interface YTNamespace {
-  Player: new (
-    element: HTMLIFrameElement | string,
-    options?: {
-      events?: {
-        onReady?: (event: { target: YTPlayer }) => void;
-      };
-    }
-  ) => YTPlayer;
-}
-
-declare global {
-  interface Window {
-    YT?: YTNamespace;
-    onYouTubeIframeAPIReady?: () => void;
-  }
-}
-
-const getSherwoodEmbedUrl = (startSeconds?: number): string => {
-  const params = new URLSearchParams({
-    enablejsapi: '1',
-    rel: '0',
-    cb: '202611151003',
-  });
-  if (typeof window !== 'undefined' && window.location.origin) {
-    params.set('origin', window.location.origin);
-  }
-  if (typeof startSeconds === 'number') {
-    params.set('start', String(startSeconds));
-    params.set('autoplay', '1');
-  }
-  return `https://www.youtube.com/embed/${SHERWOOD_YT_VIDEO_ID}?${params.toString()}`;
-};
-
 interface PercySherwoodPostProps {
   onBack?: () => void;
   isFeatured?: boolean;
@@ -78,204 +36,14 @@ export const PercySherwoodPost: React.FC<PercySherwoodPostProps> = ({
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
   const [imageFailed, setImageFailed] = useState<boolean>(false);
   const [activeMovement, setActiveMovement] = useState<number | null>(null);
-  const [iframeSrc, setIframeSrc] = useState<string>(() => getSherwoodEmbedUrl());
-
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
-  const ytPlayerRef = useRef<YTPlayer | null>(null);
-  const isPlayerReadyRef = useRef<boolean>(false);
-  const fadeIntervalRef = useRef<number | null>(null);
-  const targetVolumeRef = useRef<number>(100);
-  const isFadingRef = useRef<boolean>(false);
-  const pendingFadeInRef = useRef<boolean>(false);
-
-  const cancelYTFade = useCallback((restoreVolume = true) => {
-    if (fadeIntervalRef.current !== null) {
-      window.clearInterval(fadeIntervalRef.current);
-      fadeIntervalRef.current = null;
-    }
-    isFadingRef.current = false;
-    if (restoreVolume && ytPlayerRef.current?.setVolume) {
-      try {
-        ytPlayerRef.current.setVolume(targetVolumeRef.current);
-      } catch {
-        // Ignore if player is unmounted
-      }
-    }
-  }, []);
-
-  const startYTFadeIn = useCallback(
-    (player: YTPlayer, fadeDurationMs = 2400) => {
-      if (!player.setVolume) return;
-
-      if (!isFadingRef.current && player.getVolume) {
-        try {
-          const currentVol = player.getVolume();
-          if (Number.isFinite(currentVol) && currentVol > 0) {
-            targetVolumeRef.current = Math.max(0, Math.min(100, currentVol));
-          }
-        } catch {
-          // Keep existing targetVolumeRef
-        }
-      }
-
-      cancelYTFade(false);
-
-      try {
-        if (player.isMuted?.() || targetVolumeRef.current === 0) {
-          cancelYTFade(true);
-          return;
-        }
-      } catch {
-        // Continue with fade attempt
-      }
-
-      const targetVol = targetVolumeRef.current;
-      isFadingRef.current = true;
-      try {
-        player.setVolume(0);
-      } catch {
-        cancelYTFade(true);
-        return;
-      }
-
-      const initiatedAt = performance.now();
-      let fadeStartedAt: number | null = null;
-
-      fadeIntervalRef.current = window.setInterval(() => {
-        const now = performance.now();
-        let state: number | undefined;
-        try {
-          state = player.getPlayerState?.();
-        } catch {
-          cancelYTFade(true);
-          return;
-        }
-
-        // Abort cleanly if user paused (2) or video ended (0)
-        if ((state === 2 || state === 0) && now - initiatedAt > 500) {
-          cancelYTFade(true);
-          return;
-        }
-
-        // Wait until playback actually begins (1 = PLAYING) at the target timestamp
-        if (fadeStartedAt === null) {
-          const isPlaying = state === 1;
-          const timedOutWaiting = now - initiatedAt > 2500;
-          if (isPlaying || timedOutWaiting) {
-            fadeStartedAt = now;
-          } else {
-            try {
-              player.setVolume?.(0);
-            } catch {
-              cancelYTFade(true);
-            }
-            return;
-          }
-        }
-
-        const elapsed = now - fadeStartedAt;
-        const progress = Math.min(1, elapsed / fadeDurationMs);
-        const eased = Math.pow(progress, 1.5);
-        try {
-          player.setVolume?.(Math.round(targetVol * eased));
-        } catch {
-          cancelYTFade(true);
-          return;
-        }
-
-        if (progress >= 1) {
-          cancelYTFade(true);
-        }
-      }, 30);
-    },
-    [cancelYTFade]
-  );
-
-  const initYTPlayer = useCallback(() => {
-    if (!iframeRef.current || !window.YT?.Player) return;
-    isPlayerReadyRef.current = false;
-    try {
-      ytPlayerRef.current = new window.YT.Player(iframeRef.current, {
-        events: {
-          onReady: (event) => {
-            ytPlayerRef.current = event.target;
-            isPlayerReadyRef.current = true;
-            if (pendingFadeInRef.current) {
-              pendingFadeInRef.current = false;
-              startYTFadeIn(event.target);
-            }
-          },
-        },
-      });
-    } catch {
-      // Fallback to URL-based seeking if IFrame API fails to bind
-    }
-  }, [startYTFadeIn]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const attach = () => {
-      if (!cancelled) {
-        initYTPlayer();
-      }
-    };
-
-    if (window.YT?.Player) {
-      attach();
-    } else {
-      const previousReady = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => {
-        if (typeof previousReady === 'function') {
-          previousReady();
-        }
-        attach();
-      };
-
-      if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
-        const script = document.createElement('script');
-        script.src = 'https://www.youtube.com/iframe_api';
-        script.async = true;
-        document.head.appendChild(script);
-      }
-    }
-
-    return () => {
-      cancelled = true;
-      cancelYTFade(false);
-      ytPlayerRef.current = null;
-      isPlayerReadyRef.current = false;
-    };
-  }, [initYTPlayer, cancelYTFade]);
+  const sherwoodPlayer = useYouTubeWorkPlayer(SHERWOOD_YT_VIDEO_ID);
 
   const handleJumpToMovement = (mov: SherwoodMovement) => {
-    pauseOtherAudios();
     setActiveMovement(mov.num);
-    if (ytPlayerRef.current && isPlayerReadyRef.current) {
-      const player = ytPlayerRef.current;
-      if (!isFadingRef.current && player.getVolume) {
-        try {
-          const currentVol = player.getVolume();
-          if (Number.isFinite(currentVol) && currentVol > 0) {
-            targetVolumeRef.current = Math.max(0, Math.min(100, currentVol));
-          }
-        } catch {
-          // Ignore
-        }
-      }
-      try {
-        player.setVolume?.(0);
-      } catch {
-        // Ignore
-      }
-      player.seekTo(mov.time, true);
-      player.playVideo();
-      startYTFadeIn(player);
+    if (mov.time === 0) {
+      sherwoodPlayer.playFromStart();
     } else {
-      pendingFadeInRef.current = true;
-      isPlayerReadyRef.current = false;
-      ytPlayerRef.current = null;
-      setIframeSrc(getSherwoodEmbedUrl(mov.time));
+      sherwoodPlayer.seekWithFade(mov.time);
     }
   };
 
@@ -479,40 +247,17 @@ export const PercySherwoodPost: React.FC<PercySherwoodPostProps> = ({
             </h2>
 
             {/* Embedded YouTube Recording */}
-            <div className="max-w-xl mx-auto mt-6">
-              <div className="bg-white border-2 border-stone-300 rounded-lg p-2 sm:p-2.5 shadow-sm">
-                <div className="relative w-full aspect-video overflow-hidden rounded border border-stone-200 bg-stone-950">
-                  <iframe
-                    ref={iframeRef}
-                    id="sherwood-youtube-player"
-                    src={iframeSrc}
-                    onLoad={() => {
-                      if (!isPlayerReadyRef.current && window.YT?.Player) {
-                        initYTPlayer();
-                      }
-                    }}
-                    title="Percy Sherwood - Symphony No 2"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className="absolute inset-0 w-full h-full border-0"
-                  />
-                </div>
-                <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 px-1 text-xs font-serif text-stone-600">
-                  <span className="italic">
-                    Percy Sherwood — <em>Symphony No. 2 in G major</em> (1905)
-                  </span>
-                  <a
-                    href={`https://www.youtube.com/watch?v=${SHERWOOD_YT_VIDEO_ID}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-amber-900 hover:text-amber-950 font-semibold underline underline-offset-2 transition-colors"
-                  >
-                    <span>Watch on YouTube</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-            </div>
+            <FramedYouTubePlayer
+              player={sherwoodPlayer}
+              iframeId="sherwood-youtube-player"
+              title="Percy Sherwood - 2nd Symphony"
+              className="max-w-md mx-auto mt-6"
+              caption={
+                <>
+                  Percy Sherwood — <em>Symphony No. 2 in G major</em> (1905)
+                </>
+              }
+            />
 
             {/* Interactive Movement Timestamp Buttons */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2">

@@ -1,15 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { TOBIAS_MATTHAY_ORCHESTRAL_WORKS } from '../data/matthayData';
 import { Volume2, ArrowUp, ZoomIn, X, BookOpen, PenLine } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekWithFadeIn } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const MATTHAY_YT_VIDEO_ID = '40F3rR1Oa3g';
 
 export const TobiasMatthayPost: React.FC = () => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const inMayPlayer = useYouTubeWorkPlayer(MATTHAY_YT_VIDEO_ID);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -19,7 +21,7 @@ export const TobiasMatthayPost: React.FC = () => {
   };
 
   const seekAudio = (seconds: number) => {
-    seekWithFadeIn(audioRef.current, seconds);
+    inMayPlayer.seekWithFade(seconds);
   };
 
   return (
@@ -235,22 +237,17 @@ export const TobiasMatthayPost: React.FC = () => {
               In May - Symphonic Overture (1883)
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right mirrored) */}
-            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="In May - Symphonic Overture (1883)"
-                subtitle="Tobias Matthay"
-                src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Matthay/In%20May.mp3"
-                sources={[
-                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Matthay/In%20May.mp3", type: "audio/mpeg" },
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Matthay/In%20May.mp3", type: "audio/mpeg" }
-                ]}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Embedded YouTube Recording */}
+            <FramedYouTubePlayer
+              player={inMayPlayer}
+              iframeId="matthay-in-may-youtube-player"
+              title="Tobias Matthay - In May, Symphonic Overture (1883)"
+              caption={
+                <>
+                  Tobias Matthay — <em>In May</em>, Symphonic Overture (1883)
+                </>
+              }
+            />
 
             <div className="mt-4 flex justify-center">
               <button
@@ -352,7 +349,11 @@ export const TobiasMatthayPost: React.FC = () => {
                 [T.M.]
               </p>
 
-              <ListenToItAllLink targetId="matthay-in-may-workpage" />
+              <ListenToItAllLink
+                targetId="matthay-in-may-workpage"
+                onPlayFromStart={inMayPlayer.playFromStart}
+                isPlaying={inMayPlayer.isPlaying}
+              />
             </div>
 
             <p>

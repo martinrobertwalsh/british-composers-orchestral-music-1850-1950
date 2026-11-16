@@ -1,19 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { PERCY_PITT_ORCHESTRAL_WORKS, PercyPittWork } from '../data/percyPittData';
 import { Music, X, Calendar, BookOpen, ExternalLink, Mail, ArrowUp, Volume2, ZoomIn, PenLine } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekWithFadeIn } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const PITT_YT_VIDEO_ID = '-6HZxgXJLDI';
 
 export const PercyPittPost: React.FC = () => {
   const [selectedWork, setSelectedWork] = useState<PercyPittWork | null>(null);
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const coronationPlayer = useYouTubeWorkPlayer(PITT_YT_VIDEO_ID);
 
   const seekAudio = (seconds: number) => {
-    seekWithFadeIn(audioRef.current, seconds);
+    coronationPlayer.seekWithFade(seconds);
   };
 
   const scrollToSection = (id: string) => {
@@ -279,18 +281,17 @@ export const PercyPittPost: React.FC = () => {
               Coronation March
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right mirrored) */}
-            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="Coronation March"
-                subtitle="Percy Pitt"
-                src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Pitt/Coronation%20March.mp3"
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Embedded YouTube Recording */}
+            <FramedYouTubePlayer
+              player={coronationPlayer}
+              iframeId="pitt-coronation-march-youtube-player"
+              title="Percy Pitt - Coronation March"
+              caption={
+                <>
+                  Percy Pitt — <em>Coronation March</em> (1896)
+                </>
+              }
+            />
 
             <div className="mt-4 flex justify-center">
               <button
@@ -352,7 +353,11 @@ export const PercyPittPost: React.FC = () => {
                 At the end he takes the slow legato theme and scores it passionately for unison strings. This departure from the norm left the reviewers, and no doubt the audience, somewhat perplexed.
               </p>
 
-              <ListenToItAllLink targetId="pitt-coronation-march" />
+              <ListenToItAllLink
+                targetId="pitt-coronation-march"
+                onPlayFromStart={coronationPlayer.playFromStart}
+                isPlaying={coronationPlayer.isPlaying}
+              />
             </div>
 
             <p className="text-left">

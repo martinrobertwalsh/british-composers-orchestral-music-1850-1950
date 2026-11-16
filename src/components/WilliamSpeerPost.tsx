@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { SPEER_ORCHESTRAL_WORKS, SpeerWork } from '../data/speerData';
-import { BookOpen, Volume2, ZoomIn, PenLine, ArrowLeft, ArrowUp, X } from 'lucide-react';
+import { BookOpen, Volume2, ZoomIn, PenLine, ArrowLeft, ArrowUp, X, ExternalLink } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekWithFadeIn } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const SPEER_RHAPSODY_YT_VIDEO_ID = 'MKOkxhahL98';
+const SPEER_NOCTURNE_YT_VIDEO_ID = 'LMoDo6s1HFY';
 
 interface WilliamSpeerPostProps {
   onBack?: () => void;
@@ -15,21 +18,21 @@ interface WilliamSpeerPostProps {
 export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFeatured = false }) => {
   const [selectedWork, setSelectedWork] = useState<SpeerWork | null>(null);
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const rhapsodyAudioRef = useRef<HTMLAudioElement | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const pauseNocturneRef = useRef<() => void>(() => {});
+  const rhapsodyPlayer = useYouTubeWorkPlayer(SPEER_RHAPSODY_YT_VIDEO_ID, () => {
+    pauseNocturneRef.current();
+  });
+  const nocturnePlayer = useYouTubeWorkPlayer(SPEER_NOCTURNE_YT_VIDEO_ID, () => {
+    rhapsodyPlayer.pause();
+  });
+  pauseNocturneRef.current = nocturnePlayer.pause;
 
   const seekRhapsodyAudio = (seconds: number) => {
-    if (audioRef.current && !audioRef.current.paused) {
-      audioRef.current.pause();
-    }
-    seekWithFadeIn(rhapsodyAudioRef.current, seconds);
+    rhapsodyPlayer.seekWithFade(seconds);
   };
 
-  const seekAudio = (seconds: number) => {
-    if (rhapsodyAudioRef.current && !rhapsodyAudioRef.current.paused) {
-      rhapsodyAudioRef.current.pause();
-    }
-    seekWithFadeIn(audioRef.current, seconds);
+  const seekNocturneAudio = (seconds: number) => {
+    nocturnePlayer.seekWithFade(seconds);
   };
 
   const scrollToSection = (id: string) => {
@@ -276,28 +279,17 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
               Rhapsody in E&#9837;
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right descending) */}
-            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={rhapsodyAudioRef}
-                title="Rhapsody in E flat"
-                subtitle="William Henry Speer"
-                src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Speer/Rhapsody.mp3"
-                sources={[
-                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Speer/Rhapsody.mp3", type: "audio/mpeg" },
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/refs/heads/main/Speer/Rhapsody.mp3", type: "audio/mpeg" },
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Speer/Rhapsody.mp3", type: "audio/mpeg" }
-                ]}
-                onPlay={() => {
-                  if (audioRef.current && !audioRef.current.paused) {
-                    audioRef.current.pause();
-                  }
-                }}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Embedded YouTube Recording */}
+            <FramedYouTubePlayer
+              player={rhapsodyPlayer}
+              iframeId="speer-rhapsody-youtube-player"
+              title="William Speer - Rhapsody in Eb"
+              caption={
+                <>
+                  William Henry Speer — <em>Rhapsody in E&#9837;</em>
+                </>
+              }
+            />
 
             <div className="mt-4 flex justify-center">
               <button
@@ -415,7 +407,11 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
                 the music winds down in tempo and dynamics to an extended recap of the slow introduction.
               </p>
 
-              <ListenToItAllLink targetId="speer-rhapsody-workpage" />
+              <ListenToItAllLink
+                targetId="speer-rhapsody-workpage"
+                onPlayFromStart={rhapsodyPlayer.playFromStart}
+                isPlaying={rhapsodyPlayer.isPlaying}
+              />
             </div>
 
             {/* Archival Title Page & Manuscript Score Excerpt Full-Width Side by Side */}
@@ -499,28 +495,17 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
               Nocturne for strings (Op. 17)
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right descending) */}
-            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="Nocturne for strings (Op. 17)"
-                subtitle="William Henry Speer"
-                src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/refs/heads/main/Speer/Nocturne.mp3"
-                sources={[
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/refs/heads/main/Speer/Nocturne.mp3", type: "audio/mpeg" },
-                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Speer/Nocturne.mp3", type: "audio/mpeg" },
-                  { src: `${import.meta.env.BASE_URL}assets/aistudio/Nocturne_speer.mp3`, type: "audio/mpeg" }
-                ]}
-                onPlay={() => {
-                  if (rhapsodyAudioRef.current && !rhapsodyAudioRef.current.paused) {
-                    rhapsodyAudioRef.current.pause();
-                  }
-                }}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Embedded YouTube Recording */}
+            <FramedYouTubePlayer
+              player={nocturnePlayer}
+              iframeId="speer-nocturne-youtube-player"
+              title="William Speer - Nocturne"
+              caption={
+                <>
+                  William Henry Speer — <em>Nocturne for strings</em> (Op. 17)
+                </>
+              }
+            />
 
             <div className="mt-4 flex justify-center">
               <button
@@ -570,7 +555,7 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
                 The repeat of the first part{' '}
                 <button
                   type="button"
-                  onClick={() => seekAudio(176)}
+                  onClick={() => seekNocturneAudio(176)}
                   className="font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
                   title="Jump to 02:56 in Nocturne audio"
                 >
@@ -579,7 +564,11 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
                 is more ornate in melody, harmony and certainly in polyphony. The only downside is that the piece seems to end far too early.
               </p>
 
-              <ListenToItAllLink targetId="speer-nocturne-workpage" />
+              <ListenToItAllLink
+                targetId="speer-nocturne-workpage"
+                onPlayFromStart={nocturnePlayer.playFromStart}
+                isPlaying={nocturnePlayer.isPlaying}
+              />
             </div>
 
             {/* Score Incipit: Nocturne for Strings (Op. 17) */}
