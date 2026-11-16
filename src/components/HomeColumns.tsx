@@ -39,7 +39,7 @@ export const HomeColumns: React.FC<HomeColumnsProps> = ({
           <div className="flex items-start gap-4 w-full">
             <div className="w-24 sm:w-28 aspect-3/4 shrink-0 overflow-hidden rounded border border-stone-300 group-hover:border-amber-800 bg-stone-100 transition-colors">
               <img
-                src={`${import.meta.env.BASE_URL}assets/aistudio/speer_portrait_restored.jpg`}
+                src={`${import.meta.env.BASE_URL}assets/aistudio/speer_portrait_restored.webp`}
                 alt="William Henry Speer (1863–1937)"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-top filter contrast-105 group-hover:scale-105 transition-transform duration-300"

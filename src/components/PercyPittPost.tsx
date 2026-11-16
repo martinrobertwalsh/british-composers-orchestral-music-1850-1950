@@ -46,11 +46,11 @@ export const PercyPittPost: React.FC = () => {
           <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
             <div
               className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
-              onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/percy_pitt_sharp.jpg`)}
+              onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/percy_pitt_sharp.webp`)}
               title="Click to enlarge Percy Pitt portrait"
             >
               <img
-                src={`${import.meta.env.BASE_URL}assets/aistudio/percy_pitt_sharp.jpg`}
+                src={`${import.meta.env.BASE_URL}assets/aistudio/percy_pitt_sharp.webp`}
                 alt="Percy Pitt (1869–1932) - English composer, conductor, Director of Music at Covent Garden and the BBC"
                 className="w-full h-full object-cover object-top filter contrast-105 group-hover:scale-102 transition-transform duration-200"
                 referrerPolicy="no-referrer"

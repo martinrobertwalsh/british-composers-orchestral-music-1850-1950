@@ -70,11 +70,11 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
           <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
             <div
               className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
-              onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/speer_portrait_restored.jpg`)}
+              onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/speer_portrait_restored.webp`)}
               title="Click to enlarge William Henry Speer portrait"
             >
               <img
-                src={`${import.meta.env.BASE_URL}assets/aistudio/speer_portrait_restored.jpg`}
+                src={`${import.meta.env.BASE_URL}assets/aistudio/speer_portrait_restored.webp`}
                 alt="Dr. William Henry Speer (1863–1937) - English composer and organist"
                 className="w-full h-full object-cover object-top filter contrast-105 group-hover:scale-102 transition-transform duration-200"
                 referrerPolicy="no-referrer"
@@ -166,12 +166,12 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
             <div className="flex flex-col sm:flex-row gap-5 items-start">
               <div
                 className="w-32 sm:w-36 shrink-0 mx-auto sm:mx-0 p-1.5 bg-stone-50 border border-stone-300 rounded shadow-2xs cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/speer_photo_68fbde93.jpeg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/speer_photo_68fbde93.webp`)}
                 title="Click to enlarge photograph"
               >
                 <div className="overflow-hidden rounded-xs aspect-3/4 bg-stone-100">
                   <img
-                    src={`${import.meta.env.BASE_URL}assets/aistudio/speer_photo_68fbde93.jpeg`}
+                    src={`${import.meta.env.BASE_URL}assets/aistudio/speer_photo_68fbde93.webp`}
                     alt="Dr. William Henry Speer and Marion Speer in the garden"
                     className="w-full h-full object-cover brightness-105 group-hover:scale-102 transition-transform duration-200"
                     referrerPolicy="no-referrer"
@@ -687,11 +687,11 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
             <figure className="p-2.5 bg-white border border-stone-300 rounded shadow-xs text-center flex flex-col justify-between">
               <div
                 className="overflow-hidden rounded-xs border border-stone-200 bg-stone-50 aspect-3/4 flex items-center justify-center p-2 cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/photo_b3c2ba5c.jpg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/photo_b3c2ba5c.webp`)}
                 title="Click to enlarge memorial tablet photograph"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/photo_b3c2ba5c.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/photo_b3c2ba5c.webp`}
                   alt="Memorial tablet at Great Malvern Cemetery inscribed: William Henry Speer, M.A. Mus Doc., Born Novr. 9th 1863, Died May 21st 1937"
                   className="max-w-full max-h-full w-auto h-auto object-contain group-hover:scale-102 transition-transform duration-200"
                 />

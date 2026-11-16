@@ -48,11 +48,11 @@ export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) =>
             <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/norman_oneill_portrait.jpg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/norman_oneill_portrait.webp`)}
                 title="Click to enlarge Norman O'Neill portrait"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/norman_oneill_portrait.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/norman_oneill_portrait.webp`}
                   alt="Norman O'Neill (1875–1934)"
                   className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-200"
                 />

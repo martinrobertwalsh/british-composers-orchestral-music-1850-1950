@@ -48,11 +48,11 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
             <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/percy_godfrey_portrait.jpg?v=2`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/percy_godfrey_portrait.webp?v=2`)}
                 title="Click to enlarge Percy Godfrey portrait"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/percy_godfrey_portrait.jpg?v=2`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/percy_godfrey_portrait.webp?v=2`}
                   alt="Percy Godfrey (1859–1945)"
                   className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-200"
                 />
@@ -109,11 +109,11 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
             <figure className="w-full md:w-80 lg:w-96 shrink-0 mx-auto md:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-[4/3] cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/1910_Common_Room_df2c1dc6.jpg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/1910_Common_Room_df2c1dc6.webp`)}
                 title="Click to enlarge 1910 King's School Common Room photograph"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/1910_Common_Room_df2c1dc6.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/1910_Common_Room_df2c1dc6.webp`}
                   alt="The King's School 1910 (Percy Godfrey back row 5th from left) THANKS TO KING'S SCHOOL FOR PHOTO"
                   className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-200"
                 />

@@ -85,11 +85,11 @@ export const FeaturedPost: React.FC = () => {
             <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/photo_200faca6.jpg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/photo_200faca6.webp`)}
                 title="Click to enlarge Walter Macfarren portrait"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/photo_200faca6.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/photo_200faca6.webp`}
                   alt="Walter Macfarren (1826–1905) - English composer, pianist, and professor at the Royal Academy of Music"
                   className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-200"
                   referrerPolicy="no-referrer"
@@ -529,11 +529,11 @@ export const FeaturedPost: React.FC = () => {
             <figure className="p-2.5 bg-white border border-stone-300 rounded shadow-xs text-center flex flex-col justify-between">
               <div
                 className="overflow-hidden rounded-xs border border-stone-200 bg-stone-50 flex-1 min-h-[260px] flex items-center justify-center p-2 cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/ob1_4f6f05f3.jpg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/ob1_4f6f05f3.webp`)}
                 title="Click to enlarge obituary cutting: Death of Mr. Walter Macfarren"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/ob1_4f6f05f3.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/ob1_4f6f05f3.webp`}
                   alt="Newspaper obituary cutting: Death of Mr. Walter Macfarren"
                   className="max-w-full max-h-[360px] w-auto h-auto object-contain grayscale contrast-105 group-hover:scale-102 transition-transform duration-200"
                   referrerPolicy="no-referrer"
@@ -552,11 +552,11 @@ export const FeaturedPost: React.FC = () => {
             <figure className="p-2.5 bg-white border border-stone-300 rounded shadow-xs text-center flex flex-col justify-between">
               <div
                 className="overflow-hidden rounded-xs border border-stone-200 bg-stone-50 flex-1 min-h-[260px] flex items-center justify-center p-2 cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/ob2_d0b3efda.jpg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/ob2_d0b3efda.webp`)}
                 title="Click to enlarge obituary cutting: The Conductor's Baton"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/ob2_d0b3efda.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/ob2_d0b3efda.webp`}
                   alt="Newspaper obituary cutting: The Conductor's Baton — anecdotes of Professor Walter Macfarren"
                   className="max-w-full max-h-[360px] w-auto h-auto object-contain grayscale contrast-105 group-hover:scale-102 transition-transform duration-200"
                   referrerPolicy="no-referrer"

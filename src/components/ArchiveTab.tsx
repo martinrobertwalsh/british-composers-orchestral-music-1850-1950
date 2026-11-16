@@ -21,7 +21,7 @@ export const ARCHIVE_ARTICLES: ArchiveArticle[] = [
     id: 'macfarren',
     name: 'Walter Macfarren',
     dates: '1826–1905',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/photo_200faca6.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/photo_200faca6.webp`,
     quote: '“A symphony missing for over a hundred years, finally turns up”',
     notableWork: 'Symphony in B flat (1879)',
     tags: ['Walter Macfarren', 'Symphony in Bb', 'Royal Academy of Music', 'Philharmonic']
@@ -30,7 +30,7 @@ export const ARCHIVE_ARTICLES: ArchiveArticle[] = [
     id: 'matthay',
     name: 'Tobias Matthay',
     dates: '1858–1945',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/tobias_matthay_portrait.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/tobias_matthay_portrait.webp`,
     quote: '“Orchestral secrets from a master of the piano”',
     notableWork: 'In May — Tone Poem (1883)',
     tags: ['Tobias Matthay', 'In May', 'Tone Poem', 'Bournemouth', 'Dan Godfrey', 'Piano Pedagogy', 'Royal Academy']
@@ -39,7 +39,7 @@ export const ARCHIVE_ARTICLES: ArchiveArticle[] = [
     id: 'pitt',
     name: 'Percy Pitt',
     dates: '1869–1932',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/percy_pitt_sharp.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/percy_pitt_sharp.webp`,
     quote: '“A life on the podium, a composer in the shadows”',
     notableWork: 'Coronation March (1897)',
     tags: ['Percy Pitt', 'Coronation March', 'Queen\'s Hall', 'Covent Garden', 'BBC Music Director', 'Promenade Concerts']

@@ -69,11 +69,11 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
             <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.jpg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.webp`)}
                 title="Click to enlarge Francis Cunningham Woods portrait"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.webp`}
                   alt="Francis Cunningham Woods (1862–1929)"
                   className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-200"
                 />
@@ -138,11 +138,11 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
             <figure className="my-8 max-w-xl mx-auto p-2.5 sm:p-3 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-[16/11] cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/woods_group.jpg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/woods_group.webp`)}
                 title="Click to enlarge gathering photograph"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/woods_group.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/woods_group.webp`}
                   alt="Francis Cunningham Woods (bottom row far right) THANKS TO HIGHGATE SCHOOL FOR PHOTO"
                   className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-200"
                 />
@@ -181,11 +181,11 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               <figure className="p-2.5 bg-white border-2 border-stone-300 rounded shadow-xs text-center flex flex-col justify-between">
                 <div
                   className="overflow-hidden rounded border border-stone-200 bg-stone-50 h-52 sm:h-56 flex items-center justify-center p-2 cursor-pointer group relative"
-                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/woods_village_organist_cover.jpg`)}
+                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/woods_village_organist_cover.webp`)}
                   title="Click to enlarge Musical Times Announcement"
                 >
                   <img
-                    src={`${import.meta.env.BASE_URL}assets/aistudio/woods_village_organist_cover.jpg`}
+                    src={`${import.meta.env.BASE_URL}assets/aistudio/woods_village_organist_cover.webp`}
                     alt="The Village Organist Musical Times advertisement (September 1898)"
                     className="max-w-full max-h-full w-auto h-auto object-contain group-hover:scale-102 transition-transform duration-200"
                   />

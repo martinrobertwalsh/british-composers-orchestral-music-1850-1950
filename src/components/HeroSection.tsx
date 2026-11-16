@@ -29,7 +29,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Background Queen's Hall Photo */}
         <div className="absolute inset-0">
           <img
-            src={`${import.meta.env.BASE_URL}assets/aistudio/queens_hall_clean.jpg?v=3`}
+            src={`${import.meta.env.BASE_URL}assets/aistudio/queens_hall_clean.webp?v=3`}
             alt="Queen's Hall, Langham Place, London - The lost acoustic heart of the British Musical Renaissance and the Proms, before its destruction in May 1941"
             className="w-full h-full object-cover object-center filter brightness-125 contrast-105"
             referrerPolicy="no-referrer"

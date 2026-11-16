@@ -27,7 +27,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'hervey',
     name: 'Arthur Hervey',
     dates: '1855–1922',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/arthur_hervey_portrait.jpg?v=2`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/arthur_hervey_portrait.webp?v=2`,
     quote: '“Writer, critic, promoter and composer”',
     notableWork: 'Tone Poem: In the East (1904)',
     tags: [
@@ -44,7 +44,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'oneill',
     name: "Norman O’Neill",
     dates: '1875–1934',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/norman_oneill_portrait.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/norman_oneill_portrait.webp`,
     quote: '“Music from behind the curtain”',
     notableWork: 'In Autumn — Tone Poem (1901)',
     tags: ["Norman O'Neill", 'Norman O’Neill', 'In Autumn', 'Tone Poem', 'Frankfurt Group', "Queen's Hall", 'Henry Wood']
@@ -53,7 +53,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'godfrey',
     name: 'Percy Godfrey',
     dates: '1859–1945',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/percy_godfrey_portrait.jpg?v=2`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/percy_godfrey_portrait.webp?v=2`,
     quote: '“From prizewinner to obscurity”',
     notableWork: 'Coronation Prize-March (1902)',
     tags: ['Percy Godfrey', 'Coronation March', 'Worshipful Company of Musicians', 'Canterbury', 'Edward VII', 'Dan Godfrey']
@@ -62,7 +62,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'morris',
     name: 'R. O. Morris',
     dates: '1886–1948',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/ro_morris_portrait.jpg?v=2`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/ro_morris_portrait.webp?v=2`,
     quote: '“The quiet composer behind the great teacher”',
     notableWork: 'Sinfonia in C major (A Little Symphony) (1928)',
     tags: ['R. O. Morris', 'Reginald Owen Morris', 'Sinfonia in C major', 'A Little Symphony', 'Arthur Bliss', 'Adrian Boult', 'Howard Ferguson', 'Gerald Finzi', 'Counterpoint']
@@ -71,7 +71,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'cunningham-woods',
     name: 'Francis Cunningham Woods',
     dates: '1862–1929',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.webp`,
     quote: '“From the organ loft to a small village in Norfolk”',
     notableWork: 'The Gressenhall Suite for strings (1915)',
     tags: ['Francis Cunningham Woods', 'Cunningham Woods', 'The Gressenhall Suite', 'Suite in F major', 'The Village Organist', 'John Stainer', 'Arthur Sullivan', 'Highgate School', 'Oxford']
@@ -80,7 +80,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'percy-sherwood',
     name: 'Percy Sherwood',
     dates: '1866–1939',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/photo2_199f64f0.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/photo2_199f64f0.webp`,
     quote: '“A tale of two cities and three symphonies”',
     notableWork: '2nd Symphony (Symphony No. 2 in G major, 1905)',
     tags: [
@@ -98,7 +98,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'braithwaite',
     name: 'Sam Hartley Braithwaite',
     dates: '1883–1947',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/sam_hartley_braithwaite_portrait.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/sam_hartley_braithwaite_portrait.webp`,
     quote: '“Orchestral colourist and etcher of dark, moody landscapes”',
     notableWork: 'Elegy for Orchestra (1926)',
     tags: [
@@ -117,7 +117,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     id: 'cusins',
     name: 'William George Cusins',
     dates: '1833–1893',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/cusins_portrait_bw.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/cusins_portrait_bw.webp`,
     quote: '“Master of the Queen’s Musick”',
     notableWork: 'Les Travailleurs de la mer (1869)',
     tags: [

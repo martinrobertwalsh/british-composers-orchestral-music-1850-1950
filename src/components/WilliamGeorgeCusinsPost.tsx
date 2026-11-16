@@ -46,7 +46,7 @@ export const WilliamGeorgeCusinsPost: React.FC<WilliamGeorgeCusinsPostProps> = (
   isFeatured = false,
 }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const cusinsPortrait = `${import.meta.env.BASE_URL}assets/aistudio/cusins_portrait_bw.jpg`;
+  const cusinsPortrait = `${import.meta.env.BASE_URL}assets/aistudio/cusins_portrait_bw.webp`;
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);

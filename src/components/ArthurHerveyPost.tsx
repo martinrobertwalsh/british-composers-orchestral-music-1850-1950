@@ -57,11 +57,11 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack, isFe
             <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/arthur_hervey_portrait.jpg?v=2`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/arthur_hervey_portrait.webp?v=2`)}
                 title="Click to enlarge Arthur Hervey portrait"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/arthur_hervey_portrait.jpg?v=2`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/arthur_hervey_portrait.webp?v=2`}
                   alt="Arthur Hervey (1855–1922)"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-top filter grayscale group-hover:scale-102 transition-transform duration-200"
@@ -115,11 +115,11 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack, isFe
             <figure className="w-full sm:w-72 md:w-80 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-[16/9] cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/killiane_castle.jpg`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/killiane_castle.webp`)}
                 title="Click to enlarge Killiane Castle"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/killiane_castle.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/killiane_castle.webp`}
                   alt="Killiane Castle, Wexford"
                   className="w-full h-full object-cover filter grayscale group-hover:scale-102 transition-transform duration-200"
                 />

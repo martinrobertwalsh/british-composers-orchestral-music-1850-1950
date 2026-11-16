@@ -36,7 +36,7 @@ export const SamHartleyBraithwaitePost: React.FC<SamHartleyBraithwaitePostProps>
   isFeatured = false,
 }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const portraitSrc = `${import.meta.env.BASE_URL}assets/aistudio/sam_hartley_braithwaite_portrait.jpg`;
+  const portraitSrc = `${import.meta.env.BASE_URL}assets/aistudio/sam_hartley_braithwaite_portrait.webp`;
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);

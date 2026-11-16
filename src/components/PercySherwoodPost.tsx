@@ -47,7 +47,7 @@ export const PercySherwoodPost: React.FC<PercySherwoodPostProps> = ({
     }
   };
 
-  const portraitSrc = `${import.meta.env.BASE_URL}assets/aistudio/photo2_199f64f0.jpg`;
+  const portraitSrc = `${import.meta.env.BASE_URL}assets/aistudio/photo2_199f64f0.webp`;
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
