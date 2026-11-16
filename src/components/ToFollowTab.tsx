@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { NormanONeillPost } from './NormanONeillPost';
 import { PercyGodfreyPost } from './PercyGodfreyPost';
 import { ROMorrisPost } from './ROMorrisPost';
-import { CunninghamWoodsPost } from './CunninghamWoodsPost';
 import { WilliamSpeerPost } from './WilliamSpeerPost';
 import { ArthurHerveyPost } from './ArthurHerveyPost';
 import { PercySherwoodPost } from './PercySherwoodPost';
 import { SamHartleyBraithwaitePost } from './SamHartleyBraithwaitePost';
 import { WilliamGeorgeCusinsPost } from './WilliamGeorgeCusinsPost';
+import { ErnestAustinPost } from './ErnestAustinPost';
 import { CardsCarousel, CarouselCard } from './CardsCarousel';
 import { ArrowLeft } from 'lucide-react';
 import { trackPage } from '../lib/analytics';
@@ -68,15 +68,6 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     tags: ['R. O. Morris', 'Reginald Owen Morris', 'Sinfonia in C major', 'A Little Symphony', 'Arthur Bliss', 'Adrian Boult', 'Howard Ferguson', 'Gerald Finzi', 'Counterpoint']
   },
   {
-    id: 'cunningham-woods',
-    name: 'Francis Cunningham Woods',
-    dates: '1862–1929',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.webp`,
-    quote: '“From the organ loft to a small village in Norfolk”',
-    notableWork: 'The Gressenhall Suite for strings (1915)',
-    tags: ['Francis Cunningham Woods', 'Cunningham Woods', 'The Gressenhall Suite', 'Suite in F major', 'The Village Organist', 'John Stainer', 'Arthur Sullivan', 'Highgate School', 'Oxford']
-  },
-  {
     id: 'percy-sherwood',
     name: 'Percy Sherwood',
     dates: '1866–1939',
@@ -130,6 +121,23 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
       'Royal Academy of Music',
       'Victor Hugo',
       'Chapel Royal'
+    ]
+  },
+  {
+    id: 'austin',
+    name: 'Ernest Austin',
+    dates: '1874–1947',
+    image: `${import.meta.env.BASE_URL}assets/aistudio/ernest_austin_portrait.webp`,
+    quote: '“Younger brother of baritone and composer Frederic Austin”',
+    notableWork: 'Variations on “The Vicar of Bray”',
+    tags: [
+      'Ernest Austin',
+      'Frederic Austin',
+      'Stella-Mary Dances',
+      'Vicar of Bray',
+      "The Beggar's Opera",
+      'BBC Radio',
+      'Board of Trade'
     ]
   }
 ];
@@ -222,23 +230,6 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
     );
   }
 
-  if (selectedArticleId === 'cunningham-woods') {
-    return (
-      <div className="space-y-4">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
-          <button
-            onClick={handleBackToCarousel}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 rounded font-serif text-sm font-semibold transition-colors cursor-pointer shadow-2xs group"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-amber-900" />
-            <span>Back to Cards Carousel</span>
-          </button>
-        </div>
-        <CunninghamWoodsPost onBack={handleBackToCarousel} />
-      </div>
-    );
-  }
-
   if (selectedArticleId === 'hervey') {
     return (
       <div className="space-y-4">
@@ -320,6 +311,23 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
           </button>
         </div>
         <WilliamGeorgeCusinsPost onBack={handleBackToCarousel} />
+      </div>
+    );
+  }
+
+  if (selectedArticleId === 'austin') {
+    return (
+      <div className="space-y-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
+          <button
+            onClick={handleBackToCarousel}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 rounded font-serif text-sm font-semibold transition-colors cursor-pointer shadow-2xs group"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-amber-900" />
+            <span>Back to Cards Carousel</span>
+          </button>
+        </div>
+        <ErnestAustinPost onBack={handleBackToCarousel} />
       </div>
     );
   }

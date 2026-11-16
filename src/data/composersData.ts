@@ -1240,6 +1240,51 @@ export const COMPOSERS_DATA: Composer[] = [
         summary: 'A breathtaking, cinematic Scottish symphony portraying the Isle of Skye, from the eerie Quiraing to stormy sea cliffs.'
       }
     ]
+  },
+  {
+    id: 'ernest-austin',
+    name: 'Ernest Austin',
+    fullName: 'Ernest Austin',
+    birthYear: 1874,
+    deathYear: 1947,
+    nationality: 'British (English)',
+    era: 'Interwar & Beyond (1915-1950)',
+    portraitUrl: `${import.meta.env.BASE_URL}assets/aistudio/ernest_austin_portrait.webp`,
+    portraitCaption: 'Ernest Austin, English composer (1874–1947).',
+    shortBio: 'Self-taught composer and younger brother of Frederic Austin, whose orchestral suite Stella-Mary Dances and Vicar of Bray variations were broadcast by the BBC in 1929.',
+    detailedBiography: 'Born in London on 31 December 1874, Ernest Austin initially worked for the Board of Trade and later in business before devoting himself to music in his early thirties. Largely self-taught, he had already privately printed a piano sonata in 1897. Though at least two symphonies are mentioned as lost, his orchestral suite Stella-Mary Dances (in memory of his oldest daughter, who died in 1917 aged 12) and Vicar of Bray variations were broadcast on BBC Radio on 15 November 1929, followed by music from The Beggar’s Opera conducted by his brother Frederic Austin.',
+    whyForgotten: 'Entering music in his thirties outside conservatoire circles, and with at least two symphonies now lost, his slender orchestral output drifted out of the concert repertoire after his death.',
+    musicalStyle: 'Lyrical, poetic English scoring with personal elegiac warmth and folk-inspired variation craft.',
+    influences: ['Frederic Austin', 'English Folk Song'],
+    keyArchives: ['BBC Written Archives', 'British Library Music Collections'],
+    obscurityRank: 'Rediscovered Gem',
+    famousContemporaries: ['Frederic Austin', 'Edward Elgar', 'Ralph Vaughan Williams'],
+    works: [
+      {
+        id: 'austin-stella-mary-dances',
+        title: 'Stella-Mary Dances',
+        yearComposed: 1917,
+        premiereInfo: 'Broadcast on BBC Radio, 15 November 1929',
+        genre: 'Symphonic Poem',
+        instrumentation: 'Full Orchestra',
+        durationApprox: '14 minutes',
+        archiveLocation: 'British Library / BBC Archive',
+        catalogStatus: 'Archival Manuscript Only',
+        summary: 'Orchestral suite written in memory of his oldest daughter, who died in 1917 aged twelve.'
+      },
+      {
+        id: 'austin-vicar-of-bray',
+        title: 'Variations on “The Vicar of Bray”',
+        yearComposed: 1929,
+        premiereInfo: 'Broadcast on BBC Radio, 15 November 1929',
+        genre: 'Symphonic Poem',
+        instrumentation: 'Full Orchestra',
+        durationApprox: '12 minutes',
+        archiveLocation: 'British Library / BBC Archive',
+        catalogStatus: 'Archival Manuscript Only',
+        summary: 'Orchestral variations broadcast on BBC Radio alongside Stella-Mary Dances on 15 November 1929.'
+      }
+    ]
   }
 ];
 

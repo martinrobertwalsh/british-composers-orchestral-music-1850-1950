@@ -130,39 +130,43 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               He was employed as an organist, first at Brasenose College and then at Exeter College Oxford, where he was awarded his MA degree in 1891. Whilst in Oxford he wrote music for the theatre, mainly productions of Shakespeare, including incidental scores for <em>The Two Gentlemen of Verona</em> (1893) and <em>The Tempest</em> (1894). He later served as private organist to the Duke of Marlborough at Blenheim Palace.
             </p>
 
-            <p>
-              In 1894 he became Head of Music at Highgate School in North London, a position he held for almost the rest of his life, directing the school&apos;s choir and fostering generations of musical talent.
-            </p>
-
-            {/* Highgate / National Training School Gathering Group Photo */}
-            <figure className="my-8 max-w-xl mx-auto p-2.5 sm:p-3 bg-white border-2 border-stone-300 rounded shadow-md text-center">
-              <div
-                className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-[16/11] cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/woods_group.webp`)}
-                title="Click to enlarge gathering photograph"
-              >
-                <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/woods_group.webp`}
-                  alt="Francis Cunningham Woods (bottom row far right) THANKS TO HIGHGATE SCHOOL FOR PHOTO"
-                  className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-200"
-                />
-                <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
-                    <ZoomIn className="w-3.5 h-3.5" /> Enlarge
-                  </span>
+            {/* Highgate School Group Photo on Left (25% smaller) & Paragraphs on Right */}
+            <div className="my-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+              <figure className="w-full md:w-96 lg:w-[27rem] shrink-0 mx-auto md:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
+                <div
+                  className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-[16/11] cursor-pointer group relative"
+                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/woods_group.webp`)}
+                  title="Click to enlarge gathering photograph"
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}assets/aistudio/woods_group.webp`}
+                    alt="Francis Cunningham Woods (bottom row far right) THANKS TO HIGHGATE SCHOOL FOR PHOTO"
+                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-200"
+                  />
+                  <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
+                      <ZoomIn className="w-3.5 h-3.5" /> Enlarge
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <figcaption className="mt-2 text-xs sm:text-sm font-serif text-stone-600 italic">
-                <span>Francis Cunningham Woods (bottom row far right)</span>{' '}
-                <span className="inline-block text-[10px] sm:text-2xs font-sans not-italic text-stone-500 tracking-wide uppercase sm:ml-1">
-                  THANKS TO HIGHGATE SCHOOL FOR PHOTO
-                </span>
-              </figcaption>
-            </figure>
+                <figcaption className="mt-2 text-xs sm:text-sm font-serif text-stone-600 italic">
+                  <span>Francis Cunningham Woods (bottom row far right)</span>{' '}
+                  <span className="inline-block text-[10px] sm:text-2xs font-sans not-italic text-stone-500 tracking-wide uppercase sm:ml-1">
+                    THANKS TO HIGHGATE SCHOOL FOR PHOTO
+                  </span>
+                </figcaption>
+              </figure>
 
-            <p>
-              Together with the eminent composer Sir John Stainer, Woods was the editor of the celebrated Novello series <em>The Village Organist</em> (first published in 1897), which provided practical, beautifully voiced scores for parish organs across Britain.
-            </p>
+              <div className="flex-1 min-w-0 font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-5 text-left">
+                <p>
+                  In 1894 he became Head of Music at Highgate School in North London, a position he held for almost the rest of his life, directing the school&apos;s choir and fostering generations of musical talent.
+                </p>
+
+                <p>
+                  Together with the eminent composer Sir John Stainer, Woods was the editor of the celebrated Novello series <em>The Village Organist</em> (first published in 1897), which provided practical, beautifully voiced scores for parish organs across Britain.
+                </p>
+              </div>
+            </div>
 
             <p>
               The preface to this influential collection reads:
@@ -563,7 +567,7 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded-lg font-serif text-sm font-semibold shadow-2xs transition-all cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 text-amber-300" />
-              <span>Back to To Follow Cards</span>
+              <span>Back to Archive Cards</span>
             </button>
           )}
         </div>

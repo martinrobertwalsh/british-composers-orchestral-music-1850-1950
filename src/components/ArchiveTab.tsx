@@ -3,7 +3,9 @@ import { FeaturedPost } from './FeaturedPost';
 import { TobiasMatthayPost } from './TobiasMatthayPost';
 import { PercyPittPost } from './PercyPittPost';
 import { WilliamFenneyPost } from './WilliamFenneyPost';
+import { CunninghamWoodsPost } from './CunninghamWoodsPost';
 import { CardsCarousel, CarouselCard } from './CardsCarousel';
+import { ArrowLeft } from 'lucide-react';
 import { trackPage } from '../lib/analytics';
 
 export interface ArchiveArticle {
@@ -65,6 +67,25 @@ export const ARCHIVE_ARTICLES: ArchiveArticle[] = [
       'Dan Godfrey',
       'Joseph Holbrooke'
     ]
+  },
+  {
+    id: 'cunningham-woods',
+    name: 'Francis Cunningham Woods',
+    dates: '1862–1929',
+    image: `${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.webp`,
+    quote: '“From the organ loft to a small village in Norfolk”',
+    notableWork: 'The Gressenhall Suite for strings (1915)',
+    tags: [
+      'Francis Cunningham Woods',
+      'Cunningham Woods',
+      'The Gressenhall Suite',
+      'Suite in F major',
+      'The Village Organist',
+      'John Stainer',
+      'Arthur Sullivan',
+      'Highgate School',
+      'Oxford'
+    ]
   }
 ];
 
@@ -96,6 +117,11 @@ export const ArchiveTab: React.FC<ArchiveTabProps> = ({ initialArticleId = null 
     category: 'archive'
   }));
 
+  const handleBackToCarousel = () => {
+    setSelectedArticleId(null);
+    window.scrollTo({ top: 380, behavior: 'smooth' });
+  };
+
   // Selected Article Views
   if (selectedArticleId === 'macfarren') {
     return <FeaturedPost />;
@@ -111,6 +137,23 @@ export const ArchiveTab: React.FC<ArchiveTabProps> = ({ initialArticleId = null 
 
   if (selectedArticleId === 'fenney') {
     return <WilliamFenneyPost />;
+  }
+
+  if (selectedArticleId === 'cunningham-woods') {
+    return (
+      <div className="space-y-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
+          <button
+            onClick={handleBackToCarousel}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 rounded font-serif text-sm font-semibold transition-colors cursor-pointer shadow-2xs group"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-amber-900" />
+            <span>Back to Cards Carousel</span>
+          </button>
+        </div>
+        <CunninghamWoodsPost onBack={handleBackToCarousel} />
+      </div>
+    );
   }
 
 

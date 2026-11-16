@@ -231,14 +231,29 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
                     } aspect-3/4 overflow-hidden rounded border border-stone-300 bg-white shadow-[0_12px_22px_-2px_rgba(28,25,23,0.62),0_6px_12px_-1px_rgba(28,25,23,0.42)] shrink-0 transition-all duration-200`}
                     title={onSelectCard ? `Open article on ${article.name}` : undefined}
                   >
-                    <img
-                      src={article.image}
-                      alt={`${article.name} (${article.dates})`}
-                      className={`w-full h-full object-cover object-top filter grayscale contrast-105 pointer-events-none ${
-                        onSelectCard ? 'group-hover/portrait:scale-105 transition-transform duration-500' : ''
-                      }`}
-                      draggable={false}
-                    />
+                    {article.image ? (
+                      <img
+                        src={article.image}
+                        alt={`${article.name} (${article.dates})`}
+                        referrerPolicy="no-referrer"
+                        className={`w-full h-full object-cover object-top filter grayscale contrast-105 pointer-events-none ${
+                          onSelectCard ? 'group-hover/portrait:scale-105 transition-transform duration-500' : ''
+                        }`}
+                        draggable={false}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-b from-stone-100 to-stone-200/80 flex flex-col items-center justify-center p-3 text-center">
+                        <span className="font-serif text-2xl sm:text-3xl font-bold tracking-widest text-stone-700">
+                          {article.name
+                            .split(' ')
+                            .map((part) => part[0])
+                            .join('')}
+                        </span>
+                        <span className="mt-1.5 font-mono text-[10px] text-stone-500 tabular-nums">
+                          {article.dates}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Category Stamp to the right of photo - only for To Follow */}

@@ -237,12 +237,12 @@ export default function App() {
           </div>
         )}
 
-        {/* TO FOLLOW TAB: Arthur Hervey, Norman O'Neill, Percy Godfrey, R. O. Morris, Francis Cunningham Woods, Percy Sherwood, Sam Hartley Braithwaite */}
+        {/* TO FOLLOW TAB: Arthur Hervey, Norman O'Neill, Percy Godfrey, R. O. Morris, Percy Sherwood, Sam Hartley Braithwaite, William George Cusins, Ernest Austin */}
         {activeTab === 'to-follow' && (
           <ToFollowTab key={toFollowKey} />
         )}
 
-        {/* ARCHIVE TAB: Walter Macfarren, Tobias Matthay, Percy Pitt, William Fenney */}
+        {/* ARCHIVE TAB: Walter Macfarren, Tobias Matthay, Percy Pitt, William Fenney, Francis Cunningham Woods */}
         {activeTab === 'archive' && (
           <ArchiveTab key={archiveKey} />
         )}
@@ -380,15 +380,15 @@ export default function App() {
         onClose={() => setIsWelcomeModalOpen(false)}
       />
       {/* Archival Research Footer */}
-      <footer className="w-full bg-[#1F1C18] text-stone-400 py-10 px-4 sm:px-6 lg:px-8 border-t border-stone-800 text-center font-serif">
-        <div className="max-w-4xl mx-auto space-y-2">
+      <footer className="w-full bg-[#1F1C18] text-stone-400 py-4 px-4 sm:px-6 lg:px-8 border-t border-stone-800 text-center font-serif">
+        <div className="max-w-4xl mx-auto space-y-1">
           <p className="text-amber-200 text-sm tracking-wider uppercase font-semibold">
             Forgotten Composers: British Orchestral Music 1850–1950
           </p>
           <p className="text-xs text-stone-400 font-sans">
             Dedicated to the resurrection of neglected British orchestral music.
           </p>
-          <p className="text-[11px] font-mono text-stone-500 pt-2">
+          <p className="text-[11px] font-mono text-stone-500 pt-0.5">
             Enquiries: <a href="mailto:martinrobertwalsh@gmail.com" className="hover:text-amber-300 underline underline-offset-2">martinrobertwalsh@gmail.com</a>
           </p>
         </div>
