@@ -115,11 +115,11 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack, isFe
             <figure className="w-full sm:w-72 md:w-80 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-[16/9] cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/killiane_castle.webp`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/killiane_castle.jpg`)}
                 title="Click to enlarge Killiane Castle"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/killiane_castle.webp`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/killiane_castle.jpg`}
                   alt="Killiane Castle, Wexford"
                   className="w-full h-full object-cover filter grayscale group-hover:scale-102 transition-transform duration-200"
                 />

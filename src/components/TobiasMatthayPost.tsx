@@ -108,11 +108,11 @@ export const TobiasMatthayPost: React.FC = () => {
               <figure className="w-56 sm:w-64 md:w-72 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
                 <div
                   className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-[2/3] cursor-pointer group relative"
-                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/matthay_piano_school.webp`)}
+                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/matthay_piano_school.jpg`)}
                   title="Click to enlarge Tobias Matthay Piano School"
                 >
                   <img
-                    src={`${import.meta.env.BASE_URL}assets/aistudio/matthay_piano_school.webp`}
+                    src={`${import.meta.env.BASE_URL}assets/aistudio/matthay_piano_school.jpg`}
                     alt="The Tobias Matthay Piano School on Wimpole Street, London"
                     className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-200"
                   />
@@ -145,11 +145,11 @@ export const TobiasMatthayPost: React.FC = () => {
             <figure className="my-8 max-w-2xl mx-auto p-2.5 sm:p-3 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-[16/9] cursor-pointer group relative"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/high_marley.webp`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/high_marley.jpg`)}
                 title="Click to enlarge High Marley"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/high_marley.webp`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/high_marley.jpg`}
                   alt="High Marley, Haslemere, Surrey — country home of Tobias Matthay"
                   className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-200"
                 />

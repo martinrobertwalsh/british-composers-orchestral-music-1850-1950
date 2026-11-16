@@ -130,18 +130,18 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               He was employed as an organist, first at Brasenose College and then at Exeter College Oxford, where he was awarded his MA degree in 1891. Whilst in Oxford he wrote music for the theatre, mainly productions of Shakespeare, including incidental scores for <em>The Two Gentlemen of Verona</em> (1893) and <em>The Tempest</em> (1894). He later served as private organist to the Duke of Marlborough at Blenheim Palace.
             </p>
 
-            {/* Highgate School Group Photo on Left (25% smaller) & Paragraphs on Right */}
-            <div className="my-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start">
-              <figure className="w-full md:w-96 lg:w-[27rem] shrink-0 mx-auto md:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
+            {/* Highgate School Group Photo & School Song Side by Side at Matching Height */}
+            <div className="my-8 grid grid-cols-1 sm:grid-cols-[1412fr_890fr] gap-4 sm:gap-5 items-stretch">
+              <figure className="p-2 sm:p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center flex flex-col">
                 <div
-                  className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-[16/11] cursor-pointer group relative"
-                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/woods_group.webp`)}
+                  className="overflow-hidden rounded border border-stone-300 bg-stone-100 w-full aspect-[620/439] cursor-pointer group relative"
+                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/woods_group_sharp.webp`)}
                   title="Click to enlarge gathering photograph"
                 >
                   <img
-                    src={`${import.meta.env.BASE_URL}assets/aistudio/woods_group.webp`}
+                    src={`${import.meta.env.BASE_URL}assets/aistudio/woods_group_sharp.webp`}
                     alt="Francis Cunningham Woods (bottom row far right) THANKS TO HIGHGATE SCHOOL FOR PHOTO"
-                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-200"
+                    className="w-full h-full object-cover block group-hover:scale-102 transition-transform duration-200"
                   />
                   <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
@@ -157,16 +157,36 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
                 </figcaption>
               </figure>
 
-              <div className="flex-1 min-w-0 font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-5 text-left">
-                <p>
-                  In 1894 he became Head of Music at Highgate School in North London, a position he held for almost the rest of his life, directing the school&apos;s choir and fostering generations of musical talent.
-                </p>
-
-                <p>
-                  Together with the eminent composer Sir John Stainer, Woods was the editor of the celebrated Novello series <em>The Village Organist</em> (first published in 1897), which provided practical, beautifully voiced scores for parish organs across Britain.
-                </p>
-              </div>
+              <figure className="p-2 sm:p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center flex flex-col">
+                <div
+                  className="overflow-hidden rounded border border-stone-300 bg-white w-full aspect-[888/1024] cursor-pointer group relative"
+                  onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/school_song_sharp.jpg`)}
+                  title="Click to enlarge A Highgate School Song"
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}assets/aistudio/school_song_sharp.jpg`}
+                    alt="A Highgate School Song — Words by R. C. Lehmann, Music by W. G. Wood"
+                    className="w-full h-full object-contain block group-hover:scale-102 transition-transform duration-200"
+                  />
+                  <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
+                      <ZoomIn className="w-3.5 h-3.5" /> Enlarge
+                    </span>
+                  </div>
+                </div>
+                <figcaption className="mt-2 text-xs sm:text-sm font-serif text-stone-600 italic">
+                  A Highgate School Song
+                </figcaption>
+              </figure>
             </div>
+
+            <p>
+              In 1894 he became Head of Music at Highgate School in North London, a position he held for almost the rest of his life, directing the school&apos;s choir and fostering generations of musical talent.
+            </p>
+
+            <p>
+              Together with the eminent composer Sir John Stainer, Woods was the editor of the celebrated Novello series <em>The Village Organist</em> (first published in 1897), which provided practical, beautifully voiced scores for parish organs across Britain.
+            </p>
 
             <p>
               The preface to this influential collection reads:
@@ -579,7 +599,7 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
             onClick={() => setActiveImageModal(null)}
           >
             <div
-              className="bg-white border-2 border-[#765B37] rounded-lg max-w-3xl w-full p-4 sm:p-5 shadow-2xl relative max-h-[92vh] overflow-y-auto"
+              className="bg-white border-2 border-[#765B37] rounded-lg max-w-4xl w-full p-4 sm:p-5 shadow-2xl relative max-h-[94vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between pb-2 mb-3 border-b border-stone-200">
@@ -595,6 +615,8 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
                         </span>
                       </span>
                     )
+                    : activeImageModal.includes('school_song')
+                    ? 'A Highgate School Song'
                     : activeImageModal.includes('woods_village_organist_cover')
                     ? 'The Village Organist — The Musical Times Announcement (1898)'
                     : activeImageModal.includes('woods_img_3')
@@ -614,11 +636,33 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
                 <img
                   src={activeImageModal}
                   alt="Archival document"
-                  className="w-full h-auto max-h-[58vh] object-contain mx-auto"
+                  className={`w-full h-auto object-contain mx-auto ${
+                    activeImageModal.includes('school_song')
+                      ? ''
+                      : activeImageModal.includes('woods_village_organist_cover') || activeImageModal.includes('woods_img_3')
+                      ? 'max-h-[58vh]'
+                      : 'max-h-[82vh]'
+                  }`}
                 />
               </div>
 
               {/* Readable Transcriptions in Lightbox Modal */}
+              {activeImageModal.includes('school_song') && (
+                <div className="p-3.5 bg-[#FAF7F0] border border-stone-300 rounded text-left font-serif text-xs sm:text-sm text-stone-900 leading-relaxed space-y-2">
+                  <p className="font-bold text-stone-950 text-sm">
+                    A HIGHGATE SCHOOL SONG <span className="font-normal italic text-stone-700">(Words by R. C. Lehmann &middot; Music by W. G. Wood)</span>
+                  </p>
+                  <p className="text-stone-800">
+                    <strong>1.</strong> A song, boys, a song for the School! It rejoices our hearts to stand up for the School and to sing: While round and above us, repeating our voices The walls and the rafters re-echo and ring. Sopranos and Altos and&hellip;
+                  </p>
+                  <p className="text-stone-800">
+                    <strong>2.</strong> For now she has thousands to cheer and befriend her In the North, in the South, in the East or the West; Wherever our England has sons to defend her there&rsquo;s a Cholmeleian there &rsquo;mid the bravest and best, Whate&rsquo;er be their path and where-&hellip;
+                  </p>
+                  <p className="text-2xs sm:text-xs text-stone-600 pt-1.5 border-t border-stone-200 font-sans">
+                    Laudy &amp; Co., 86 Newman St., Oxford St., London, W. &middot; J. 30 L. &middot; Price 4d. net
+                  </p>
+                </div>
+              )}
               {activeImageModal.includes('woods_village_organist_cover') && (
                 <div className="p-3.5 bg-[#FAF7F0] border border-stone-300 rounded text-left font-serif text-xs sm:text-sm text-stone-900 leading-relaxed space-y-1">
                   <p className="font-bold text-stone-950 text-sm">THE VILLAGE ORGANIST</p>
