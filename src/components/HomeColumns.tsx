@@ -89,7 +89,7 @@ export const HomeColumns: React.FC<HomeColumnsProps> = ({
                 key={article.id}
                 className="w-full bg-[#FAF8F5]/70 border border-stone-200/80 group-hover:border-amber-900/30 rounded-lg p-3 transition-colors flex items-center gap-3.5"
               >
-                <div className="w-16 aspect-3/4 shrink-0 overflow-hidden rounded border border-stone-300 group-hover:border-amber-800 bg-stone-100 transition-colors">
+                <div className="w-16 aspect-3/4 shrink-0 overflow-hidden rounded border border-stone-300 group-hover:border-amber-800 bg-stone-100 shadow-[0_10px_20px_-2px_rgba(28,25,23,0.55),0_4px_10px_-1px_rgba(28,25,23,0.36)] transition-all">
                   <img
                     src={article.image}
                     alt={`${article.name} (${article.dates})`}
@@ -133,7 +133,7 @@ export const HomeColumns: React.FC<HomeColumnsProps> = ({
                 key={article.id}
                 className="w-full bg-[#FAF8F5]/70 border border-stone-200/80 group-hover:border-amber-900/30 rounded-lg p-3 transition-colors flex items-center gap-3.5"
               >
-                <div className="w-16 aspect-3/4 shrink-0 overflow-hidden rounded border border-stone-300 group-hover:border-amber-800 bg-stone-100 transition-colors">
+                <div className="w-16 aspect-3/4 shrink-0 overflow-hidden rounded border border-stone-300 group-hover:border-amber-800 bg-stone-100 shadow-[0_10px_20px_-2px_rgba(28,25,23,0.55),0_4px_10px_-1px_rgba(28,25,23,0.36)] transition-all">
                   <img
                     src={article.image}
                     alt={`${article.name} (${article.dates})`}

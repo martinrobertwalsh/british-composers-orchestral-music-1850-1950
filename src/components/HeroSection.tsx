@@ -83,21 +83,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </section>
 
       {/* Buttons Directly Under Image: HOME · WELCOME · TO FOLLOW · ARCHIVE · CONTACT - Sticky at top of page while scrolling */}
-      <nav className="w-full bg-[#FAF8F5]/95 backdrop-blur-md border-y border-stone-300 py-3 sm:py-3.5 px-4 sticky top-0 z-50 shadow-md">
+      <nav className="w-full bg-[#FAF8F5]/95 backdrop-blur-md border-y border-stone-300 py-3.5 sm:py-4 px-4 sticky top-0 z-50 shadow-md">
         <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 md:gap-6">
           <button
             onClick={() => onTabChange('home')}
             className={`min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
               activeTab === 'home'
-                ? 'bg-stone-900 text-stone-50 shadow-sm border border-stone-900 ring-1 ring-stone-900/30'
-                : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-2xs'
+                ? 'bg-stone-900 text-stone-50 shadow-[0_9px_20px_-2px_rgba(28,25,23,0.55),0_4px_10px_-1px_rgba(28,25,23,0.38)] border border-stone-900 ring-1 ring-stone-900/30'
+                : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-[0_8px_18px_-2px_rgba(28,25,23,0.45),0_4px_8px_-1px_rgba(28,25,23,0.30)] hover:shadow-[0_10px_22px_-2px_rgba(28,25,23,0.52),0_5px_10px_-1px_rgba(28,25,23,0.35)]'
             }`}
           >
             HOME
           </button>
           <button
-            onClick={onOpenWelcome}
-            className="min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-2xs"
+            onClick={() => onOpenWelcome()}
+            className="min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-[0_8px_18px_-2px_rgba(28,25,23,0.45),0_4px_8px_-1px_rgba(28,25,23,0.30)] hover:shadow-[0_10px_22px_-2px_rgba(28,25,23,0.52),0_5px_10px_-1px_rgba(28,25,23,0.35)]"
           >
             WELCOME
           </button>
@@ -105,14 +105,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             onClick={() => onTabChange('to-follow')}
             className={`relative min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
               activeTab === 'to-follow'
-                ? 'bg-stone-900 text-stone-50 shadow-sm border border-stone-900 ring-1 ring-stone-900/30'
-                : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-2xs'
+                ? 'bg-stone-900 text-stone-50 shadow-[0_9px_20px_-2px_rgba(28,25,23,0.55),0_4px_10px_-1px_rgba(28,25,23,0.38)] border border-stone-900 ring-1 ring-stone-900/30'
+                : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-[0_8px_18px_-2px_rgba(28,25,23,0.45),0_4px_8px_-1px_rgba(28,25,23,0.30)] hover:shadow-[0_10px_22px_-2px_rgba(28,25,23,0.52),0_5px_10px_-1px_rgba(28,25,23,0.35)]'
             }`}
           >
             <span>TO FOLLOW</span>
             <span
-              className={`absolute bottom-1 right-2 text-[10px] sm:text-[11px] font-mono font-bold leading-none pointer-events-none transition-colors ${
-                activeTab === 'to-follow' ? 'text-amber-400' : 'text-stone-500'
+              className={`absolute bottom-1 right-2 text-xs sm:text-[13px] font-mono font-bold leading-none pointer-events-none transition-colors ${
+                activeTab === 'to-follow' ? 'text-amber-400' : 'text-amber-900'
               }`}
             >
               {toFollowTotal}
@@ -122,14 +122,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             onClick={() => onTabChange('archive')}
             className={`relative min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
               activeTab === 'archive'
-                ? 'bg-stone-900 text-stone-50 shadow-sm border border-stone-900 ring-1 ring-stone-900/30'
-                : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-2xs'
+                ? 'bg-stone-900 text-stone-50 shadow-[0_9px_20px_-2px_rgba(28,25,23,0.55),0_4px_10px_-1px_rgba(28,25,23,0.38)] border border-stone-900 ring-1 ring-stone-900/30'
+                : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-[0_8px_18px_-2px_rgba(28,25,23,0.45),0_4px_8px_-1px_rgba(28,25,23,0.30)] hover:shadow-[0_10px_22px_-2px_rgba(28,25,23,0.52),0_5px_10px_-1px_rgba(28,25,23,0.35)]'
             }`}
           >
             <span>ARCHIVE</span>
             <span
-              className={`absolute bottom-1 right-2 text-[10px] sm:text-[11px] font-mono font-bold leading-none pointer-events-none transition-colors ${
-                activeTab === 'archive' ? 'text-amber-400' : 'text-stone-500'
+              className={`absolute bottom-1 right-2 text-xs sm:text-[13px] font-mono font-bold leading-none pointer-events-none transition-colors ${
+                activeTab === 'archive' ? 'text-amber-400' : 'text-amber-900'
               }`}
             >
               {archiveTotal}
@@ -139,8 +139,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             onClick={() => onTabChange('contact')}
             className={`min-h-[44px] px-6 sm:px-8 py-2.5 rounded font-serif text-xs sm:text-sm font-bold tracking-widest uppercase transition-all cursor-pointer ${
               activeTab === 'contact'
-                ? 'bg-stone-900 text-stone-50 shadow-sm border border-stone-900 ring-1 ring-stone-900/30'
-                : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-2xs'
+                ? 'bg-stone-900 text-stone-50 shadow-[0_9px_20px_-2px_rgba(28,25,23,0.55),0_4px_10px_-1px_rgba(28,25,23,0.38)] border border-stone-900 ring-1 ring-stone-900/30'
+                : 'bg-white text-stone-700 hover:bg-stone-100 hover:text-stone-950 border border-stone-300 shadow-[0_8px_18px_-2px_rgba(28,25,23,0.45),0_4px_8px_-1px_rgba(28,25,23,0.30)] hover:shadow-[0_10px_22px_-2px_rgba(28,25,23,0.52),0_5px_10px_-1px_rgba(28,25,23,0.35)]'
             }`}
           >
             CONTACT

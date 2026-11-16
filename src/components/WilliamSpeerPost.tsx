@@ -654,6 +654,10 @@ export const WilliamSpeerPost: React.FC<WilliamSpeerPostProps> = ({ onBack, isFe
                 </p>
               </div>
             </div>
+
+            <p className="pt-4 mt-6 border-t border-stone-200 font-serif text-xs sm:text-sm font-bold tracking-wider text-amber-900 uppercase">
+              Bexhill-on-Sea Observer — May 1937
+            </p>
           </div>
 
           {/* Side-by-side Archival Plates: Speer Memorial Library Cutting & Dr. and Mrs. Speer */}

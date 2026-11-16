@@ -228,7 +228,7 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
                       isToFollow ? 'w-36 sm:w-40' : 'w-40 sm:w-44'
                     } ${
                       onSelectCard ? 'group-hover:border-amber-800 group/portrait' : ''
-                    } aspect-3/4 overflow-hidden rounded border border-stone-300 bg-white shadow-xs shrink-0 transition-colors duration-200`}
+                    } aspect-3/4 overflow-hidden rounded border border-stone-300 bg-white shadow-[0_12px_22px_-2px_rgba(28,25,23,0.62),0_6px_12px_-1px_rgba(28,25,23,0.42)] shrink-0 transition-all duration-200`}
                     title={onSelectCard ? `Open article on ${article.name}` : undefined}
                   >
                     <img
@@ -259,9 +259,20 @@ export const CardsCarousel: React.FC<CardsCarouselProps> = ({
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
                     {/* Name title with dates */}
-                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 transition-colors group-hover:text-amber-900">
-                      {article.name} ({article.dates})
-                    </h3>
+                    {isToFollow ? (
+                      <>
+                        <h3 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 transition-colors group-hover:text-amber-900 leading-snug">
+                          {article.name}
+                        </h3>
+                        <p className="font-serif text-sm sm:text-base font-medium text-stone-600 tabular-nums mt-0.5">
+                          ({article.dates})
+                        </p>
+                      </>
+                    ) : (
+                      <h3 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 transition-colors group-hover:text-amber-900">
+                        {article.name} ({article.dates})
+                      </h3>
+                    )}
 
                     <p className="font-times italic text-sm sm:text-base text-amber-950 leading-relaxed mt-2.5 line-clamp-2">
                       {article.quote}

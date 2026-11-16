@@ -7,6 +7,7 @@ import { WilliamSpeerPost } from './WilliamSpeerPost';
 import { ArthurHerveyPost } from './ArthurHerveyPost';
 import { PercySherwoodPost } from './PercySherwoodPost';
 import { SamHartleyBraithwaitePost } from './SamHartleyBraithwaitePost';
+import { WilliamGeorgeCusinsPost } from './WilliamGeorgeCusinsPost';
 import { CardsCarousel, CarouselCard } from './CardsCarousel';
 import { ArrowLeft } from 'lucide-react';
 import { trackPage } from '../lib/analytics';
@@ -110,6 +111,25 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
       'Royal Academy of Music',
       'Eric Coates',
       'Passmore Edwards Settlement'
+    ]
+  },
+  {
+    id: 'cusins',
+    name: 'William George Cusins',
+    dates: '1833–1893',
+    image: `${import.meta.env.BASE_URL}assets/aistudio/cusins_portrait_bw.jpg`,
+    quote: '“Master of the Queen’s Musick”',
+    notableWork: 'Les Travailleurs de la mer (1869)',
+    tags: [
+      'William George Cusins',
+      'Sir William George Cusins',
+      'Les Travailleurs de la mer',
+      "Love's Labour's Lost",
+      'Master of the Queen’s Musick',
+      'Philharmonic Society',
+      'Royal Academy of Music',
+      'Victor Hugo',
+      'Chapel Royal'
     ]
   }
 ];
@@ -283,6 +303,23 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
           </button>
         </div>
         <SamHartleyBraithwaitePost onBack={handleBackToCarousel} />
+      </div>
+    );
+  }
+
+  if (selectedArticleId === 'cusins') {
+    return (
+      <div className="space-y-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
+          <button
+            onClick={handleBackToCarousel}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 rounded font-serif text-sm font-semibold transition-colors cursor-pointer shadow-2xs group"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-amber-900" />
+            <span>Back to Cards Carousel</span>
+          </button>
+        </div>
+        <WilliamGeorgeCusinsPost onBack={handleBackToCarousel} />
       </div>
     );
   }
