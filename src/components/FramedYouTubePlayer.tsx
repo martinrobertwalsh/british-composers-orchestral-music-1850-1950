@@ -7,7 +7,6 @@ import {
   Volume2,
   Volume1,
   VolumeX,
-  ExternalLink,
   Loader2,
 } from 'lucide-react';
 import { YouTubeWorkPlayerController } from '../utils/youtubePlayer';
@@ -61,7 +60,7 @@ export const FramedYouTubePlayer: React.FC<FramedYouTubePlayerProps> = ({
             tabIndex={-1}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
-            className="absolute inset-0 w-full h-full border-0 pointer-events-none"
+            className="absolute left-0 -top-[72px] w-full h-[calc(100%+144px)] border-0 pointer-events-none"
           />
 
           {/* Transparent click-shield while playing so pausing immediately engages our clean cover */}
@@ -211,18 +210,9 @@ export const FramedYouTubePlayer: React.FC<FramedYouTubePlayerProps> = ({
           </div>
         </div>
 
-        {/* Caption & External YouTube Link */}
-        <div className="mt-1.5 flex flex-wrap items-center justify-between gap-2 px-1 text-xs font-serif text-stone-600">
-          <span className="italic">{caption}</span>
-          <a
-            href={`https://www.youtube.com/watch?v=${player.videoId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-amber-900 hover:text-amber-950 font-semibold underline underline-offset-2 transition-colors whitespace-nowrap"
-          >
-            <span>Watch on YouTube</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
+        {/* Caption */}
+        <div className="mt-1.5 px-1 text-center text-xs font-serif italic text-stone-600">
+          {caption}
         </div>
       </div>
     </div>

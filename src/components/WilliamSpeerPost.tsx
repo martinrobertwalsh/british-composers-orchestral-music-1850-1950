@@ -7,8 +7,8 @@ import { ListenToItAllLink } from './ListenToItAllLink';
 import { FramedYouTubePlayer } from './FramedYouTubePlayer';
 import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
 
-const SPEER_RHAPSODY_YT_VIDEO_ID = 'MKOkxhahL98';
-const SPEER_NOCTURNE_YT_VIDEO_ID = 'LMoDo6s1HFY';
+const SPEER_RHAPSODY_YT_VIDEO_ID = 'YaoSnd5XOdY';
+const SPEER_NOCTURNE_YT_VIDEO_ID = 'oLGJG2fb7fw';
 
 interface WilliamSpeerPostProps {
   onBack?: () => void;
