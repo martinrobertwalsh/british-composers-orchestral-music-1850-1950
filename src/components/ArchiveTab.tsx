@@ -50,7 +50,7 @@ export const ARCHIVE_ARTICLES: ArchiveArticle[] = [
     id: 'fenney',
     name: 'William Fenney',
     dates: '1891–1957',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/fenney_in_shadow_score_flat.jpg`,
+    image: `${import.meta.env.BASE_URL}assets/aistudio/william_fenney_portrait.webp`,
     quote: '“Bright in colour and sad in feeling”',
     notableWork: 'Pastoral for Small Orchestra (1916)',
     tags: [

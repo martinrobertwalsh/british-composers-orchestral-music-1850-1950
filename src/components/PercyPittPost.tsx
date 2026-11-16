@@ -337,21 +337,106 @@ export const PercyPittPost: React.FC = () => {
               <p className="text-left m-0">
                 Pitt&apos;s Coronation March is not in the classic, clearly defined ABA shape of marches such as Elgar&apos;s Pomp and Circumstance where a brisk, lively opening is followed by a contrasting slower part with a sustained legato melody and then a da capo of the opening.
               </p>
+
               <p className="text-left m-0">
-                Pitt chooses to begin softly and gradually build the music through a series of gradual crescendos, for example{' '}
+                It&apos;s as if he has chosen to focus less on the ceremonial pomp and more on the regal serenity.
+              </p>
+
+              <p className="text-center m-0 text-black tracking-widest text-sm select-none" aria-hidden="true">
+                ********************
+              </p>
+
+              <p className="text-left m-0">
+                He starts with a short repeated motif which recurs throughout the piece
+              </p>
+
+              <div className="flex items-baseline gap-2">
                 <button
                   type="button"
-                  onClick={() => seekAudio(206)}
-                  className="font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
-                  title="Jump to 03:26 in Coronation March audio"
+                  onClick={() => seekAudio(77)}
+                  className="shrink-0 font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
+                  title="Jump to 01:17 in Coronation March audio"
                 >
-                  (03:26)
+                  (01:17)
                 </button>
-                . It&apos;s as if he has chosen to focus less on the ceremonial pomp and more on the regal serenity.
+                <p className="m-0">
+                  &ndash; the first main theme, a fanfare like idea announced in a controlled stately fashion on the brass
+                </p>
+              </div>
+
+              <div className="flex items-baseline gap-2">
+                <button
+                  type="button"
+                  onClick={() => seekAudio(133)}
+                  className="shrink-0 font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
+                  title="Jump to 02:13 in Coronation March audio"
+                >
+                  (02:13)
+                </button>
+                <p className="m-0">
+                  &ndash; a repeat of the fanfare but now fortissimo
+                </p>
+              </div>
+
+              <div className="flex items-baseline gap-2">
+                <button
+                  type="button"
+                  onClick={() => seekAudio(170)}
+                  className="shrink-0 font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
+                  title="Jump to 02:50 in Coronation March audio"
+                >
+                  (02:50)
+                </button>
+                <p className="m-0">
+                  &ndash; the first of the legato melodies introduced by the cor anglais and violas
+                </p>
+              </div>
+
+              <div className="flex items-baseline gap-2">
+                <button
+                  type="button"
+                  onClick={() => seekAudio(273)}
+                  className="shrink-0 font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
+                  title="Jump to 04:33 in Coronation March audio"
+                >
+                  (04:33)
+                </button>
+                <p className="m-0">
+                  &ndash; the second legato melody, serene and regal starting on a solo oboe and then taken up by the violins
+                </p>
+              </div>
+
+              <p className="text-left">
+                All the ideas now introduced they are repeated in different guises.
               </p>
-              <p className="text-left m-0">
-                At the end he takes the slow legato theme and scores it passionately for unison strings. This departure from the norm left the reviewers, and no doubt the audience, somewhat perplexed.
-              </p>
+
+              <div className="flex items-baseline gap-2">
+                <button
+                  type="button"
+                  onClick={() => seekAudio(512)}
+                  className="shrink-0 font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
+                  title="Jump to 08:32 in Coronation March audio"
+                >
+                  (08:32)
+                </button>
+                <p className="m-0">
+                  &ndash; the start of a long drawn out crescendo to the second legato theme set for the whole string section
+                </p>
+              </div>
+
+              <div className="flex items-baseline gap-2">
+                <button
+                  type="button"
+                  onClick={() => seekAudio(596)}
+                  className="shrink-0 font-mono text-[0.78em] text-amber-900 hover:text-amber-950 font-semibold transition-colors cursor-pointer align-baseline"
+                  title="Jump to 09:56 in Coronation March audio"
+                >
+                  (09:56)
+                </button>
+                <p className="m-0">
+                  &ndash; we reach a brilliant coda
+                </p>
+              </div>
 
               <ListenToItAllLink
                 targetId="pitt-coronation-march"
@@ -438,11 +523,11 @@ export const PercyPittPost: React.FC = () => {
             <figure className="my-8 max-w-md mx-auto bg-white border border-stone-200/90 rounded-lg p-2.5 sm:p-3 shadow-xs">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-950 relative group cursor-pointer"
-                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/hall_slight_plus_89dff31e.png`)}
+                onClick={() => setActiveImageModal(`${import.meta.env.BASE_URL}assets/aistudio/hall_slight_plus_89dff31e.webp`)}
                 title="Click to enlarge photograph"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/hall_slight_plus_89dff31e.png`}
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/hall_slight_plus_89dff31e.webp`}
                   alt="Henry Wood and the Queen's Hall Orchestra on stage at Queen's Hall"
                   className="w-full h-auto object-cover filter contrast-105 group-hover:scale-[1.01] transition-transform duration-300"
                 />

@@ -15,13 +15,11 @@ const BRAITHWAITE_ORCHESTRAL_WORKS: BraithwaiteWork[] = [
     id: 'snow-picture',
     title: 'Snow Picture for orchestra',
     date: '1924',
-    note: 'Carnegie Trust Award · Carnegie Collection of British Music',
   },
   {
     id: 'elegy',
     title: 'Elegy for orchestra',
-    date: '1926 (pub. 1927)',
-    note: 'Carnegie Trust Award · Carnegie Collection of British Music',
+    date: '1926',
     hasDedicatedPage: true,
   },
 ];
@@ -125,14 +123,14 @@ export const SamHartleyBraithwaitePost: React.FC<SamHartleyBraithwaitePostProps>
               </div>
 
               <p className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed text-left first-letter:text-5xl first-letter:font-bold first-letter:text-stone-900 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
-                Sam Hartley Braithwaite was born in Egremont, Cumberland. He trained at the Royal Academy of Music, studying piano, organ and clarinet, as well as composition with Frederick Corder.
+                Sam Hartley Braithwaite was born in Egremont, Cumberland. He trained at the Royal Academy of Music, studying piano, organ and clarinet, as well as composition with Frederick Corder. He was also a keen amateur artist.
               </p>
             </div>
           </div>
 
           <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-6 mt-4 text-left">
             <p>
-              An exact contemporary there was Arnold Bax. They became close friends and Bax dedicated his piano piece <em>Apple Blossom Time</em> (1915) to Braithwaite.
+              An exact contemporary at the RAM was Arnold Bax. They became close friends and Bax dedicated his piano piece <em>Apple Blossom Time</em> (1915) to Braithwaite.
             </p>
 
             <p>

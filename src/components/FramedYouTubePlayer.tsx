@@ -19,6 +19,15 @@ interface FramedYouTubePlayerProps {
   className?: string;
 }
 
+// Exact bounding boxes around the composer portrait inside each 16:9 YouTube thumbnail
+const THUMBNAIL_PORTRAIT_CLASSES: Record<string, string> = {
+  bMRjgkb7tpM: 'left-[11.55%] top-[16.55%] w-[25.55%] h-[66.9%]', // Walter Macfarren — Symphony in Bb
+  YaoSnd5XOdY: 'left-[11.6%] top-[19.6%] w-[25.8%] h-[60.8%]',    // William Henry Speer — Rhapsody in Eb
+  oLGJG2fb7fw: 'left-[11.6%] top-[19.6%] w-[25.8%] h-[60.8%]',    // William Henry Speer — Nocturne for strings
+  '-6HZxgXJLDI': 'left-[11.55%] top-[27.25%] w-[25.8%] h-[45.65%]', // Percy Pitt — Coronation March
+  '40F3rR1Oa3g': 'left-[11.6%] top-[27.25%] w-[25.8%] h-[45.5%]',  // Tobias Matthay — In May
+};
+
 function formatTime(seconds: number): string {
   if (!Number.isFinite(seconds) || seconds < 0) return '00:00';
   const totalSecs = Math.floor(seconds);
@@ -45,6 +54,8 @@ export const FramedYouTubePlayer: React.FC<FramedYouTubePlayerProps> = ({
   const clampedCurrent = effectiveDuration > 0
     ? Math.min(player.currentTime, effectiveDuration)
     : player.currentTime;
+
+  const portraitFrameClasses = THUMBNAIL_PORTRAIT_CLASSES[player.videoId];
 
   return (
     <div className={className}>
@@ -83,22 +94,32 @@ export const FramedYouTubePlayer: React.FC<FramedYouTubePlayerProps> = ({
               title={player.currentTime > 1 ? `Resume ${title}` : `Play ${title}`}
               aria-label={player.currentTime > 1 ? `Resume ${title}` : `Play ${title}`}
             >
-              <img
-                src={thumbnailUrl}
-                alt={title}
-                onLoad={(e) => {
-                  if (thumbQuality === 'maxresdefault' && e.currentTarget.naturalWidth <= 120) {
-                    setThumbQuality('hqdefault');
-                  }
-                }}
-                onError={() => {
-                  if (thumbQuality === 'maxresdefault') {
-                    setThumbQuality('hqdefault');
-                  }
-                }}
-                className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.01]"
-                referrerPolicy="no-referrer"
-              />
+              <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-[1.01]">
+                <img
+                  src={thumbnailUrl}
+                  alt={title}
+                  onLoad={(e) => {
+                    if (thumbQuality === 'maxresdefault' && e.currentTarget.naturalWidth <= 120) {
+                      setThumbQuality('hqdefault');
+                    }
+                  }}
+                  onError={() => {
+                    if (thumbQuality === 'maxresdefault') {
+                      setThumbQuality('hqdefault');
+                    }
+                  }}
+                  className="w-full h-full object-cover object-center"
+                  referrerPolicy="no-referrer"
+                />
+
+                {/* Brown Frame Around the Composer Portrait Inside the Thumbnail */}
+                {portraitFrameClasses && (
+                  <div
+                    aria-hidden="true"
+                    className={`absolute pointer-events-none border-[2.5px] sm:border-[3px] border-[#765B37] shadow-[0_0_0_1px_rgba(21,11,9,0.75)] ${portraitFrameClasses}`}
+                  />
+                )}
+              </div>
 
               <div className="absolute inset-0 bg-stone-950/20 group-hover:bg-stone-950/30 transition-colors flex items-center justify-center">
                 <span className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#2A2621]/90 group-hover:bg-[#765B37] border-2 border-[#FAF8F5]/90 text-[#FAF8F5] shadow-lg flex items-center justify-center transition-all duration-200 group-hover:scale-105">

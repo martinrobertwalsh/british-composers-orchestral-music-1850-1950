@@ -46,22 +46,22 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
 
         {/* Section 1: Biography */}
         <section id="fenney-bio">
-          {/* Cover on Left & Compact Audio Realisations + Opening Paragraph on Right */}
+          {/* Portrait on Left & Compact Audio Realisations + Opening Paragraph on Right */}
           <div className="mt-8 mb-4 flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start">
             <figure className="w-40 sm:w-44 md:w-48 shrink-0 mx-auto sm:mx-0 p-2.5 bg-white border-2 border-stone-300 rounded shadow-md text-center">
               <div
                 className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
                 onClick={() =>
                   setActiveImageModal({
-                    src: `${import.meta.env.BASE_URL}assets/aistudio/fenney_in_shadow_score_flat.jpg`,
-                    title: 'William J. Fenney — In Shadow, Op. 15 (Score Title Page)',
+                    src: `${import.meta.env.BASE_URL}assets/aistudio/william_fenney_portrait.webp`,
+                    title: 'William Fenney (1891–1957)',
                   })
                 }
-                title="Click to enlarge score cover of In Shadow"
+                title="Click to enlarge William Fenney portrait"
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/aistudio/fenney_in_shadow_score_flat.jpg`}
-                  alt="William J. Fenney — In Shadow, Op. 15 (Poem for Small Orchestra) score cover"
+                  src={`${import.meta.env.BASE_URL}assets/aistudio/william_fenney_portrait.webp`}
+                  alt="William Fenney (1891–1957)"
                   className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-200"
                 />
                 <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -70,8 +70,8 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
                   </span>
                 </div>
               </div>
-              <figcaption className="mt-2 text-xs font-serif text-stone-600 italic">
-                Stainer &amp; Bell score cover for <em>In Shadow</em> (Op. 15)
+              <figcaption className="mt-2.5 font-serif font-bold text-stone-900 text-sm sm:text-base tracking-wide">
+                William Fenney*
               </figcaption>
             </figure>
 
@@ -113,20 +113,56 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
             <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">
               &ldquo;From early years I studied the great masters, &ndash; Beethoven and Chopin were my first teachers; I liked Wagner only on the stage. I have never liked the modernist school; my own style owes to Elgar.&rdquo;
             </p>
-            <footer className="mt-4 pt-3 border-t border-stone-200 text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold not-italic">
-              &mdash; From a short written note by William Fenney
+            <footer className="mt-4 pt-3 border-t border-stone-200 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 not-italic">
+              <span className="text-xs font-mono uppercase tracking-widest text-amber-900 font-semibold">
+                &mdash; From a short written note by William Fenney
+              </span>
+              <span className="text-xs sm:text-sm font-serif italic text-stone-600">
+                *Photograph not confirmed to date
+              </span>
             </footer>
           </blockquote>
 
-          {/* Financial Difficulty & Copyist Context + Joseph Holbrooke Critique */}
+          {/* Financial Difficulty & Copyist Context + Score Cover + Joseph Holbrooke Critique */}
           <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-6 mt-6 text-left">
-            <p>
-              His early career combined musical promise with financial difficulty. In August 1915, writing to Bantock as &ldquo;Master&rdquo;, Fenney asked for help paying a publishing fee connected with <em>Flower Fairies</em>. The same letter reveals his fascination with Scriabin. He also worked as a copyist: Birmingham&rsquo;s Bantock collection preserves a full score of the <em>Hebridean Symphony</em> copied by Fenney in 1916.
-            </p>
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-7 items-center sm:items-start">
+              <figure className="w-36 sm:w-40 shrink-0 p-2 bg-white border-2 border-stone-300 rounded shadow-sm text-center">
+                <div
+                  className="overflow-hidden rounded border border-stone-300 bg-stone-100 aspect-3/4 cursor-pointer group relative"
+                  onClick={() =>
+                    setActiveImageModal({
+                      src: `${import.meta.env.BASE_URL}assets/aistudio/fenney_in_shadow_score_flat.jpg`,
+                      title: 'William J. Fenney — In Shadow, Op. 15 (Score Title Page)',
+                    })
+                  }
+                  title="Click to enlarge score cover of In Shadow"
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}assets/aistudio/fenney_in_shadow_score_flat.jpg`}
+                    alt="William J. Fenney — In Shadow, Op. 15 (Poem for Small Orchestra) score cover"
+                    className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-200"
+                  />
+                  <div className="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="bg-stone-900/90 text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1 font-sans">
+                      <ZoomIn className="w-3.5 h-3.5" /> Enlarge
+                    </span>
+                  </div>
+                </div>
+                <figcaption className="mt-2 text-xs font-serif text-stone-600 italic">
+                  Stainer &amp; Bell score cover for <em>In Shadow</em> (Op. 15)
+                </figcaption>
+              </figure>
 
-            <p>
-              Joseph Holbrooke&apos;s book, <em>Contemporary British Composers</em>, mentions Fenney as follows:
-            </p>
+              <div className="flex-1 min-w-0 space-y-6">
+                <p>
+                  His early career combined musical promise with financial difficulty. In August 1915, writing to Bantock as &ldquo;Master&rdquo;, Fenney asked for help paying a publishing fee connected with <em>Flower Fairies</em>. The same letter reveals his fascination with Scriabin. He also worked as a copyist: Birmingham&rsquo;s Bantock collection preserves a full score of the <em>Hebridean Symphony</em> copied by Fenney in 1916.
+                </p>
+
+                <p>
+                  Joseph Holbrooke&apos;s book, <em>Contemporary British Composers</em>, mentions Fenney as follows:
+                </p>
+              </div>
+            </div>
 
             <blockquote className="my-8 p-6 sm:p-8 bg-white border-l-4 border-amber-800 border-y border-r border-stone-200 rounded-r shadow-xs space-y-4">
               <p className="font-serif italic text-base sm:text-lg text-stone-800 leading-relaxed">

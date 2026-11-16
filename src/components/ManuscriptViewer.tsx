@@ -117,7 +117,7 @@ export const ManuscriptViewer: React.FC<ManuscriptViewerProps> = ({ onPlayTheme 
               style={{ transform: `scale(${zoomLevel})`, transformOrigin: 'top center' }}
             >
               <img
-                src={new URL("../assets/images/archive_manuscript_score_1793641661700.jpg", import.meta.url).href}
+                src={`${import.meta.env.BASE_URL}assets/aistudio/queens_hall_clean.webp`}
                 alt="Autograph 19th century orchestral score manuscript"
                 className="rounded shadow-xl w-full h-auto block select-none"
                 referrerPolicy="no-referrer"
