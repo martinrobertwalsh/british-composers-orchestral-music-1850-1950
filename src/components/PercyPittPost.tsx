@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PERCY_PITT_ORCHESTRAL_WORKS, PercyPittWork } from '../data/percyPittData';
-import { Music, X, Calendar, BookOpen, ExternalLink, Mail, ArrowUp, Volume2, ZoomIn, PenLine } from 'lucide-react';
+import { Music, X, Calendar, BookOpen, ExternalLink, Mail, ArrowUp, ArrowLeft, Volume2, ZoomIn, PenLine } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
@@ -9,7 +9,15 @@ import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
 
 const PITT_YT_VIDEO_ID = '-6HZxgXJLDI';
 
-export const PercyPittPost: React.FC = () => {
+interface PercyPittPostProps {
+  onBack?: () => void;
+  isFeatured?: boolean;
+}
+
+export const PercyPittPost: React.FC<PercyPittPostProps> = ({
+  onBack,
+  isFeatured = false,
+}) => {
   const [selectedWork, setSelectedWork] = useState<PercyPittWork | null>(null);
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
   const coronationPlayer = useYouTubeWorkPlayer(PITT_YT_VIDEO_ID);
@@ -28,6 +36,13 @@ export const PercyPittPost: React.FC = () => {
   return (
     <article id="percy-pitt-post" className="w-full bg-[#FAF8F5] text-stone-900 py-12 px-4 sm:px-6 lg:px-8 selection:bg-amber-200 selection:text-stone-900">
       <div className="max-w-4xl mx-auto">
+        {isFeatured && (
+          <div className="flex items-center justify-between mb-3">
+            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
+              FEATURED POST
+            </span>
+          </div>
+        )}
 
         {/* Post Title */}
         <header className="text-center mb-8 pb-6 border-b border-stone-200">
@@ -543,8 +558,8 @@ export const PercyPittPost: React.FC = () => {
           </div>
         </section>
 
-        {/* Bottom Back-to-Top Button */}
-        <div className="mt-14 pt-8 border-t border-stone-300 text-center">
+        {/* Bottom Navigation Buttons */}
+        <div className="mt-14 pt-8 border-t border-stone-300 flex flex-wrap items-center justify-center gap-3 text-center">
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 350, behavior: 'smooth' })}
@@ -553,6 +568,16 @@ export const PercyPittPost: React.FC = () => {
             <ArrowUp className="w-4 h-4 text-amber-900" />
             <span>Return to top of Percy Pitt post</span>
           </button>
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded-lg font-serif text-sm font-semibold shadow-2xs transition-all cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4 text-amber-300" />
+              <span>{isFeatured ? 'Back to Home' : 'Back to Archive Cards'}</span>
+            </button>
+          )}
         </div>
 
         {/* Modal for linked work */}

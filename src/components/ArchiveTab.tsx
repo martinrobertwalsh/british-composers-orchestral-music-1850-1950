@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FeaturedPost } from './FeaturedPost';
 import { TobiasMatthayPost } from './TobiasMatthayPost';
-import { PercyPittPost } from './PercyPittPost';
+import { CunninghamWoodsPost } from './CunninghamWoodsPost';
 import { WilliamFenneyPost } from './WilliamFenneyPost';
 import { WilliamSpeerPost } from './WilliamSpeerPost';
 import { CardsCarousel, CarouselCard } from './CardsCarousel';
@@ -38,13 +38,23 @@ export const ARCHIVE_ARTICLES: ArchiveArticle[] = [
     tags: ['Tobias Matthay', 'In May', 'Tone Poem', 'Bournemouth', 'Dan Godfrey', 'Piano Pedagogy', 'Royal Academy']
   },
   {
-    id: 'pitt',
-    name: 'Percy Pitt',
-    dates: '1869–1932',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/percy_pitt_sharp.webp`,
-    quote: '“A life on the podium, a composer in the shadows”',
-    notableWork: 'Coronation March (1897)',
-    tags: ['Percy Pitt', 'Coronation March', 'Queen\'s Hall', 'Covent Garden', 'BBC Music Director', 'Promenade Concerts']
+    id: 'cunningham-woods',
+    name: 'Francis Cunningham Woods',
+    dates: '1862–1929',
+    image: `${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.webp`,
+    quote: '“From the organ loft to a small village in Norfolk”',
+    notableWork: 'The Gressenhall Suite for strings (1915)',
+    tags: [
+      'Francis Cunningham Woods',
+      'The Gressenhall Suite',
+      'Highgate School',
+      'The Village Organist',
+      'Blenheim Palace',
+      'Exeter College Oxford',
+      'John Stainer',
+      'Arthur Sullivan',
+      'Ebenezer Prout'
+    ]
   },
   {
     id: 'fenney',
@@ -131,8 +141,8 @@ export const ArchiveTab: React.FC<ArchiveTabProps> = ({ initialArticleId = null 
     return <TobiasMatthayPost />;
   }
 
-  if (selectedArticleId === 'pitt') {
-    return <PercyPittPost />;
+  if (selectedArticleId === 'cunningham-woods') {
+    return <CunninghamWoodsPost onBack={handleBackToCarousel} />;
   }
 
   if (selectedArticleId === 'fenney') {

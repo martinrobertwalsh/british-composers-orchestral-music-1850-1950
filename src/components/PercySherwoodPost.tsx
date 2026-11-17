@@ -8,7 +8,7 @@ import { QuaversIcon } from './QuaversIcon';
 import { FramedYouTubePlayer } from './FramedYouTubePlayer';
 import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
 
-const SHERWOOD_YT_VIDEO_ID = 'IauKz5zqvY0';
+const SHERWOOD_YT_VIDEO_ID = 'SJ7lfCjpVrE';
 
 interface SherwoodMovement {
   num: number;
@@ -20,8 +20,8 @@ interface SherwoodMovement {
 const SHERWOOD_MOVEMENTS: SherwoodMovement[] = [
   { num: 1, label: '1st mov – Adagio – Allegro molto', time: 0, timeStr: '00:00' },
   { num: 2, label: '2nd mov – Adagio', time: 894, timeStr: '14:54' },
-  { num: 3, label: '3rd mov – Scherzo prestissimo', time: 1537, timeStr: '25:37' },
-  { num: 4, label: '4th mov – Allegro con fuoco', time: 2013, timeStr: '33:33' },
+  { num: 3, label: '3rd mov – Scherzo prestissimo', time: 1531, timeStr: '25:31' },
+  { num: 4, label: '4th mov – Allegro con fuoco', time: 2008, timeStr: '33:28' },
 ];
 
 interface PercySherwoodPostProps {

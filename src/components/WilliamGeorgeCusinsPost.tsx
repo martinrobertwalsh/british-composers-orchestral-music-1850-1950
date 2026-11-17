@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const CUSINS_YT_VIDEO_ID = 'pvvFYxvHnJk';
 
 interface CusinsWork {
   id: string;
@@ -46,6 +50,7 @@ export const WilliamGeorgeCusinsPost: React.FC<WilliamGeorgeCusinsPostProps> = (
   isFeatured = false,
 }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
+  const travailleursPlayer = useYouTubeWorkPlayer(CUSINS_YT_VIDEO_ID);
   const cusinsPortrait = `${import.meta.env.BASE_URL}assets/aistudio/cusins_portrait_bw.webp`;
 
   const scrollToSection = (id: string) => {
@@ -222,12 +227,33 @@ export const WilliamGeorgeCusinsPost: React.FC<WilliamGeorgeCusinsPostProps> = (
           className="mt-14 pt-8 border-t-2 border-stone-300/70 scroll-mt-20"
         >
           <div className="text-center mb-8 pb-6 border-b border-stone-200">
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-2">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 mb-4">
               Les Travailleurs de la mer (1869)
             </h2>
-            <p className="font-serif italic text-base sm:text-lg text-stone-700">
-              Concert Overture after the novel by Victor Hugo &middot; Audio realisation to follow
-            </p>
+
+            {/* Framed Archival YouTube Player */}
+            <FramedYouTubePlayer
+              player={travailleursPlayer}
+              iframeId="cusins-travailleurs-youtube-player"
+              title="William George Cusins - Les Travailleurs de la mer (1869)"
+              caption={
+                <>
+                  William George Cusins — <em>Les Travailleurs de la mer</em> (Concert Overture after Victor Hugo, 1869)
+                </>
+              }
+            />
+
+            <div className="mt-4 flex justify-center">
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-stone-100 text-stone-700 hover:text-amber-900 border border-stone-300 rounded-md font-mono text-xs font-semibold tracking-wider uppercase shadow-2xs transition-colors cursor-pointer"
+                title="Read from the top while you listen"
+              >
+                <ArrowUp className="w-3.5 h-3.5 text-amber-900" />
+                <span>READ FROM THE TOP WHILE YOU LISTEN</span>
+              </button>
+            </div>
           </div>
 
           <div className="font-serif text-stone-800 text-lg sm:text-xl leading-relaxed space-y-6 text-left">

@@ -8,6 +8,7 @@ import { PercySherwoodPost } from './PercySherwoodPost';
 import { SamHartleyBraithwaitePost } from './SamHartleyBraithwaitePost';
 import { WilliamGeorgeCusinsPost } from './WilliamGeorgeCusinsPost';
 import { ErnestAustinPost } from './ErnestAustinPost';
+import { EmanuelMoorPost } from './EmanuelMoorPost';
 import { CardsCarousel, CarouselCard } from './CardsCarousel';
 import { ArrowLeft } from 'lucide-react';
 import { trackPage } from '../lib/analytics';
@@ -138,6 +139,24 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
       "The Beggar's Opera",
       'BBC Radio',
       'Board of Trade'
+    ]
+  },
+  {
+    id: 'emanuel-moor',
+    name: 'Emanuel Moór',
+    dates: '1863–1931',
+    image: `${import.meta.env.BASE_URL}assets/aistudio/emanuel_moor_portrait.webp`,
+    quote: '“Symphonies from Surrey”',
+    notableWork: 'Symphony No. 3 (1895–96) · Symphony No. 5 (1901)',
+    tags: [
+      'Emanuel Moór',
+      'Emanuel Moor',
+      'Symphony No. 3',
+      'Symphony No. 5',
+      'Frühlingszauber',
+      'In Memoriam Kossuth',
+      'Surrey',
+      'Lausanne'
     ]
   }
 ];
@@ -328,6 +347,23 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
           </button>
         </div>
         <ErnestAustinPost onBack={handleBackToCarousel} />
+      </div>
+    );
+  }
+
+  if (selectedArticleId === 'emanuel-moor') {
+    return (
+      <div className="space-y-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
+          <button
+            onClick={handleBackToCarousel}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 rounded font-serif text-sm font-semibold transition-colors cursor-pointer shadow-2xs group"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-amber-900" />
+            <span>Back to Cards Carousel</span>
+          </button>
+        </div>
+        <EmanuelMoorPost onBack={handleBackToCarousel} />
       </div>
     );
   }
