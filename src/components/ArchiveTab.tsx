@@ -3,7 +3,7 @@ import { FeaturedPost } from './FeaturedPost';
 import { TobiasMatthayPost } from './TobiasMatthayPost';
 import { PercyPittPost } from './PercyPittPost';
 import { WilliamFenneyPost } from './WilliamFenneyPost';
-import { CunninghamWoodsPost } from './CunninghamWoodsPost';
+import { WilliamSpeerPost } from './WilliamSpeerPost';
 import { CardsCarousel, CarouselCard } from './CardsCarousel';
 import { ArrowLeft } from 'lucide-react';
 import { trackPage } from '../lib/analytics';
@@ -69,22 +69,22 @@ export const ARCHIVE_ARTICLES: ArchiveArticle[] = [
     ]
   },
   {
-    id: 'cunningham-woods',
-    name: 'Francis Cunningham Woods',
-    dates: '1862–1929',
-    image: `${import.meta.env.BASE_URL}assets/aistudio/cunningham_woods_portrait.webp`,
-    quote: '“From the organ loft to a small village in Norfolk”',
-    notableWork: 'The Gressenhall Suite for strings (1915)',
+    id: 'speer',
+    name: 'William Henry Speer',
+    dates: '1863–1937',
+    image: `${import.meta.env.BASE_URL}assets/aistudio/speer_portrait_restored.webp`,
+    quote: '“In the shadow of the Malverns and Elgar”',
+    notableWork: 'Rhapsody in E♭ (1898) · Nocturne for strings (1907)',
     tags: [
-      'Francis Cunningham Woods',
-      'Cunningham Woods',
-      'The Gressenhall Suite',
-      'Suite in F major',
-      'The Village Organist',
-      'John Stainer',
-      'Arthur Sullivan',
-      'Highgate School',
-      'Oxford'
+      'William Henry Speer',
+      'Rhapsody in Eb',
+      'Nocturne for strings',
+      'Malvern',
+      'Elgar',
+      'Charles Villiers Stanford',
+      'Trinity College Cambridge',
+      'Bournemouth',
+      'Dan Godfrey'
     ]
   }
 ];
@@ -139,7 +139,7 @@ export const ArchiveTab: React.FC<ArchiveTabProps> = ({ initialArticleId = null 
     return <WilliamFenneyPost />;
   }
 
-  if (selectedArticleId === 'cunningham-woods') {
+  if (selectedArticleId === 'speer') {
     return (
       <div className="space-y-4">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
@@ -151,7 +151,7 @@ export const ArchiveTab: React.FC<ArchiveTabProps> = ({ initialArticleId = null 
             <span>Back to Cards Carousel</span>
           </button>
         </div>
-        <CunninghamWoodsPost onBack={handleBackToCarousel} />
+        <WilliamSpeerPost onBack={handleBackToCarousel} />
       </div>
     );
   }

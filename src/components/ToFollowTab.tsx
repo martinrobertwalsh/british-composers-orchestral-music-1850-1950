@@ -128,7 +128,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     name: 'Ernest Austin',
     dates: '1874–1947',
     image: `${import.meta.env.BASE_URL}assets/aistudio/ernest_austin_portrait.webp`,
-    quote: '“Younger brother of baritone and composer Frederic Austin”',
+    quote: '“A late calling to music, touched by a father’s grief.”',
     notableWork: 'Variations on “The Vicar of Bray”',
     tags: [
       'Ernest Austin',

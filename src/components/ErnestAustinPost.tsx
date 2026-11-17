@@ -75,7 +75,7 @@ export const ErnestAustinPost: React.FC<ErnestAustinPostProps> = ({
           </h1>
 
           <p className="font-times italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
-            &ldquo;Younger brother of baritone and composer Frederic Austin (1872–1951)&rdquo;
+            &ldquo;A late calling to music, touched by a father&rsquo;s grief.&rdquo;
           </p>
         </header>
 

@@ -19,16 +19,20 @@ interface GressenhallMovement {
 
 const GRESSENHALL_MOVEMENTS: GressenhallMovement[] = [
   { num: '1', title: 'Preamble', label: '1. Preamble', time: 0, timeStr: '00:00' },
-  { num: '2', title: 'A Norfolk Folk Tune', label: '2. A Norfolk Folk Tune', time: 127, timeStr: '02:07' },
-  { num: '3', title: 'Slow Air', label: '3. Slow Air', time: 309, timeStr: '05:09' },
-  { num: '4', title: 'Jig and Finale', label: '4. Jig and Finale', time: 538, timeStr: '08:58' }
+  { num: '2', title: 'A Norfolk Folk Tune', label: '2. A Norfolk Folk Tune', time: 124, timeStr: '02:04' },
+  { num: '3', title: 'Slow Air', label: '3. Slow Air', time: 305, timeStr: '05:05' },
+  { num: '4', title: 'Jig and Finale', label: '4. Jig and Finale', time: 533, timeStr: '08:53' }
 ];
 
 interface CunninghamWoodsPostProps {
   onBack?: () => void;
+  isFeatured?: boolean;
 }
 
-export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack }) => {
+export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({
+  onBack,
+  isFeatured = false,
+}) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
   const [activeMovement, setActiveMovement] = useState<string | null>(null);
   const gressenhallPlayer = useYouTubeWorkPlayer(WOODS_YT_VIDEO_ID);
@@ -49,13 +53,20 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
     if (seconds === 0) {
       gressenhallPlayer.playFromStart();
     } else {
-      gressenhallPlayer.seekDirectTo(seconds);
+      gressenhallPlayer.seekWithFade(seconds);
     }
   };
 
   return (
     <article id="cunningham-woods-post" className="w-full bg-[#FAF8F5] text-stone-900 py-12 px-4 sm:px-6 lg:px-8 selection:bg-amber-200 selection:text-stone-900">
       <div className="max-w-4xl mx-auto">
+        {isFeatured && (
+          <div className="flex items-center justify-between mb-3">
+            <span className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-stone-600 uppercase">
+              FEATURED POST
+            </span>
+          </div>
+        )}
 
         {/* Post Title & Subtitle */}
         <header className="text-center mb-8 pb-6 border-b border-stone-200">
@@ -353,22 +364,23 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               <span className="font-mono text-xs uppercase tracking-wider text-stone-600 font-semibold mr-1">
                 Movements:
               </span>
-              {GRESSENHALL_MOVEMENTS.map((mov, idx) => (
+              {GRESSENHALL_MOVEMENTS.map((mov) => (
                 <button
                   key={mov.num}
                   type="button"
                   onClick={() => handleJumpToMovement(mov.time, mov.title)}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 border border-stone-300 rounded font-serif text-xs sm:text-sm font-semibold transition-all cursor-pointer shadow-2xs ${
-                    idx === 1 ? 'mr-3 sm:mr-5' : idx === 2 ? 'mr-1.5 sm:mr-2.5' : ''
-                  } ${
                     activeMovement === mov.title
                       ? 'bg-amber-100 ring-2 ring-amber-800 text-stone-900 shadow-xs'
                       : 'bg-white hover:bg-amber-50 text-stone-800 hover:border-amber-400'
                   }`}
                   title={`Jump to ${mov.label} (${mov.timeStr})`}
                 >
-                  <Play className="w-3 h-3 text-amber-900" />
+                  <Play className="w-3 h-3 text-amber-900 shrink-0" />
                   <span>{mov.label}</span>
+                  <span className="font-mono text-[11px] text-amber-900">
+                    ({mov.timeStr})
+                  </span>
                 </button>
               ))}
             </div>
@@ -456,14 +468,14 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               <div>
                 <button
                   type="button"
-                  onClick={() => handleJumpToMovement(127, 'A Norfolk Folk Tune')}
+                  onClick={() => handleJumpToMovement(124, 'A Norfolk Folk Tune')}
                   className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-baseline flex-wrap gap-y-1"
                   title="Jump to 2nd movement in audio player"
                 >
                   <span className="mr-2.5 text-amber-950 font-serif font-bold select-none">II</span>
                   <span>A Norfolk Folk Tune</span>{' '}
                   <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
-                    (02:07)
+                    (02:04)
                   </span>
                 </button>
                 <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
@@ -483,14 +495,14 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               <div>
                 <button
                   type="button"
-                  onClick={() => handleJumpToMovement(309, 'Slow Air')}
+                  onClick={() => handleJumpToMovement(305, 'Slow Air')}
                   className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-baseline flex-wrap gap-y-1"
                   title="Jump to 3rd movement in audio player"
                 >
                   <span className="mr-2.5 text-amber-950 font-serif font-bold select-none">III</span>
                   <span>Slow Air</span>{' '}
                   <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
-                    (05:09)
+                    (05:05)
                   </span>
                 </button>
                 <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
@@ -510,14 +522,14 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               <div>
                 <button
                   type="button"
-                  onClick={() => handleJumpToMovement(538, 'Jig and Finale')}
+                  onClick={() => handleJumpToMovement(533, 'Jig and Finale')}
                   className="font-bold text-stone-900 hover:text-amber-900 transition-colors cursor-pointer text-left font-serif text-lg sm:text-xl flex items-baseline flex-wrap gap-y-1"
                   title="Jump to 4th movement in audio player"
                 >
                   <span className="mr-2.5 text-amber-950 font-serif font-bold select-none">IV</span>
                   <span>Jig and Finale</span>{' '}
                   <span className="font-mono text-[0.78em] text-amber-900 font-semibold align-baseline ml-1.5">
-                    (08:58)
+                    (08:53)
                   </span>
                 </button>
                 <p className="mt-1 text-stone-900 font-normal leading-relaxed m-0">
@@ -591,7 +603,7 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-stone-100 rounded-lg font-serif text-sm font-semibold shadow-2xs transition-all cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 text-amber-300" />
-              <span>Back to Archive Cards</span>
+              <span>{isFeatured ? 'Back to Home' : 'Back to Archive Cards'}</span>
             </button>
           )}
         </div>

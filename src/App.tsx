@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HeroSection } from './components/HeroSection';
 import { HomeColumns } from './components/HomeColumns';
-import { WilliamSpeerPost } from './components/WilliamSpeerPost';
+import { CunninghamWoodsPost } from './components/CunninghamWoodsPost';
 import { ComposerModal } from './components/ComposerModal';
 import { WelcomeModal } from './components/WelcomeModal';
 import { ArchiveTab } from './components/ArchiveTab';
@@ -111,7 +111,7 @@ export default function App() {
     switch (activeTab) {
       case 'home':
         if (isFeaturedOpen) {
-          trackPage('/featured/speer', 'William Henry Speer (1863–1937) — Forgotten Composers');
+          trackPage('/featured/cunningham-woods', 'Francis Cunningham Woods (1862–1929) — Forgotten Composers');
         } else {
           trackPage('/', 'Home — Forgotten Composers');
         }
@@ -181,7 +181,7 @@ export default function App() {
         )}
 
         {activeTab === 'home' && isFeaturedOpen && (
-          <WilliamSpeerPost
+          <CunninghamWoodsPost
             isFeatured={true}
             onBack={() => {
               setIsFeaturedOpen(false);
@@ -242,7 +242,7 @@ export default function App() {
           <ToFollowTab key={toFollowKey} />
         )}
 
-        {/* ARCHIVE TAB: Walter Macfarren, Tobias Matthay, Percy Pitt, William Fenney, Francis Cunningham Woods */}
+        {/* ARCHIVE TAB: Walter Macfarren, Tobias Matthay, Percy Pitt, William Fenney, William Henry Speer */}
         {activeTab === 'archive' && (
           <ArchiveTab key={archiveKey} />
         )}

@@ -32,7 +32,7 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
     if (seconds === 0) {
       sinfoniaPlayer.playFromStart();
     } else {
-      sinfoniaPlayer.seekDirectTo(seconds);
+      sinfoniaPlayer.seekWithFade(seconds);
     }
   };
 
