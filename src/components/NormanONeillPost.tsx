@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { NORMAN_ONEILL_ORCHESTRAL_WORKS } from '../data/normanONeillData';
 import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, BookOpen, PenLine } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekWithFadeIn } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const ONEILL_YT_VIDEO_ID = 'GjSFZTRtagU';
 
 interface NormanONeillPostProps {
   onBack?: () => void;
@@ -13,10 +15,10 @@ interface NormanONeillPostProps {
 
 export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const inAutumnPlayer = useYouTubeWorkPlayer(ONEILL_YT_VIDEO_ID);
 
   const seekAudio = (seconds: number) => {
-    seekWithFadeIn(audioRef.current, seconds);
+    inAutumnPlayer.seekWithFade(seconds);
   };
 
   const scrollToSection = (id: string) => {
@@ -186,23 +188,17 @@ export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) =>
               In Autumn (Tone Poem)
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right mirrored) */}
-            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="In Autumn (Tone Poem)"
-                subtitle="Norman O'Neill"
-                src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/O'Neill/In%20Autumn.mp3"
-                sources={[
-                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/O'Neill/In%20Autumn.mp3", type: "audio/mpeg" },
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/refs/heads/main/O%27Neill/In%20Autumn.mp3", type: "audio/mpeg" },
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/O%27Neill/In%20Autumn.mp3", type: "audio/mpeg" }
-                ]}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Framed Archival YouTube Player */}
+            <FramedYouTubePlayer
+              player={inAutumnPlayer}
+              iframeId="oneill-autumn-youtube-player"
+              title="Norman O’Neill - In Autumn (Tone Poem)"
+              caption={
+                <>
+                  Norman O’Neill — <em>In Autumn</em> (Tone Poem)
+                </>
+              }
+            />
 
             <div className="mt-4 flex justify-center">
               <button
@@ -285,7 +281,11 @@ export const NormanONeillPost: React.FC<NormanONeillPostProps> = ({ onBack }) =>
                 they are all the more impressive given the generally thin texture of the piece. As a sign to the onset of winter the music dies to nothing.
               </p>
 
-              <ListenToItAllLink targetId="oneill-autumn-workpage" />
+              <ListenToItAllLink
+                targetId="oneill-autumn-workpage"
+                onPlayFromStart={inAutumnPlayer.playFromStart}
+                isPlaying={inAutumnPlayer.isPlaying}
+              />
             </div>
 
             <p>

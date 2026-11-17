@@ -30,7 +30,7 @@ export const FENNEY_ORCHESTRAL_WORKS: FenneyWork[] = [
     genre: 'Pastoral / Tone Piece',
     hasDedicatedPage: true,
     isLost: false,
-    audioUrl: `${import.meta.env.BASE_URL}assets/aistudio/Pastoral_3704f15a.mp3`
+    audioUrl: 'https://www.youtube.com/watch?v=rEgbrM6bUms'
   },
   {
     id: 'tragic-poem',

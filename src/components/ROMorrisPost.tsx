@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { RO_MORRIS_ORCHESTRAL_WORKS, RO_MORRIS_THEORETICAL_BOOKS } from '../data/roMorrisData';
 import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, Play, BookOpen, PenLine } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekWithFadeIn, seekDirect } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const MORRIS_YT_VIDEO_ID = 'oSsNHl-RUFU';
 
 interface ROMorrisPostProps {
   onBack?: () => void;
@@ -13,7 +15,7 @@ interface ROMorrisPostProps {
 
 export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const sinfoniaPlayer = useYouTubeWorkPlayer(MORRIS_YT_VIDEO_ID);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -23,11 +25,15 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
   };
 
   const seekAudio = (seconds: number) => {
-    seekWithFadeIn(audioRef.current, seconds);
+    sinfoniaPlayer.seekWithFade(seconds);
   };
 
   const jumpToMovement = (seconds: number) => {
-    seekDirect(audioRef.current, seconds);
+    if (seconds === 0) {
+      sinfoniaPlayer.playFromStart();
+    } else {
+      sinfoniaPlayer.seekDirectTo(seconds);
+    }
   };
 
   return (
@@ -277,22 +283,17 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
               Sinfonia in C major (1928)
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right mirrored) */}
-            <div className="max-w-2xl mx-auto mt-4 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="Sinfonia in C major (1928)"
-                subtitle="R. O. Morris"
-                src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Morris/Full%20Sinfonia.mp3"
-                sources={[
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Morris/Full%20Sinfonia.mp3", type: "audio/mpeg" },
-                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Morris/Full%20Sinfonia.mp3", type: "audio/mpeg" }
-                ]}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Framed Archival YouTube Player */}
+            <FramedYouTubePlayer
+              player={sinfoniaPlayer}
+              iframeId="morris-sinfonia-youtube-player"
+              title="R. O. Morris - Sinfonia in C major (1928)"
+              caption={
+                <>
+                  R. O. Morris — <em>Sinfonia in C major</em> (1928)
+                </>
+              }
+            />
 
             {/* Quick Movement Jump Buttons Bar */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
@@ -506,7 +507,11 @@ export const ROMorrisPost: React.FC<ROMorrisPostProps> = ({ onBack }) => {
                 </p>
               </div>
 
-              <ListenToItAllLink targetId="morris-sinfonia-workpage" />
+              <ListenToItAllLink
+                targetId="morris-sinfonia-workpage"
+                onPlayFromStart={sinfoniaPlayer.playFromStart}
+                isPlaying={sinfoniaPlayer.isPlaying}
+              />
             </div>
           </div>
         </section>

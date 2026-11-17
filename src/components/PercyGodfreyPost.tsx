@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { PERCY_GODFREY_ORCHESTRAL_WORKS } from '../data/godfreyData';
 import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, BookOpen, PenLine } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekWithFadeIn } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const GODFREY_YT_VIDEO_ID = 'pQGTBdsr4mY';
 
 interface PercyGodfreyPostProps {
   onBack?: () => void;
@@ -13,7 +15,7 @@ interface PercyGodfreyPostProps {
 
 export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const coronationPlayer = useYouTubeWorkPlayer(GODFREY_YT_VIDEO_ID);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -23,7 +25,7 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
   };
 
   const seekAudio = (seconds: number) => {
-    seekWithFadeIn(audioRef.current, seconds);
+    coronationPlayer.seekWithFade(seconds);
   };
 
   return (
@@ -336,22 +338,17 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
               Coronation Prize-March (1902)
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right mirrored) */}
-            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="Coronation Prize-March (1902)"
-                subtitle="Percy Godfrey"
-                src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Godfrey/Prize%20March.mp3"
-                sources={[
-                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Godfrey/Prize%20March.mp3", type: "audio/mpeg" },
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Godfrey/Prize%20March.mp3", type: "audio/mpeg" }
-                ]}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Framed Archival YouTube Player */}
+            <FramedYouTubePlayer
+              player={coronationPlayer}
+              iframeId="godfrey-coronation-youtube-player"
+              title="Percy Godfrey - Coronation Prize-March (1902)"
+              caption={
+                <>
+                  Percy Godfrey — <em>Coronation Prize-March</em> (1902)
+                </>
+              }
+            />
 
             <div className="mt-4 flex justify-center">
               <button
@@ -500,7 +497,11 @@ export const PercyGodfreyPost: React.FC<PercyGodfreyPostProps> = ({ onBack }) =>
                   The overall feel in this 5 minute offering is one of happiness and joy. Its melodic construction was sufficiently straightforward and cheerful to be readily appreciated by a large audience.
                 </p>
 
-                <ListenToItAllLink targetId="godfrey-coronation-workpage" />
+                <ListenToItAllLink
+                  targetId="godfrey-coronation-workpage"
+                  onPlayFromStart={coronationPlayer.playFromStart}
+                  isPlaying={coronationPlayer.isPlaying}
+                />
               </div>
             </div>
 

@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { CUNNINGHAM_WOODS_ORCHESTRAL_WORKS } from '../data/cunninghamWoodsData';
 import { ArrowUp, ZoomIn, X, ArrowLeft, Volume2, BookOpen, PenLine, Play } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekWithFadeIn, seekDirect } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const WOODS_YT_VIDEO_ID = 'ycqz2UDNdq0';
 
 interface GressenhallMovement {
   num: string;
@@ -29,7 +31,7 @@ interface CunninghamWoodsPostProps {
 export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
   const [activeMovement, setActiveMovement] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const gressenhallPlayer = useYouTubeWorkPlayer(WOODS_YT_VIDEO_ID);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -39,12 +41,16 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
   };
 
   const seekAudio = (seconds: number) => {
-    seekWithFadeIn(audioRef.current, seconds);
+    gressenhallPlayer.seekWithFade(seconds);
   };
 
   const handleJumpToMovement = (seconds: number, title: string) => {
     setActiveMovement(title);
-    seekDirect(audioRef.current, seconds);
+    if (seconds === 0) {
+      gressenhallPlayer.playFromStart();
+    } else {
+      gressenhallPlayer.seekDirectTo(seconds);
+    }
   };
 
   return (
@@ -330,23 +336,17 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
               The Gressenhall Suite for strings (1915)
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right descending) */}
-            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="The Gressenhall Suite for strings (1915)"
-                subtitle="Francis Cunningham Woods"
-                src="https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Woods/Full%20Gressenhall%20Suite.mp3"
-                sources={[
-                  { src: "https://github.com/martinrobertwalsh/MP3FreddieWalsh/raw/refs/heads/main/Woods/Full%20Gressenhall%20Suite.mp3", type: "audio/mpeg" },
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/refs/heads/main/Woods/Full%20Gressenhall%20Suite.mp3", type: "audio/mpeg" },
-                  { src: "https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Woods/Full%20Gressenhall%20Suite.mp3", type: "audio/mpeg" }
-                ]}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Embedded YouTube Recording */}
+            <FramedYouTubePlayer
+              player={gressenhallPlayer}
+              iframeId="woods-gressenhall-youtube-player"
+              title="Francis Cunningham Woods - The Gressenhall Suite for strings (1915)"
+              caption={
+                <>
+                  Francis Cunningham Woods — <em>The Gressenhall Suite for strings</em> (1915)
+                </>
+              }
+            />
 
             {/* Quick Movement Jump Buttons Bar under Audio */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
@@ -537,7 +537,11 @@ export const CunninghamWoodsPost: React.FC<CunninghamWoodsPostProps> = ({ onBack
                 </p>
               </div>
 
-              <ListenToItAllLink targetId="woods-gressenhall-workpage" />
+              <ListenToItAllLink
+                targetId="woods-gressenhall-workpage"
+                onPlayFromStart={gressenhallPlayer.playFromStart}
+                isPlaying={gressenhallPlayer.isPlaying}
+              />
             </div>
 
             {/* Contemporary Radio Broadcast Notice */}

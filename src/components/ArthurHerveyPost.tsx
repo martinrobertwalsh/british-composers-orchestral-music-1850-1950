@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { ARTHUR_HERVEY_ORCHESTRAL_WORKS } from '../data/herveyData';
-import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, BookOpen, PenLine } from 'lucide-react';
+import { Volume2, ArrowUp, ZoomIn, ArrowLeft, BookOpen, PenLine } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekWithFadeIn } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const HERVEY_YT_VIDEO_ID = '9Biwq8hOWzk';
 
 interface ArthurHerveyPostProps {
   onBack?: () => void;
@@ -14,10 +16,10 @@ interface ArthurHerveyPostProps {
 
 export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack, isFeatured = false }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const summerPlayer = useYouTubeWorkPlayer(HERVEY_YT_VIDEO_ID);
 
   const seekAudio = (seconds: number) => {
-    seekWithFadeIn(audioRef.current, seconds);
+    summerPlayer.seekWithFade(seconds);
   };
 
   const scrollToSection = (id: string) => {
@@ -254,18 +256,17 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack, isFe
               Summer (Tone Poem)
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right mirrored) */}
-            <div className="max-w-2xl mx-auto mt-3 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="Summer (Tone Poem)"
-                subtitle="Arthur Hervey"
-                src="https://raw.githubusercontent.com/martinrobertwalsh/MP3FreddieWalsh/main/Hervey/Summer.mp3"
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Framed Archival YouTube Player */}
+            <FramedYouTubePlayer
+              player={summerPlayer}
+              iframeId="hervey-summer-youtube-player"
+              title="Arthur Hervey - Summer (Tone Poem)"
+              caption={
+                <>
+                  Arthur Hervey — <em>Summer</em> (Tone Poem)
+                </>
+              }
+            />
 
             <div className="mt-4 flex justify-center">
               <button
@@ -330,7 +331,11 @@ export const ArthurHerveyPost: React.FC<ArthurHerveyPostProps> = ({ onBack, isFe
                 It&apos;s not an especially dramatic portrayal but a more subtle, threatening rumbling. This middle section shows, very clearly, the skills Hervey possessed as an orchestral scene painter. The calm returns and the music builds to a bright finale.
               </p>
 
-              <ListenToItAllLink targetId="hervey-summer-workpage" />
+              <ListenToItAllLink
+                targetId="hervey-summer-workpage"
+                onPlayFromStart={summerPlayer.playFromStart}
+                isPlaying={summerPlayer.isPlaying}
+              />
             </div>
 
             <p>

@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Volume2, ArrowUp, ZoomIn, X, ArrowLeft, BookOpen, PenLine } from 'lucide-react';
 import { QuaversIcon } from './QuaversIcon';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { HolePunchMargin } from './HolePunchMargin';
 import { ListenToItAllLink } from './ListenToItAllLink';
-import { seekWithFadeIn } from '../utils/audioFade';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const AUSTIN_YT_VIDEO_ID = 'OZFYBww4xnI';
 
 interface AustinWork {
   id: string;
@@ -38,7 +40,7 @@ export const ErnestAustinPost: React.FC<ErnestAustinPostProps> = ({
   isFeatured = false,
 }) => {
   const [activeImageModal, setActiveImageModal] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const vicarPlayer = useYouTubeWorkPlayer(AUSTIN_YT_VIDEO_ID);
   const austinPortrait = `${import.meta.env.BASE_URL}assets/aistudio/ernest_austin_portrait.webp`;
 
   const scrollToSection = (id: string) => {
@@ -49,7 +51,7 @@ export const ErnestAustinPost: React.FC<ErnestAustinPostProps> = ({
   };
 
   const seekAudio = (seconds: number) => {
-    seekWithFadeIn(audioRef.current, seconds);
+    vicarPlayer.seekWithFade(seconds);
   };
 
   return (
@@ -221,21 +223,17 @@ export const ErnestAustinPost: React.FC<ErnestAustinPostProps> = ({
               Variations on &ldquo;The Vicar of Bray&rdquo;
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right descending) */}
-            <div className="max-w-2xl mx-auto mt-6 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="Variations on “The Vicar of Bray”"
-                subtitle="Ernest Austin"
-                src={`${import.meta.env.BASE_URL}assets/aistudio/Vicar_of_Bray_f1b5e50e.mp3`}
-                sources={[
-                  { src: `${import.meta.env.BASE_URL}assets/aistudio/Vicar_of_Bray_f1b5e50e.mp3`, type: 'audio/mpeg' }
-                ]}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Framed Archival YouTube Player */}
+            <FramedYouTubePlayer
+              player={vicarPlayer}
+              iframeId="austin-vicar-youtube-player"
+              title="Ernest Austin - Variations on The Vicar of Bray"
+              caption={
+                <>
+                  Ernest Austin — <em>Variations on &ldquo;The Vicar of Bray&rdquo;</em>
+                </>
+              }
+            />
 
             <div className="mt-4 flex justify-center">
               <button
@@ -465,7 +463,11 @@ export const ErnestAustinPost: React.FC<ErnestAustinPostProps> = ({
                 </div>
               </div>
 
-              <ListenToItAllLink targetId="austin-vicar-section" />
+              <ListenToItAllLink
+                targetId="austin-vicar-section"
+                onPlayFromStart={vicarPlayer.playFromStart}
+                isPlaying={vicarPlayer.isPlaying}
+              />
             </div>
 
             {/* Contemporary Review Card: The Musical Times */}

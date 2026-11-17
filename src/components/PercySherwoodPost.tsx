@@ -8,7 +8,7 @@ import { QuaversIcon } from './QuaversIcon';
 import { FramedYouTubePlayer } from './FramedYouTubePlayer';
 import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
 
-const SHERWOOD_YT_VIDEO_ID = 'oL3Yt4PrJ9c';
+const SHERWOOD_YT_VIDEO_ID = 'IauKz5zqvY0';
 
 interface SherwoodMovement {
   num: number;

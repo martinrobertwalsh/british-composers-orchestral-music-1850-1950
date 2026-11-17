@@ -1,10 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { FENNEY_ORCHESTRAL_WORKS } from '../data/fenneyData';
 import { ZoomIn, X, ArrowLeft, ArrowUp, BookOpen, PenLine, Volume2 } from 'lucide-react';
 import { HolePunchMargin } from './HolePunchMargin';
-import { WaveformAudioPlayer } from './WaveformAudioPlayer';
 import { QuaversIcon } from './QuaversIcon';
 import { ListenToItAllLink } from './ListenToItAllLink';
+import { FramedYouTubePlayer } from './FramedYouTubePlayer';
+import { useYouTubeWorkPlayer } from '../utils/youtubePlayer';
+
+const FENNEY_YT_VIDEO_ID = 'rEgbrM6bUms';
 
 interface WilliamFenneyPostProps {
   onBack?: () => void;
@@ -13,7 +16,7 @@ interface WilliamFenneyPostProps {
 
 export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, isFeatured = false }) => {
   const [activeImageModal, setActiveImageModal] = useState<{ src: string; title: string } | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const pastoralPlayer = useYouTubeWorkPlayer(FENNEY_YT_VIDEO_ID);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -242,21 +245,17 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
               Pastoral for Small Orchestra (1916)
             </h2>
 
-            {/* Audio player flanked by quavers (left standard, right descending) */}
-            <div className="max-w-2xl mx-auto mt-6 flex items-center justify-center gap-3.5">
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" />
-              <WaveformAudioPlayer
-                ref={audioRef}
-                title="Pastoral for Small Orchestra (Op. 5)"
-                subtitle="William Fenney"
-                src={`${import.meta.env.BASE_URL}assets/aistudio/Pastoral_3704f15a.mp3`}
-                sources={[
-                  { src: `${import.meta.env.BASE_URL}assets/aistudio/Pastoral_3704f15a.mp3`, type: "audio/mpeg" }
-                ]}
-                className="flex-1"
-              />
-              <QuaversIcon className="w-11 h-11 sm:w-12 sm:h-12 shrink-0" descending={true} />
-            </div>
+            {/* Embedded YouTube Recording */}
+            <FramedYouTubePlayer
+              player={pastoralPlayer}
+              iframeId="fenney-pastoral-youtube-player"
+              title="William Fenney - Pastoral for Small Orchestra (Op. 5)"
+              caption={
+                <>
+                  William Fenney — <em>Pastoral for Small Orchestra</em> (Op. 5)
+                </>
+              }
+            />
 
             <div className="mt-4 flex justify-center">
               <button
@@ -310,7 +309,11 @@ export const WilliamFenneyPost: React.FC<WilliamFenneyPostProps> = ({ onBack, is
                 It begins with one note on the horn, followed by bright chromatic harmonies in the strings; several fragmentary themes appear. The episode is more flowing, beginning in the woodwind instruments and leading to a brief climax. The work ends with various references to the opening themes.&rdquo;
               </p>
 
-              <ListenToItAllLink targetId="fenney-pastoral-section" />
+              <ListenToItAllLink
+                targetId="fenney-pastoral-section"
+                onPlayFromStart={pastoralPlayer.playFromStart}
+                isPlaying={pastoralPlayer.isPlaying}
+              />
             </div>
 
             <p className="text-stone-800 text-lg sm:text-xl leading-relaxed pt-1">
