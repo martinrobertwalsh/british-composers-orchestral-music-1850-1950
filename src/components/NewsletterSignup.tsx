@@ -10,16 +10,16 @@ export const NewsletterSignup: React.FC<{ signupUrl?: string }> = ({
   if (!signupUrl) return null;
 
   return (
-    <section aria-label="Email updates" className="bg-[#1F1C18] border-t border-[#947541]/40 px-5 py-8 text-center">
+    <section aria-label="Email updates" className="bg-[#2B2119] border-y border-[#C8AA70]/60 px-5 py-10 sm:py-12 text-center">
       <div className="max-w-xl mx-auto">
         <a
           href={signupUrl}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded border border-[#C8AA70] px-6 py-3 font-serif text-lg font-semibold text-[#E8D2A3] transition-colors hover:bg-[#35291F] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E8D2A3]"
+          className="inline-flex w-full sm:w-auto min-h-16 items-center justify-center gap-3 rounded border-2 border-[#E8D2A3] bg-[#D7B775] px-9 py-4 font-serif text-2xl sm:text-3xl font-bold text-[#241A12] shadow-lg shadow-black/25 transition-colors hover:bg-[#E8D2A3] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E8D2A3]"
         >
-          <Mail aria-hidden="true" className="h-4 w-4" />
+          <Mail aria-hidden="true" className="h-6 w-6 shrink-0" />
           Keep me updated
         </a>
-        <p className="mt-3 font-body text-sm leading-relaxed text-[#D8C9B4]">
+        <p className="mt-4 font-body text-base leading-relaxed text-[#E8DCC9]">
           Receive occasional emails when new composers and recordings are added.
         </p>
       </div>
