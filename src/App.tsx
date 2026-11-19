@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HeroSection } from './components/HeroSection';
+import { NewsletterSignup } from './components/NewsletterSignup';
 import { HomeColumns } from './components/HomeColumns';
 import { PercyPittPost } from './components/PercyPittPost';
 import { ComposerModal } from './components/ComposerModal';
@@ -380,6 +381,7 @@ export default function App() {
         onClose={() => setIsWelcomeModalOpen(false)}
       />
       {/* Archival Research Footer */}
+      <NewsletterSignup />
       <footer className="w-full bg-[#1F1C18] text-stone-400 py-4 px-4 sm:px-6 lg:px-8 border-t border-stone-800 text-center font-serif">
         <div className="max-w-4xl mx-auto space-y-1">
           <p className="text-amber-200 text-sm tracking-wider uppercase font-semibold">
