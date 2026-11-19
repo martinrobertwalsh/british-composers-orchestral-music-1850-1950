@@ -75,7 +75,7 @@ export const ErnestAustinPost: React.FC<ErnestAustinPostProps> = ({
           </h1>
 
           <p className="font-times italic text-xl sm:text-2xl text-amber-950 max-w-2xl mx-auto leading-relaxed mt-3">
-            &ldquo;A late calling to music, touched by a father&rsquo;s grief.&rdquo;
+            &ldquo;A late call to music&rdquo;
           </p>
         </header>
 

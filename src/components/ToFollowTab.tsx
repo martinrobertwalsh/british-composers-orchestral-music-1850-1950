@@ -9,6 +9,7 @@ import { SamHartleyBraithwaitePost } from './SamHartleyBraithwaitePost';
 import { WilliamGeorgeCusinsPost } from './WilliamGeorgeCusinsPost';
 import { ErnestAustinPost } from './ErnestAustinPost';
 import { EmanuelMoorPost } from './EmanuelMoorPost';
+import { MaryAndersonLucasPost } from './MaryAndersonLucasPost';
 import { CardsCarousel, CarouselCard } from './CardsCarousel';
 import { ArrowLeft } from 'lucide-react';
 import { trackPage } from '../lib/analytics';
@@ -129,7 +130,7 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
     name: 'Ernest Austin',
     dates: '1874–1947',
     image: `${import.meta.env.BASE_URL}assets/aistudio/ernest_austin_portrait.webp`,
-    quote: '“A late calling to music, touched by a father’s grief.”',
+    quote: '“A late call to music”',
     notableWork: 'Variations on “The Vicar of Bray”',
     tags: [
       'Ernest Austin',
@@ -157,6 +158,28 @@ export const TO_FOLLOW_ARTICLES: ToFollowArticle[] = [
       'In Memoriam Kossuth',
       'Surrey',
       'Lausanne'
+    ]
+  },
+  {
+    id: 'mary-anderson-lucas',
+    name: 'Mary Anderson Lucas',
+    dates: '1882–1952',
+    image: '',
+    quote: '“Juggling motherhood and music”',
+    notableWork: 'The Circus, suite for orchestra (1939)',
+    tags: [
+      'Mary Anderson Lucas',
+      'Mary Anderson Juler',
+      'The Circus',
+      'Circus Suite',
+      'Sawdust',
+      'Préludes de Ballet',
+      'Herbert Howells',
+      'R. O. Morris',
+      'Pauline Juler',
+      'Leighton Lucas',
+      'Henry Wood',
+      'Proms'
     ]
   }
 ];
@@ -368,6 +391,23 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
     );
   }
 
+  if (selectedArticleId === 'mary-anderson-lucas') {
+    return (
+      <div className="space-y-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4">
+          <button
+            onClick={handleBackToCarousel}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 rounded font-serif text-sm font-semibold transition-colors cursor-pointer shadow-2xs group"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-amber-900" />
+            <span>Back to Cards Carousel</span>
+          </button>
+        </div>
+        <MaryAndersonLucasPost onBack={handleBackToCarousel} />
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header bar: Centred title on the page */}
@@ -385,3 +425,4 @@ export const ToFollowTab: React.FC<ToFollowTabProps> = ({ initialArticleId = nul
     </div>
   );
 };
+
